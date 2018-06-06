@@ -12,9 +12,10 @@ RingCentral offers [Glip Restful API in beta](https://developer.ringcentral.com/
 
 [WeChat](https://en.wikipedia.org/wiki/WeChat) is one of most popular messaging tool in China. It's especially famous for its ease of use.
 
-I'd like to take advantages of RingCentral Glip API to build a client which is as user friendly as WeChat.
+I'd like to take advantages of RingCentral Glip API to build a Glip client which is as user friendly as WeChat.
 
 
 ## Technical stack
 
 - [Vue.js](https://vuejs.org/)
+- [Parcel](https://parceljs.org/)
