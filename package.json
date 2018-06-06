@@ -5,11 +5,10 @@
   "private": true,
   "scripts": {
     "upgrade": "yarn-upgrade-all",
-    "server": "parcel index.html",
+    "server": "parcel index.html -d build",
     "release": "parcel build index.html -d docs"
   },
   "dependencies": {
-    "ramda": "^0.25.0",
     "vue": "^2.5.16",
     "vue-hot-reload-api": "^2.3.0"
   },
