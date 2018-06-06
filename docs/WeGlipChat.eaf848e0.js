@@ -7,4 +7,4 @@ var t=arguments[3];Object.defineProperty(exports,"__esModule",{value:!0});var e=
 var global = arguments[3];
 var e=arguments[3],r=require("vue"),u=a(r),n=require("./App"),t=a(n);function a(e){return e&&e.__esModule?e:{default:e}}e.app=new u.default({el:"#app",render:function(e){return e(t.default)}});
 },{"vue":9,"./App":11}]},{},[6], null)
-//# sourceMappingURL=/WeGlipChat.eaf848e0.map
+//# sourceMappingURL=WeGlipChat.eaf848e0.map
