@@ -1,0 +1,18 @@
+{
+  "name": "we-glip-chat",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "server": "parcel index.html",
+    "release": "parcel build index.html -d docs"
+  },
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.8.1",
+    "standard": "^11.0.1",
+    "yarn-upgrade-all": "^0.3.0"
+  }
+}
