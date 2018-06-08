@@ -11,7 +11,7 @@ export default {
     authorized: false
   }),
   methods: {
-    authorize: function() {
+    authorize: function () {
       this.authorized = true
     }
   }
