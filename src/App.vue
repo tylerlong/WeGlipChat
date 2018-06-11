@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
+import rc from './api/ringcentral'
 
 export default {
   data: function () {
@@ -13,9 +13,9 @@ export default {
       authorized: false
     }
   },
-  mounted: function () {
-    const accessToken = Cookies.get('RINGCENTRAL_ACCESS_TOKEN')
-    if (accessToken === undefined) {
+  mounted: async function () {
+    const authorized = await rc.authorized()
+    if (!authorized) {
       this.$router.push('/login/')
     }
   }

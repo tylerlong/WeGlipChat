@@ -1,5 +1,6 @@
 import RingCentral from 'ringcentral-js-concise'
 import URI from 'urijs'
+import Cookies from 'js-cookie'
 
 import config from '../config'
 
@@ -9,8 +10,13 @@ export default {
   logIn () {
     return new Promise((resolve, reject) => {
       const oauthUri = rc.authorizeUri(config.OAUTH_REDIRECT_URI, { responseType: 'token' })
-      var oauthWindow = window.open(oauthUri, 'oauthWindow', 'width=800, height=600')
+      var oauthWindow = window.open(oauthUri, 'oauthWindow', 'width=800,height=600,top=100')
       var oauthInterval = window.setInterval(function () {
+        if (oauthWindow.closed) {
+          window.clearInterval(oauthInterval)
+          return
+        }
+        console.log('interval')
         try {
           const uri = oauthWindow.document.URL
           if (uri.indexOf(config.OAUTH_REDIRECT_URI) !== -1) {
@@ -27,5 +33,22 @@ export default {
         }
       }, 1000)
     })
+  },
+
+  async authorized () {
+    if (rc.token() === undefined) {
+      const accessToken = Cookies.get('RINGCENTRAL_ACCESS_TOKEN')
+      if (accessToken === undefined) {
+        return false
+      }
+      rc.token({ access_token: accessToken })
+    }
+    try {
+      await rc.get('/restapi/v1.0/account/~/extension/~')
+      return true
+    } catch (e) {
+      console.log(e.response.data)
+      return false
+    }
   }
 }
