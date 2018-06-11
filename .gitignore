@@ -1,3 +1,7 @@
 node_modules/
 build/
 .cache/
+
+config.js
+config.prod.js
+confix.sandbox.js

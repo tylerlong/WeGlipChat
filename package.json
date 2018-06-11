@@ -6,10 +6,11 @@
   "author": "Tyler Long <tyler4long@gmail.com>",
   "scripts": {
     "upgrade": "yarn-upgrade-all",
-    "server": "parcel index.html -d build",
-    "release": "parcel build index.html -d docs --public-url ./"
+    "server": "parcel index.html oauth.html -d build",
+    "release": "parcel build index.html oauth.html -d docs --public-url ./"
   },
   "dependencies": {
+    "ringcentral-js-concise": "^0.4.2",
     "vue": "^2.5.16"
   },
   "devDependencies": {
