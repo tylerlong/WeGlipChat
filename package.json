@@ -12,6 +12,7 @@
   "dependencies": {
     "js-cookie": "^2.2.0",
     "ringcentral-js-concise": "^0.4.2",
+    "urijs": "^1.19.1",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1"
   },
@@ -25,6 +26,6 @@
     "yarn-upgrade-all": "^0.3.0"
   },
   "alias": {
-    "vue" : "./node_modules/vue/dist/vue.common.js"
+    "vue": "./node_modules/vue/dist/vue.common.js"
   }
 }
