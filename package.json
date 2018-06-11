@@ -6,12 +6,14 @@
   "author": "Tyler Long <tyler4long@gmail.com>",
   "scripts": {
     "upgrade": "yarn-upgrade-all",
-    "server": "parcel index.html oauth.html -d build",
+    "watch": "parcel watch index.html oauth.html -d build",
     "release": "parcel build index.html oauth.html -d docs --public-url ./"
   },
   "dependencies": {
+    "js-cookie": "^2.2.0",
     "ringcentral-js-concise": "^0.4.2",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "1.3.1",
@@ -21,5 +23,8 @@
     "vue-hot-reload-api": "^2.3.0",
     "vue-template-compiler": "^2.5.16",
     "yarn-upgrade-all": "^0.3.0"
+  },
+  "alias": {
+    "vue" : "./node_modules/vue/dist/vue.common.js"
   }
 }

@@ -7,6 +7,7 @@
 
 <script>
 import RingCentral from 'ringcentral-js-concise'
+import Cookies from 'js-cookie'
 
 import config from './config'
 
@@ -16,6 +17,12 @@ export default {
   data: function () {
     return {
       authorized: false
+    }
+  },
+  mounted: function () {
+    const accessToken = Cookies.get('RINGCENTRAL_ACCESS_TOKEN')
+    if (accessToken === undefined) {
+
     }
   },
   methods: {
