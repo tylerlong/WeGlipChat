@@ -14,8 +14,3 @@ Workaround:
 ```
 yarn add --dev @vue/component-compiler-utils@1.3.1
 ```
-
-
-
-`window.app.authorized = true` has no effect, strange.
-But Vue extension for Chrome does work like a charm!
