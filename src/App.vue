@@ -7,9 +7,11 @@
 
 <script>
 export default {
-  data: () => ({
-    authorized: false
-  }),
+  data: function () {
+    return {
+      authorized: false
+    }
+  },
   methods: {
     authorize: function () {
       this.authorized = true
