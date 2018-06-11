@@ -11,11 +11,10 @@
 
   export default {
     methods: {
-      logIn: function () {
-        rc.logIn(token => {
-          Cookies.set('RINGCENTRAL_ACCESS_TOKEN', token.access_token, { expires: 1 / 24 })
-          this.$router.push('/')
-        })
+      logIn: async function () {
+        const token = await rc.logIn()
+        Cookies.set('RINGCENTRAL_ACCESS_TOKEN', token.access_token, { expires: 1 / 24 })
+        this.$router.push('/')
       }
     }
   }
