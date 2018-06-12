@@ -8,7 +8,7 @@
     "upgrade": "yarn-upgrade-all",
     "watch": "parcel watch index.html oauth.html -d build",
     "release": "parcel build index.html oauth.html -d docs --public-url ./",
-    "prepush": "standard --plugin html '**/*.{js,vue}"
+    "prepush": "standard --plugin html '**/*.{js,vue}'"
   },
   "dependencies": {
     "js-cookie": "^2.2.0",
