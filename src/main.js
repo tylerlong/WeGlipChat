@@ -1,11 +1,14 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Element from 'element-ui'
 
 import App from './App'
 import Login from './components/Login'
+import OAuth from './components/OAuth'
 
 Vue.use(VueRouter)
+Vue.use(Element)
 
 const routes = [
   { path: '/', component: App },
@@ -13,5 +16,10 @@ const routes = [
 ]
 const router = new VueRouter({ routes })
 
-const vue = new Vue({ router })
-vue.$mount('#app')
+const app = new Vue({ router })
+app.$mount('#app')
+
+const oauth = new Vue({
+  render: h => h(OAuth)
+})
+oauth.$mount('#oauth')
