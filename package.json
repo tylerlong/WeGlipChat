@@ -6,8 +6,8 @@
   "author": "Tyler Long <tyler4long@gmail.com>",
   "scripts": {
     "upgrade": "yarn-upgrade-all",
-    "watch": "parcel watch index.html oauth.html -d build",
-    "release": "parcel build index.html oauth.html -d docs --public-url ./",
+    "watch": "parcel watch src/index.html src/oauth.html -d build",
+    "release": "parcel build src/index.html src/oauth.html -d docs --public-url ./",
     "prepush": "standard --plugin html '**/*.{js,vue}'"
   },
   "dependencies": {
