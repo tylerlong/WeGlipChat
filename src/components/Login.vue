@@ -5,16 +5,23 @@
 </template>
 
 <script>
-  import Cookies from 'js-cookie'
-
-  import rc from '../api/ringcentral'
+  import { mapGetters } from 'vuex'
 
   export default {
+    computed: {
+      ...mapGetters(['authorized'])
+    },
+    watch: {
+      authorized: function (newVal, oldVal) {
+        this.$router.push('/')
+        console.log('watch')
+      }
+    },
     methods: {
       logIn: async function () {
-        const token = await rc.logIn()
-        Cookies.set('RINGCENTRAL_ACCESS_TOKEN', token.access_token, { expires: 1 / 24 })
-        this.$router.push('/')
+        this.$store.commit('showLoginModal')
+        // Cookies.set('RINGCENTRAL_ACCESS_TOKEN', token.access_token, { expires: 1 / 24 })
+        // this.$router.push('/')
       }
     }
   }

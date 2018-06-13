@@ -1,27 +1,22 @@
 <template>
-  <el-dialog title="Log In" :visible.sync="visible" :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false">
-    <iframe v-if="!authorized" ref="oauthIframe" :src="oauthUri" width="100%" height="600" frameborder="0" @load="iframeLoad"></iframe>
-    <pre v-else>{{ accessToken }}</pre>
+  <el-dialog title="Log In" :visible="loginModalVisible" :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false">
+    <iframe v-if="loginModalVisible" ref="oauthIframe" :src="oauthUri" width="100%" height="600" frameborder="0" @load="iframeLoad"></iframe>
   </el-dialog>
 </template>
 
 <script>
   import URI from 'urijs'
-  import { mapGetters } from 'vuex'
+  import { mapState } from 'vuex'
 
   import rc from '../api/ringcentral'
+  import config from '../config'
 
   export default {
-    data: function () {
-      return {
-        visible: true
-      }
-    },
     computed: {
-      oauthUri: function () {
-        return rc.oauthUri()
+      oauthUri: function (prompt = true) {
+        return rc.oauthUri(prompt)
       },
-      ...mapGetters(['authorized', 'accessToken'])
+      ...mapState(['loginModalVisible'])
     },
     methods: {
       iframeLoad: function () {
@@ -34,8 +29,15 @@
           }
           throw error
         }
+        if (redirectUri.indexOf(config.OAUTH_REDIRECT_URI) === -1) {
+          return // not expected uri
+        }
         const token = URI(redirectUri.replace('#', '?')).search(true)
+        if (token.access_token === undefined) {
+          throw new Error(JSON.stringify(token, null, 2))
+        }
         this.$store.commit('setToken', token)
+        this.$store.commit('hideLoginModal')
       }
     }
   }
