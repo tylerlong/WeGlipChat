@@ -27,6 +27,7 @@ app.$mount('#app')
 
 const oauth = new Vue({
   render: h => h(OAuth),
+  router,
   store
 })
 oauth.$mount('#oauth')

@@ -23,7 +23,7 @@
     watch: {
       token: function (newToken, oldToken) {
         if (!R.isNil(newToken) && !R.isNil(newToken.access_token)) {
-          Cookies.set('RINGCENTRAL_TOKEN', JSON.stringify(newToken), { expires: 1 / 24 })
+          Cookies.set('RINGCENTRAL_TOKEN', newToken, { expires: 1 / 24 })
         } else {
           Cookies.remove('RINGCENTRAL_TOKEN')
         }
@@ -49,6 +49,14 @@
         }
         this.$store.commit('setToken', token)
         this.$store.commit('hideLoginModal')
+      }
+    },
+    mounted: function () {
+      const token = Cookies.getJSON('RINGCENTRAL_TOKEN')
+      if (!R.isNil(token)) {
+        this.$store.commit('setToken', token)
+      } else {
+        this.$router.push('/login/')
       }
     }
   }
