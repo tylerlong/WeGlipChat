@@ -1,11 +1,13 @@
 <template>
   <el-dialog title="Log In" :visible.sync="visible" :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false">
-    <iframe ref="oauthIframe" :src="oauthUri" width="100%" height="600" frameborder="0" @load="iframeLoad"></iframe>
+    <iframe v-if="!authorized" ref="oauthIframe" :src="oauthUri" width="100%" height="600" frameborder="0" @load="iframeLoad"></iframe>
+    <pre v-else>{{ accessToken }}</pre>
   </el-dialog>
 </template>
 
 <script>
   import URI from 'urijs'
+  import { mapGetters } from 'vuex'
 
   import rc from '../api/ringcentral'
 
@@ -18,7 +20,8 @@
     computed: {
       oauthUri: function () {
         return rc.oauthUri()
-      }
+      },
+      ...mapGetters(['authorized', 'accessToken'])
     },
     methods: {
       iframeLoad: function () {
@@ -32,7 +35,7 @@
           throw error
         }
         const token = URI(redirectUri.replace('#', '?')).search(true)
-        console.log(JSON.stringify(token, null, 2))
+        this.$store.commit('setToken', token)
       }
     }
   }

@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import Login from './components/Login'
 import OAuth from './components/OAuth'
+import store from './store'
 
 Vue.use(VueRouter)
 Vue.use(Element)
@@ -18,10 +19,14 @@ const routes = [
 ]
 const router = new VueRouter({ routes })
 
-const app = new Vue({ router })
+const app = new Vue({
+  router,
+  store
+})
 app.$mount('#app')
 
 const oauth = new Vue({
-  render: h => h(OAuth)
+  render: h => h(OAuth),
+  store
 })
 oauth.$mount('#oauth')
