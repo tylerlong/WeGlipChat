@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button @click="logIn">Log In</button>
+    <div v-if="authorized">You are logged in. <button @click="logOut">Log Out</button></div>
+    <button v-else @click="logIn">Log In</button>
   </div>
 </template>
 
@@ -13,15 +14,17 @@
     },
     watch: {
       authorized: function (newVal, oldVal) {
-        this.$router.push('/')
-        console.log('watch')
+        if (newVal) {
+          this.$router.push('/')
+        }
       }
     },
     methods: {
-      logIn: async function () {
+      logIn: function () {
         this.$store.commit('showLoginModal')
-        // Cookies.set('RINGCENTRAL_ACCESS_TOKEN', token.access_token, { expires: 1 / 24 })
-        // this.$router.push('/')
+      },
+      logOut: function () {
+        this.$store.commit('setToken', null)
       }
     }
   }

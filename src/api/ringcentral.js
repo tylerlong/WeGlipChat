@@ -11,11 +11,11 @@ export default {
   },
   async authorized () {
     if (rc.token() === undefined) {
-      const accessToken = Cookies.get('RINGCENTRAL_ACCESS_TOKEN')
-      if (accessToken === undefined) {
+      const token = Cookies.get('RINGCENTRAL_TOKEN')
+      if (token === undefined) {
         return false
       }
-      rc.token({ access_token: accessToken })
+      rc.token(JSON.parse(token))
     }
     try {
       await rc.get('/restapi/v1.0/account/~/extension/~')

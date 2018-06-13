@@ -7,6 +7,8 @@
 <script>
   import URI from 'urijs'
   import { mapState } from 'vuex'
+  import Cookies from 'js-cookie'
+  import * as R from 'ramda'
 
   import rc from '../api/ringcentral'
   import config from '../config'
@@ -16,7 +18,16 @@
       oauthUri: function (prompt = true) {
         return rc.oauthUri(prompt)
       },
-      ...mapState(['loginModalVisible'])
+      ...mapState(['token', 'loginModalVisible'])
+    },
+    watch: {
+      token: function (newToken, oldToken) {
+        if (!R.isNil(newToken) && !R.isNil(newToken.access_token)) {
+          Cookies.set('RINGCENTRAL_TOKEN', JSON.stringify(newToken), { expires: 1 / 24 })
+        } else {
+          Cookies.remove('RINGCENTRAL_TOKEN')
+        }
+      }
     },
     methods: {
       iframeLoad: function () {
