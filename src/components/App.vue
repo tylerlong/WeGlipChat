@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import rc from './api/ringcentral'
+import rc from '../api/ringcentral'
 
 export default {
   data: function () {

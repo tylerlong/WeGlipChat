@@ -5,7 +5,7 @@ import Element from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css'
 
-import App from './App'
+import App from './components/App'
 import Login from './components/Login'
 import OAuth from './components/OAuth'
 import store from './store'
