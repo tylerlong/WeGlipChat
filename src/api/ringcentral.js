@@ -7,6 +7,9 @@ import config from '../config'
 const rc = new RingCentral(config.RINGCENTRAL_CLIENT_ID, '', config.RINGCENTRAL_SERVER_URI)
 
 export default {
+  oauthUri () {
+    return rc.authorizeUri(config.OAUTH_REDIRECT_URI, { responseType: 'token' })
+  },
   logIn () {
     return new Promise((resolve, reject) => {
       const oauthUri = rc.authorizeUri(config.OAUTH_REDIRECT_URI, { responseType: 'token' })
