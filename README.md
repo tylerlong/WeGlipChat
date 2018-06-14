@@ -34,3 +34,8 @@ I want to see how simple a project I can manage to produce.
 - [x] log in & log out
 - [ ] keep the user logged
 - [ ] list Glip groups
+
+
+## Release
+
+Update RingCentral app and change redirect uri to `<your-server>/oauth.html`.

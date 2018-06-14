@@ -1,2 +1,12 @@
 <!DOCTYPE html>
-<html></html>
+<html>
+  <head></head>
+  <body>
+    <script>
+      window.parent.postMessage({
+        type: 'REDIRECT_URI',
+        redirectUri: window.location.href
+      }, window.location.origin)
+    </script>
+  </body>
+</html>
