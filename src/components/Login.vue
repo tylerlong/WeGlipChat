@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div v-if="authorized">You are logged in. <button @click="logOut">Log Out</button></div>
-    <button v-else @click="logIn">Log In</button>
+    <button @click="logIn">Log In</button>
   </div>
 </template>
 
@@ -22,9 +21,6 @@
     methods: {
       logIn: function () {
         this.$store.commit('showLoginModal')
-      },
-      logOut: function () {
-        this.$store.commit('setToken', null)
       }
     }
   }
