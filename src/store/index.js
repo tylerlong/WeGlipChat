@@ -9,8 +9,7 @@ export default new Vuex.Store({
     loginModalVisible: false
   },
   getters: {
-    authorized: state => state.token !== null && state.token.access_token !== undefined,
-    accessToken: state => state.token === null ? null : state.token.access_token
+    authorized: state => state.token !== null && state.token.access_token !== undefined
   },
   mutations: {
     setToken (state, token) {
