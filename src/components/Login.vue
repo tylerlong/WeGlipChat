@@ -5,15 +5,15 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
     computed: {
-      ...mapGetters(['authorized'])
+      ...mapState(['token'])
     },
     watch: {
-      authorized: function (newVal, oldVal) {
-        if (newVal) {
+      token: function (newToken, oldToken) {
+        if (newToken) {
           this.$router.push('/')
         }
       }
