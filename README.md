@@ -24,3 +24,13 @@ I want to see how simple a project I can manage to produce.
 
 - [Vue.js](https://vuejs.org/)
 - [Parcel](https://parceljs.org/)
+- [Vuex](https://vuex.vuejs.org/)
+- [Vue Router](https://router.vuejs.org/)
+- [Element](http://element-cn.eleme.io/#/en-US)
+
+
+## Roadmap
+
+- [x] log in & log out
+- [ ] keep the user logged
+- [ ] list Glip groups
