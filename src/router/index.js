@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import * as R from 'ramda'
 
 import App from '../components/App'
 import Login from '../components/Login'
@@ -14,7 +15,7 @@ const router = new VueRouter({ routes })
 
 let routeBeforeLogin = 'root'
 router.afterEach((to, from) => {
-  if (to.name === 'login' && from.name !== 'login') {
+  if (to.name === 'login' && !R.isNil(from.name) && from.name !== 'login') {
     routeBeforeLogin = from.name
   }
 })
