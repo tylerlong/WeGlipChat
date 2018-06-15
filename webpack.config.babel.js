@@ -1,8 +1,8 @@
+import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-const path = require('path')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
-module.exports = {
+export default {
   mode: 'development',
   entry: {
     index: './src/index.js'
