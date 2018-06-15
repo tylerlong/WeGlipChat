@@ -41,7 +41,7 @@ export default {
       }
       const token = URI(redirectUri.replace('#', '?')).search(true)
       if (token.access_token === undefined) { // unexpected data
-        throw new Error(JSON.stringify(token, null, 2))
+        throw new Error(JSON.stringify(token))
       }
       this.$store.commit('setToken', token)
       this.$store.commit('hideLoginModal')

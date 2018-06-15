@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    token: null,
+    token: undefined,
     loginModalVisible: false,
     extension: undefined
   },
@@ -36,9 +36,7 @@ const store = new Vuex.Store({
   }
 })
 
-store.watch((state) => {
-  return state.token
-}, (token) => {
+const tokenCallback = token => {
   if (!R.isNil(token)) {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
     rc.token(token)
@@ -50,7 +48,9 @@ store.watch((state) => {
     store.commit('setExtension', undefined)
     router.push({ name: 'login' })
   }
-})
+}
+tokenCallback(undefined) // initial trigger of callback
+store.watch(state => state.token, tokenCallback)
 
 store.commit('setToken', Cookies.getJSON('RINGCENTRAL_TOKEN'))
 
