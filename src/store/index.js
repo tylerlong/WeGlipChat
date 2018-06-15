@@ -51,10 +51,14 @@ const tokenCallback = token => {
 }
 store.watch(state => state.token, tokenCallback)
 
-// for guests, the only available page is the login page
 router.afterEach((to, from) => {
+  // for guests, the only available page is the login page
   if (to.name !== 'login' && (R.isNil(store.state.token) || R.isNil(store.state.token.access_token))) {
     router.push({ name: 'login' })
+  }
+  // for users, the only unavailable page is the login page
+  if (to.name === 'login' && (!R.isNil(store.state.token) && !R.isNil(store.state.token.access_token))) {
+    router.redirectAfterLogin()
   }
 })
 
