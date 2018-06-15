@@ -23,7 +23,7 @@ I want to see how simple a project I can manage to produce.
 ## Technical stack
 
 - [Vue.js](https://vuejs.org/)
-- [Parcel](https://parceljs.org/)
+- [Webpack](https://webpack.js.org/)
 - [Vuex](https://vuex.vuejs.org/)
 - [Vue Router](https://router.vuejs.org/)
 - [Framework7](http://framework7.io/)
