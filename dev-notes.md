@@ -17,3 +17,8 @@ yarn add --dev @vue/component-compiler-utils@1.3.1
 
 
 - A separate web server is needed. I use [HTTP Server](https://tylingsoft.com/http-server/).
+
+
+## todo
+
+- How to make the release package smaller?

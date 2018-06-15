@@ -38,4 +38,11 @@ I want to see how simple a project I can manage to produce.
 
 ## Release
 
+```
+cp src/config.sample.js  src/config.js
+edit src/config.js
+yarn install
+yarn release
+```
+
 Update RingCentral app and change redirect uri to `<your-server>/oauth.html`.
