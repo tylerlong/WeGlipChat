@@ -3,7 +3,6 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
 export default {
-  mode: 'development',
   entry: {
     index: './src/index.js'
   },
@@ -27,7 +26,6 @@ export default {
     ]
   },
   plugins: [
-    // make sure to include the plugin!
     new VueLoaderPlugin(),
     new ExtractTextPlugin('[name].bundle.css')
   ],
