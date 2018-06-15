@@ -52,6 +52,13 @@ const tokenCallback = token => {
 tokenCallback(undefined) // initial trigger of callback
 store.watch(state => state.token, tokenCallback)
 
+// for guests, the only available page is the login page
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && (R.isNil(store.state.token) || R.isNil(store.state.token.access_token))) {
+    next({ name: 'login' })
+  }
+})
+
 store.commit('setToken', Cookies.getJSON('RINGCENTRAL_TOKEN'))
 
 export default store
