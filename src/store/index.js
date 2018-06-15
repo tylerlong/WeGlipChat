@@ -43,11 +43,12 @@ store.watch((state) => {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
     rc.token(token)
     store.dispatch('fetchExtension')
+    router.redirectAfterLogin()
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
     rc.token(undefined)
     store.commit('setExtension', undefined)
-    router.push('/login/')
+    router.push({ name: 'login' })
   }
 })
 

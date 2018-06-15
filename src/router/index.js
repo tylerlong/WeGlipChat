@@ -7,9 +7,19 @@ import Login from '../components/Login'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: App },
-  { path: '/login/', component: Login }
+  { path: '/', name: 'root', component: App },
+  { path: '/login/', name: 'login', component: Login }
 ]
 const router = new VueRouter({ routes })
+
+let routeBeforeLogin = 'root'
+router.afterEach((to, from) => {
+  if (to.name === 'login' && from.name !== 'login') {
+    routeBeforeLogin = from.name
+  }
+})
+router.redirectAfterLogin = () => {
+  router.push({ name: routeBeforeLogin })
+}
 
 export default router
