@@ -26,7 +26,7 @@ I want to see how simple a project I can manage to produce.
 - [Parcel](https://parceljs.org/)
 - [Vuex](https://vuex.vuejs.org/)
 - [Vue Router](https://router.vuejs.org/)
-- [Element](http://element-cn.eleme.io/#/en-US)
+- [Framework7](http://framework7.io/)
 
 
 ## Roadmap

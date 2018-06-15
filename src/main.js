@@ -1,14 +1,15 @@
 import 'babel-polyfill'
 import Vue from 'vue'
-import Element from 'element-ui'
+import Framework7 from 'framework7/dist/framework7.esm.bundle'
+import Framework7Vue from 'framework7-vue'
 
-import 'element-ui/lib/theme-chalk/index.css'
+import 'framework7/dist/css/framework7.min.css'
 
 import OAuth from './components/OAuth'
 import store from './store'
 import router from './router'
 
-Vue.use(Element)
+Vue.use(Framework7Vue, Framework7)
 
 const app = new Vue({
   router,
