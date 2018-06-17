@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as R from 'ramda'
+import { isNil } from 'ramda'
 import Cookies from 'js-cookie'
 
 import rc from '../api/ringcentral'
@@ -37,7 +37,7 @@ const store = new Vuex.Store({
 })
 
 const tokenCallback = token => {
-  if (!R.isNil(token)) {
+  if (!isNil(token)) {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
     rc.token(token)
     store.dispatch('fetchExtension')
@@ -53,11 +53,11 @@ store.watch(state => state.token, tokenCallback)
 
 router.afterEach((to, from) => {
   // for guests, the only available page is the login page
-  if (to.name !== 'login' && (R.isNil(store.state.token) || R.isNil(store.state.token.access_token))) {
+  if (to.name !== 'login' && (isNil(store.state.token) || isNil(store.state.token.access_token))) {
     router.push({ name: 'login' })
   }
   // for users, the only unavailable page is the login page
-  if (to.name === 'login' && (!R.isNil(store.state.token) && !R.isNil(store.state.token.access_token))) {
+  if (to.name === 'login' && (!isNil(store.state.token) && !isNil(store.state.token.access_token))) {
     router.redirectAfterLogin()
   }
 })

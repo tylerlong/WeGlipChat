@@ -1,9 +1,9 @@
 import path from 'path'
-import * as R from 'ramda'
+import { mergeDeepRight } from 'ramda'
 
 import commonConfig from './webpack.common'
 
-export default R.mergeDeepRight(commonConfig, {
+export default mergeDeepRight(commonConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   output: {
