@@ -4,7 +4,7 @@ import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
 export default {
   entry: {
-    index: './src/index.js'
+    index: ['babel-polyfill', './src/index.js']
   },
   output: {
     path: path.join(__dirname, 'build'),
