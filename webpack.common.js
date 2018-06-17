@@ -1,5 +1,5 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 export default {
   entry: {
@@ -12,10 +12,10 @@ export default {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       },
       {
         test: /\.vue$/,
@@ -25,7 +25,9 @@ export default {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new ExtractTextPlugin('[name].bundle.css')
+    new MiniCssExtractPlugin({
+      filename: '[name].bundle.css'
+    })
   ],
   resolve: {
     alias: {

@@ -4,3 +4,4 @@
 ## todo
 
 - How to make the release package smaller?
+- webpack dev-server
