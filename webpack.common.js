@@ -1,5 +1,6 @@
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default {
   entry: {
@@ -24,6 +25,14 @@ export default {
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'oauth.html',
+      template: './src/oauth.html',
+      inject: false
+    }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].bundle.css'
