@@ -7,7 +7,7 @@
   "scripts": {
     "upgrade": "yarn-upgrade-all && yarn remove framework7 framework7-vue extract-text-webpack-plugin && yarn add --dev extract-text-webpack-plugin@next && yarn add framework7@2.3.1 framework7-vue@2.3.0",
     "prepush": "standard --plugin html '**/*.{js,vue}'",
-    "build": "rm -rf build && mkdir build && cp src/*.html build/ && cp src/*.png build/ && npx webpack --progress --colors --config webpack.dev.babel.js",
+    "build": "cp src/*.html build/ && cp src/*.png build/ && webpack --progress --colors --config webpack.dev.babel.js",
     "release": "rm -rf docs && mkdir docs && cp src/*.html docs/ && cp src/*.png docs/ && webpack --progress --colors --config webpack.prod.babel.js"
   },
   "dependencies": {
@@ -31,7 +31,6 @@
     "husky": "^0.14.3",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
-    "vue-hot-reload-api": "^2.3.0",
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.12.0",

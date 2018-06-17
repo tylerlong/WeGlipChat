@@ -1,4 +1,3 @@
-import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
@@ -7,7 +6,6 @@ export default {
     index: ['babel-polyfill', './src/index.js']
   },
   output: {
-    path: path.join(__dirname, 'build'),
     filename: '[name].bundle.js'
   },
   module: {
