@@ -11,7 +11,14 @@ const webpackConfig = mergeDeepRight(commonConfig, {
     path: path.join(__dirname, 'build')
   },
   devServer: {
-    contentBase: './build'
+    contentBase: './build',
+    port: 6015,
+    inline: false,
+    overlay: {
+      warnings: true,
+      errors: true
+    },
+    open: true
   }
 })
 
