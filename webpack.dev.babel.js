@@ -6,7 +6,7 @@ import commonConfig from './webpack.common'
 
 const webpackConfig = mergeDeepRight(commonConfig, {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   output: {
     path: path.join(__dirname, 'build')
   },
