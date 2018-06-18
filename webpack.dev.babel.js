@@ -1,9 +1,10 @@
 import path from 'path'
 import { mergeDeepRight } from 'ramda'
+import CleanWebpackPlugin from 'clean-webpack-plugin'
 
 import commonConfig from './webpack.common'
 
-export default mergeDeepRight(commonConfig, {
+const webpackConfig = mergeDeepRight(commonConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   output: {
@@ -13,3 +14,7 @@ export default mergeDeepRight(commonConfig, {
     contentBase: './build'
   }
 })
+
+webpackConfig.plugins.push(new CleanWebpackPlugin(['build']))
+
+export default webpackConfig
