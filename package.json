@@ -7,8 +7,8 @@
   "scripts": {
     "upgrade": "yarn-upgrade-all && yarn remove framework7 framework7-vue && yarn add framework7@2.3.1 framework7-vue@2.3.0",
     "prepush": "standard --plugin html '**/*.{js,vue}'",
-    "build": "cp src/*.png build/ && webpack --progress --colors --config webpack.dev.babel.js",
-    "release": "cp src/*.png docs/ && webpack --progress --colors --config webpack.prod.babel.js"
+    "build": "webpack --progress --colors --config webpack.dev.babel.js",
+    "release": "webpack --progress --colors --config webpack.prod.babel.js"
   },
   "dependencies": {
     "framework7": "2.3.1",
@@ -34,7 +34,7 @@
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.7",
+    "webpack-cli": "^3.0.8",
     "yarn-upgrade-all": "^0.3.0"
   },
   "alias": {
