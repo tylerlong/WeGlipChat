@@ -7,6 +7,8 @@ import OAuth from './components/OAuth.vue'
 import store from './store'
 import router from './router'
 
+import './index.css'
+
 Vue.use(Framework7Vue, Framework7)
 
 const app = new Vue({
