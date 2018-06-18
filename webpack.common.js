@@ -6,9 +6,6 @@ export default {
   entry: {
     index: ['babel-polyfill', './src/index.js']
   },
-  output: {
-    filename: '[name].bundle.js'
-  },
   module: {
     rules: [
       {
@@ -34,10 +31,7 @@ export default {
       template: './src/oauth.html',
       inject: false
     }),
-    new VueLoaderPlugin(),
-    new ExtractCssChunksPlugin({
-      filename: '[name].bundle.css'
-    })
+    new VueLoaderPlugin()
   ],
   resolve: {
     alias: {
