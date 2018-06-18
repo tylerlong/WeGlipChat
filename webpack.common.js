@@ -1,5 +1,5 @@
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default {
@@ -14,7 +14,7 @@ export default {
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          ExtractCssChunksPlugin.loader,
           'css-loader'
         ]
       },
@@ -35,7 +35,7 @@ export default {
       inject: false
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
+    new ExtractCssChunksPlugin({
       filename: '[name].bundle.css'
     })
   ],

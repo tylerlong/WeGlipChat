@@ -14,7 +14,6 @@ const webpackConfig = mergeDeepRight(commonConfig, {
   devServer: {
     contentBase: './build',
     port: 6015,
-    inline: false,
     overlay: {
       warnings: true,
       errors: true
