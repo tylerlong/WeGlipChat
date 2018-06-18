@@ -1,6 +1,7 @@
 import path from 'path'
 import { mergeDeepRight } from 'ramda'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
+import { HotModuleReplacementPlugin } from 'webpack'
 
 import commonConfig from './webpack.common'
 
@@ -18,10 +19,11 @@ const webpackConfig = mergeDeepRight(commonConfig, {
       warnings: true,
       errors: true
     },
-    open: true
+    hot: true
   }
 })
 
 webpackConfig.plugins.push(new CleanWebpackPlugin(['build']))
+webpackConfig.plugins.push(new HotModuleReplacementPlugin())
 
 export default webpackConfig
