@@ -7,7 +7,7 @@
   "scripts": {
     "upgrade": "yarn-upgrade-all && yarn remove framework7 framework7-vue && yarn add framework7@2.3.1 framework7-vue@2.3.0",
     "prepush": "standard --plugin html '**/*.{js,vue}'",
-    "start": "webpack-dev-server --progress --colors --config webpack.dev.babel.js",
+    "start": "webpack-dev-server --open --progress --colors --config webpack.dev.babel.js",
     "build": "webpack --progress --colors --config webpack.dev.babel.js",
     "release": "webpack --progress --colors --config webpack.prod.babel.js"
   },
@@ -32,6 +32,7 @@
     "extract-css-chunks-webpack-plugin": "^3.0.5",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
+    "optimize-css-assets-webpack-plugin": "^4.0.2",
     "standard": "^11.0.1",
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
