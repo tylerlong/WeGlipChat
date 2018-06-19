@@ -4,12 +4,14 @@ import { isNil } from 'ramda'
 
 import App from '../components/App.vue'
 import Login from '../components/Login.vue'
+import Settings from '../components/Settings.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', name: 'root', component: App },
-  { path: '/login/', name: 'login', component: Login }
+  { path: '/login/', name: 'login', component: Login },
+  { path: '/settings/', name: 'settings', component: Settings }
 ]
 const router = new VueRouter({ routes })
 
