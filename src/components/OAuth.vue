@@ -13,16 +13,16 @@
 <script>
 import URI from 'urijs'
 import { mapState } from 'vuex'
-import { f7Navbar, f7Page, f7Popup, f7Block } from 'framework7-vue'
+import { f7Popup, f7Page, f7Navbar, f7Block } from 'framework7-vue'
 
 import rc from '../api/ringcentral'
 import config from '../config'
 
 export default {
   components: {
-    f7Navbar,
-    f7Page,
     f7Popup,
+    f7Page,
+    f7Navbar,
     f7Block
   },
   computed: {

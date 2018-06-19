@@ -12,9 +12,13 @@ const store = new Vuex.Store({
   state: {
     token: undefined,
     loginModalVisible: false,
-    extension: undefined
+    extension: undefined,
+    groups: undefined
   },
   mutations: {
+    setGroups (state, groups) {
+      state.groups = groups
+    },
     setExtension (state, extension) {
       state.extension = extension
     },
@@ -32,6 +36,10 @@ const store = new Vuex.Store({
     async fetchExtension ({ commit }) {
       const r = await rc.get('/restapi/v1.0/account/~/extension/~')
       commit('setExtension', r.data)
+    },
+    async fetchGroups ({ commit }) {
+      const r = await rc.get('/restapi/v1.0/glip/groups')
+      commit('setGroups', r.data.records)
     }
   }
 })
@@ -41,6 +49,7 @@ const tokenCallback = token => {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
     rc.token(token)
     store.dispatch('fetchExtension')
+    store.dispatch('fetchGroups')
     router.redirectAfterLogin()
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
