@@ -1,10 +1,11 @@
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { GenerateSW } from 'workbox-webpack-plugin'
 
 export default {
   entry: {
-    index: ['babel-polyfill', './src/index.js']
+    index: ['babel-polyfill', './src/service-worker.js', './src/index.js']
   },
   module: {
     rules: [
@@ -31,7 +32,8 @@ export default {
       template: './src/oauth.html',
       inject: false
     }),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new GenerateSW({})
   ],
   resolve: {
     alias: {
