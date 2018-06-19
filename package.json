@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "framework7": "2.3.1",
+    "framework7-icons": "^0.9.1",
     "framework7-vue": "2.3.0",
     "js-cookie": "^2.2.0",
     "ramda": "^0.25.0",
@@ -35,6 +36,7 @@
     "optimize-css-assets-webpack-plugin": "^4.0.2",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.12.0",

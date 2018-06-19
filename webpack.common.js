@@ -16,6 +16,10 @@ export default {
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf)$/,
+        loader: 'url-loader?limit=100000'
       }
     ]
   },
