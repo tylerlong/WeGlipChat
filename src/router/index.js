@@ -13,6 +13,7 @@ const routes = [
 ]
 const router = new VueRouter({ routes })
 
+// redirect to the route before login
 let routeBeforeLogin = 'root'
 router.afterEach((to, from) => {
   if (to.name === 'login' && !isNil(from.name) && from.name !== 'login') {

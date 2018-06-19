@@ -20,10 +20,7 @@ import config from '../config'
 
 export default {
   components: {
-    f7Popup,
-    f7Page,
-    f7Navbar,
-    f7Block
+    f7Popup, f7Page, f7Navbar, f7Block
   },
   computed: {
     oauthUri: function (prompt = true) {
