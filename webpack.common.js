@@ -1,5 +1,4 @@
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
-import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { GenerateSW } from 'workbox-webpack-plugin'
 
@@ -12,7 +11,6 @@ export default {
       {
         test: /\.css$/,
         use: [
-          ExtractCssChunksPlugin.loader,
           'css-loader'
         ]
       },

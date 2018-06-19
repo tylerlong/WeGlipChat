@@ -26,6 +26,7 @@ const webpackConfig = mergeDeepRight(commonConfig, {
   }
 })
 
+webpackConfig.module.rules[0].use.unshift(ExtractCssChunksPlugin.loader)
 webpackConfig.plugins.push(new ExtractCssChunksPlugin({ filename: '[name].[chunkhash].css' }))
 webpackConfig.plugins.push(new CleanWebpackPlugin(['docs']))
 
