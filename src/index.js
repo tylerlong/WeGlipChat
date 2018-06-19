@@ -11,11 +11,13 @@ import './index.css'
 
 Vue.use(Framework7Vue, Framework7)
 
+const theme = 'auto'
+
 const app = new Vue({
   router,
   store,
   framework7: {
-    theme: 'ios'
+    theme
   }
 })
 app.$mount('#app')
@@ -24,7 +26,7 @@ const oauth = new Vue({
   render: h => h(OAuth),
   store,
   framework7: {
-    theme: 'ios'
+    theme
   }
 })
 oauth.$mount('#oauth')

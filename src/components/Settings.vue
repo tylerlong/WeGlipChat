@@ -1,8 +1,10 @@
 <template>
   <f7-page :page-content="false">
     <tabs active="settings"></tabs>
-    <p>Welcome<span v-if="extension"> {{ extension.name }}</span>!</p>
-    <f7-button fill v-if="token" @click="logOut">Log Out</f7-button>
+    <div class="page-content">
+      <p>Welcome<span v-if="extension"> {{ extension.name }}</span>!</p>
+      <f7-button fill v-if="token" @click="logOut">Log Out</f7-button>
+    </div>
   </f7-page>
 </template>
 

@@ -1,17 +1,19 @@
 <template>
   <f7-page :page-content="false">
     <tabs active="glip"></tabs>
-    <f7-list media-list v-if="groups">
-      <f7-list-item
-        link="#"
-        :title="group.name || group.members.join(', ')"
-        text="..."
-        v-for="group in groups"
-        :key="group.id"
-      >
-      <img slot="media" src="https://via.placeholder.com/64x64" width="42" />
-      </f7-list-item>
-    </f7-list>
+    <div class="page-content">
+      <f7-list media-list v-if="groups">
+        <f7-list-item
+          link="#"
+          :title="group.name || group.members.join(', ')"
+          text="..."
+          v-for="group in groups"
+          :key="group.id"
+        >
+        <img slot="media" src="https://via.placeholder.com/64x64" width="42" />
+        </f7-list-item>
+      </f7-list>
+    </div>
   </f7-page>
 </template>
 
