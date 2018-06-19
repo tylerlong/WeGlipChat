@@ -5,14 +5,12 @@
     <f7-list media-list v-if="groups">
       <f7-list-item
         link="#"
-        title="Yellow Submarine"
-        after="$15"
-        subtitle="Beatles"
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
+        :title="group.name || group.members.join(', ')"
+        text="..."
         v-for="group in groups"
         :key="group.id"
       >
-        <img slot="media" src="http://via.placeholder.com/160x160" width="80" />
+        <img slot="media" src="http://via.placeholder.com/72x72" width="42" />
       </f7-list-item>
     </f7-list>
   </div>
