@@ -3,6 +3,7 @@ import Framework7 from 'framework7/dist/framework7.esm.bundle'
 import 'framework7/dist/css/framework7.css'
 import Framework7Vue from 'framework7-vue'
 import 'framework7-icons'
+import 'material-design-icons/iconfont/material-icons.css'
 
 import OAuth from './components/OAuth.vue'
 import store from './store'
