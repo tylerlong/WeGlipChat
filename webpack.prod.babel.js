@@ -1,6 +1,5 @@
 import { join } from 'path'
 import { mergeDeepRight } from 'ramda'
-import CleanWebpackPlugin from 'clean-webpack-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin'
@@ -12,7 +11,7 @@ const webpackConfig = mergeDeepRight(commonConfig, {
   mode: 'production',
   devtool: 'source-map',
   output: {
-    path: join(__dirname, 'docs'),
+    path: join(__dirname, '..', 'wgc'),
     filename: '[name].[chunkhash].js'
   },
   optimization: {
@@ -31,6 +30,5 @@ webpackConfig.module.rules[0].use.unshift(ExtractCssChunksPlugin.loader)
 webpackConfig.plugins.push(new ExtractCssChunksPlugin({ filename: '[name].[chunkhash].css' }))
 webpackConfig.entry.index.splice(1, 0, './src/service-worker.js')
 webpackConfig.plugins.push(new GenerateSW({}))
-webpackConfig.plugins.push(new CleanWebpackPlugin(['docs']))
 
 export default webpackConfig

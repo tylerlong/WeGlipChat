@@ -2,7 +2,7 @@
 
 A Glip client inspired by WeChat.
 
-### [Live Demo](https://tylerlong.github.io/WeGlipChat/)
+### [Live Demo](https://tylerlong.github.io/wgc/)
 
 
 ## Motivations

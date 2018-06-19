@@ -9,7 +9,7 @@
     "prepush": "standard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --open --progress --colors --config webpack.dev.babel.js",
     "build": "webpack --progress --colors --config webpack.dev.babel.js",
-    "release": "webpack --progress --colors --config webpack.prod.babel.js"
+    "release": "rm -rf ../wgc/* && webpack --progress --colors --config webpack.prod.babel.js"
   },
   "dependencies": {
     "framework7": "2.3.1",
@@ -45,10 +45,5 @@
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js"
-  },
-  "standard": {
-    "ignore": [
-      "/docs/"
-    ]
   }
 }
