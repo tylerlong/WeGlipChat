@@ -13,12 +13,18 @@ Vue.use(Framework7Vue, Framework7)
 
 const app = new Vue({
   router,
-  store
+  store,
+  framework7: {
+    theme: 'ios'
+  }
 })
 app.$mount('#app')
 
 const oauth = new Vue({
   render: h => h(OAuth),
-  store
+  store,
+  framework7: {
+    theme: 'ios'
+  }
 })
 oauth.$mount('#oauth')
