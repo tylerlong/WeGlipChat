@@ -9,7 +9,7 @@ import Settings from '../components/Settings.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', name: 'root', component: App },
+  { path: '/glip/', name: 'root', component: App },
   { path: '/login/', name: 'login', component: Login },
   { path: '/settings/', name: 'settings', component: Settings }
 ]
@@ -18,7 +18,7 @@ const router = new VueRouter({ routes })
 // redirect to the route before login
 let routeBeforeLogin = 'root'
 router.afterEach((to, from) => {
-  if (to.name === 'login' && !isNil(from.name) && from.name !== 'login') {
+  if (to.name === 'login' && !isNil(from.name) && from.name !== 'login' && from.name !== 'settings') {
     routeBeforeLogin = from.name
   }
 })
