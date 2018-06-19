@@ -1,6 +1,5 @@
 node_modules/
 build/
-.cache/
 
 config.js
 config.prod.js
