@@ -1,19 +1,25 @@
 <template>
   <f7-page>
-    <f7-navbar title="Chat" back-link="Back" @back-click="goToRoot">
+    <f7-navbar :title="group.name || group.members.join(', ')" back-link="Back" @back-click="goToRoot">
     </f7-navbar>
-    <span v-if="group">{{ group.id }} - {{ group.type }}</span>
-    <p v-for="post in posts">{{ post.type }} - {{ post.text }}</p>
+    <f7-messages>
+      <f7-message
+        v-for="post in posts"
+        type="received"
+        :key="post.id">
+        <span slot="text" v-if="post.text" v-html="post.text"></span>
+      </f7-message>
+    </f7-messages>
   </f7-page>
 </template>
 
 <script>
-import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link } from 'framework7-vue'
+import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link
+    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message
   },
   computed: {
     ...mapGetters(['getGroupById', 'getPostByGroupId']),
