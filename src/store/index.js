@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { isNil } from 'ramda'
+import { isNil, find } from 'ramda'
 import Cookies from 'js-cookie'
 
 import rc from '../api/ringcentral'
@@ -13,9 +13,21 @@ const store = new Vuex.Store({
     token: undefined,
     loginModalVisible: false,
     extension: undefined,
-    groups: undefined
+    groups: undefined,
+    posts: {}
+  },
+  getters: {
+    getGroupById: state => id => {
+      return find(g => g.id === id, state.groups)
+    },
+    getPostByGroupId: state => groupId => {
+      return state.posts[groupId]
+    }
   },
   mutations: {
+    setPosts (state, { groupId, posts }) {
+      Vue.set(state.posts, groupId, posts)
+    },
     setGroups (state, groups) {
       state.groups = groups
     },
@@ -40,6 +52,10 @@ const store = new Vuex.Store({
     async fetchGroups ({ commit }) {
       const r = await rc.get('/restapi/v1.0/glip/groups')
       commit('setGroups', r.data.records)
+    },
+    async fetchPosts ({ commit }, groupId) {
+      const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`)
+      commit('setPosts', { groupId, posts: r.data.records })
     }
   }
 })

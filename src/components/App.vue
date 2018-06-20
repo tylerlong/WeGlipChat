@@ -9,6 +9,7 @@
           text="..."
           v-for="group in groups"
           :key="group.id"
+          @click="openGroup(group.id)"
         >
         <img slot="media" src="https://via.placeholder.com/64x64" width="42" />
         </f7-list-item>
@@ -30,6 +31,11 @@ export default {
   },
   computed: {
     ...mapState(['groups'])
+  },
+  methods: {
+    openGroup (id) {
+      this.$router.push({ name: 'group', params: { id } })
+    }
   }
 }
 </script>
