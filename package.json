@@ -9,7 +9,7 @@
     "prepush": "standard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --open --progress --colors --config webpack.dev.babel.js",
     "build": "webpack --progress --colors --config webpack.dev.babel.js",
-    "release": "rm -rf ../wgc/* && webpack --progress --colors --config webpack.prod.babel.js && cd ../wgc/ && git commit -a -m 'release' && git push"
+    "release": "rm -rf ../wgc/* && webpack --progress --colors --config webpack.prod.babel.js && cd ../wgc/ && git add . && git commit -a -m 'release' && git push"
   },
   "dependencies": {
     "framework7": "2.3.1",
