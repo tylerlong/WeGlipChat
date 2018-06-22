@@ -51,12 +51,12 @@ const store = new Vuex.Store({
       commit('setExtension', r.data)
     },
     async fetchGroups ({ commit }) {
-      const r = await rcGet('/restapi/v1.0/glip/groups')
+      const r = await rcGet('/restapi/v1.0/glip/groups', { params: { recordCount: 250 } })
       commit('setGroups', r.data.records)
     },
     async fetchPosts ({ commit }, groupId) {
       const r = await rcGet(`/restapi/v1.0/glip/groups/${groupId}/posts`)
-      commit('setPosts', { groupId, posts: r.data.records })
+      commit('setPosts', { groupId, posts: r.data.records.reverse() })
     }
   }
 })
@@ -66,7 +66,7 @@ const rcGet = async (...args) => {
     await delay(1000) // wait for token
   }
   try {
-    return await rc.get(args)
+    return await rc.get(...args)
   } catch (e) {
     if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
       // token expired
