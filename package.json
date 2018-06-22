@@ -19,6 +19,7 @@
     "material-design-icons": "^3.0.1",
     "ramda": "^0.25.0",
     "ringcentral-js-concise": "^0.4.3",
+    "timeout-as-promise": "^1.0.0",
     "urijs": "^1.19.1",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",

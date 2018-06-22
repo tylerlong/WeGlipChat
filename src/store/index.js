@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { isNil, find } from 'ramda'
 import Cookies from 'js-cookie'
+import delay from 'timeout-as-promise'
 
 import rc from '../api/ringcentral'
 import router from '../router'
@@ -18,7 +19,7 @@ const store = new Vuex.Store({
   },
   getters: {
     getGroupById: state => id => {
-      return find(g => g.id === id, state.groups)
+      return find(g => g.id === id, state.groups || [])
     },
     getPostByGroupId: state => groupId => {
       return state.posts[groupId]
@@ -61,6 +62,9 @@ const store = new Vuex.Store({
 })
 
 const rcGet = async (...args) => {
+  while (rc.token() === undefined) {
+    await delay(1000) // wait for token
+  }
   try {
     return await rc.get(args)
   } catch (e) {
@@ -78,7 +82,9 @@ const tokenCallback = token => {
     rc.token(token)
     store.dispatch('fetchExtension')
     store.dispatch('fetchGroups')
-    router.redirectAfterLogin()
+    if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
+      router.push({ name: 'root' })
+    }
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
     rc.token(undefined)
@@ -95,7 +101,7 @@ router.afterEach((to, from) => {
   }
   // for users, the only unavailable page is the login page
   if (to.name === 'login' && (!isNil(store.state.token) && !isNil(store.state.token.access_token))) {
-    router.redirectAfterLogin()
+    router.push({ name: 'root' })
   }
 })
 

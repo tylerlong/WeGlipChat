@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { isNil } from 'ramda'
 
 import App from '../components/App.vue'
 import Login from '../components/Login.vue'
@@ -18,16 +17,5 @@ const routes = [
   { path: '/group/:id', name: 'group', component: Group }
 ]
 const router = new VueRouter({ routes })
-
-// redirect to the route before login
-let routeBeforeLogin = 'root'
-router.afterEach((to, from) => {
-  if (to.name === 'login' && !isNil(from.name) && from.name !== 'login' && from.name !== 'settings') {
-    routeBeforeLogin = from.name
-  }
-})
-router.redirectAfterLogin = () => {
-  router.push({ name: routeBeforeLogin })
-}
 
 export default router

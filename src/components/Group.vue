@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page v-if="group">
     <f7-navbar :title="group.name || group.members.join(', ')" back-link="Back" @back-click="goToRoot">
     </f7-navbar>
     <f7-messages>
