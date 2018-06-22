@@ -46,19 +46,31 @@ const store = new Vuex.Store({
   },
   actions: {
     async fetchExtension ({ commit }) {
-      const r = await rc.get('/restapi/v1.0/account/~/extension/~')
+      const r = await rcGet('/restapi/v1.0/account/~/extension/~')
       commit('setExtension', r.data)
     },
     async fetchGroups ({ commit }) {
-      const r = await rc.get('/restapi/v1.0/glip/groups')
+      const r = await rcGet('/restapi/v1.0/glip/groups')
       commit('setGroups', r.data.records)
     },
     async fetchPosts ({ commit }, groupId) {
-      const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`)
+      const r = await rcGet(`/restapi/v1.0/glip/groups/${groupId}/posts`)
       commit('setPosts', { groupId, posts: r.data.records })
     }
   }
 })
+
+const rcGet = async (...args) => {
+  try {
+    return await rc.get(args)
+  } catch (e) {
+    if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
+      // token expired
+      store.commit('setToken', undefined)
+    }
+    throw e
+  }
+}
 
 const tokenCallback = token => {
   if (!isNil(token)) {
