@@ -6,9 +6,8 @@
       <f7-message
         v-for="post in posts"
         type="received"
-        :image="postImage(post)"
         :key="post.id">
-        <span slot="text" v-if="post.text" v-html="post.text"></span>
+        <p slot="text" v-html="postText(post)"></p>
       </f7-message>
     </f7-messages>
   </f7-page>
@@ -43,23 +42,19 @@ export default {
     goToRoot () {
       this.$router.push({ name: 'root' })
     },
-    postImage: function (post) {
-      if (isNil(post.attachments)) {
-        return undefined
-      }
-      const file = post.attachments[0]
-      if (!test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)) {
-        return undefined
-      }
-      return post.attachments[0].contentUri
-    },
     postText: function (post) {
       let text = post.text
       if (isNil(text)) {
         text = ''
       }
       if (!isNil(post.attachments)) {
-
+        for (const file of post.attachments) {
+          if (test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)) {
+            text += `\n<img src="${file.contentUri}" style="width: 100%; height: auto;"/>`
+          } else {
+            text += `\n<a download href="${file.contentUri}">${file.name}</a>`
+          }
+        }
       }
       return text
     }
