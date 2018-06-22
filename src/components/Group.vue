@@ -22,12 +22,12 @@ export default {
     f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message
   },
   computed: {
-    ...mapGetters(['getGroupById', 'getPostByGroupId']),
+    ...mapGetters(['getGroupById', 'getPostsByGroupId']),
     group: function () {
       return this.getGroupById(this.$route.params.id)
     },
     posts: function () {
-      return this.getPostByGroupId(this.$route.params.id)
+      return this.getPostsByGroupId(this.$route.params.id)
     }
   },
   mounted: function () {

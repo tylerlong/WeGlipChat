@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     getGroupById: state => id => {
       return find(g => g.id === id, state.groups || [])
     },
-    getPostByGroupId: state => groupId => {
+    getPostsByGroupId: state => groupId => {
       return state.posts[groupId]
     }
   },
