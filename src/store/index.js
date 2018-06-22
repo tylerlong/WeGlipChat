@@ -56,7 +56,7 @@ const store = new Vuex.Store({
     },
     async fetchPosts ({ commit }, groupId) {
       const r = await rcGet(`/restapi/v1.0/glip/groups/${groupId}/posts`)
-      commit('setPosts', { groupId, posts: r.data.records.reverse() })
+      commit('setPosts', { groupId, posts: r.data.records })
     }
   }
 })
