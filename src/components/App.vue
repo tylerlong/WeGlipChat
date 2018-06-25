@@ -70,6 +70,9 @@ export default {
           const memberIds = group.members.filter(m => m !== this.extension.id.toString())
           const personNames = memberIds.map(id => this.personName(this.persons[id])).filter(name => !R.isNil(name))
           return personNames.join(', ')
+        case 'PersonalChat':
+          const self = this.persons[this.extension.id.toString()]
+          return this.personName(self)
         default:
           return group.name
       }
