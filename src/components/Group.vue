@@ -8,7 +8,7 @@
           <div v-if="post.text" v-html="postText(post)"></div>
           <div v-if="post.attachments">
             <template v-for="file in post.attachments">
-              <img v-if="isImage(file)" :src="file.contentUri" style="width: 100%; height: auto;"/>
+              <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
               <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
             </template>
           </div>
