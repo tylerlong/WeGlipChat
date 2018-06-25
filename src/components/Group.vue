@@ -12,6 +12,7 @@
               <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
             </template>
           </div>
+          <div v-if="post.text === null && post.attachments === null">Unsupported message</div>
         </div>
       </f7-message>
     </f7-messages>
