@@ -23,6 +23,11 @@ const store = new Vuex.Store({
     },
     getPostsByGroupId: state => groupId => {
       return state.posts[groupId]
+    },
+    isMyself: state => personId => {
+      console.log(personId)
+      console.log(personId === state.extension.id)
+      return state.extension && personId === state.extension.id.toString()
     }
   },
   mutations: {
