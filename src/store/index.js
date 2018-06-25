@@ -40,7 +40,6 @@ const store = new Vuex.Store({
       Vue.set(state.posts, groupId, posts)
     },
     setGroups (state, groups) {
-      console.log(groups.filter(g => g.id === '11067785218'))
       state.groups = groups
     },
     setExtension (state, extension) {
@@ -79,7 +78,7 @@ const store = new Vuex.Store({
       )(personIds)
       for (const ids of R.splitEvery(30, idsToFetch)) {
         const r = await rcGet(`/restapi/v1.0/glip/persons/${ids.join(',')}`)
-        const persons = multipartMixedParser.parse(r.data).slice(1)
+        const persons = multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)
         commit('setPersons', persons)
       }
     }
