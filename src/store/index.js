@@ -7,6 +7,8 @@ import multipartMixedParser from 'multipart-mixed-parser'
 
 import rc from '../api/ringcentral'
 import router from '../router'
+import * as getters from './getters'
+import * as mutations from './mutations'
 
 Vue.use(Vuex)
 
@@ -19,42 +21,8 @@ const store = new Vuex.Store({
     posts: {},
     persons: {}
   },
-  getters: {
-    getGroupById: state => id => {
-      return R.find(g => g.id === id, state.groups || [])
-    },
-    getPostsByGroupId: state => groupId => {
-      return state.posts[groupId]
-    },
-    isMyself: state => personId => {
-      return state.extension && personId === state.extension.id.toString()
-    }
-  },
-  mutations: {
-    setPersons (state, persons) {
-      for (const person of persons) {
-        Vue.set(state.persons, person.id, person)
-      }
-    },
-    setPosts (state, { groupId, posts }) {
-      Vue.set(state.posts, groupId, posts)
-    },
-    setGroups (state, groups) {
-      state.groups = groups
-    },
-    setExtension (state, extension) {
-      state.extension = extension
-    },
-    setToken (state, token) {
-      state.token = token
-    },
-    showLoginModal (state) {
-      state.loginModalVisible = true
-    },
-    hideLoginModal (state) {
-      state.loginModalVisible = false
-    }
-  },
+  getters,
+  mutations,
   actions: {
     async fetchExtension ({ commit }) {
       const r = await rcGet('/restapi/v1.0/account/~/extension/~')
