@@ -25,8 +25,6 @@ const store = new Vuex.Store({
       return state.posts[groupId]
     },
     isMyself: state => personId => {
-      console.log(personId)
-      console.log(personId === state.extension.id)
       return state.extension && personId === state.extension.id.toString()
     }
   },
@@ -59,7 +57,10 @@ const store = new Vuex.Store({
       const r = await rcGet('/restapi/v1.0/glip/groups', { params: { recordCount: 250 } })
       commit('setGroups', r.data.records)
     },
-    async fetchPosts ({ commit }, groupId) {
+    async fetchPosts ({ commit, state }, groupId, force = false) {
+      if (!force && state.posts[groupId]) {
+        return // Use data in cache
+      }
       const r = await rcGet(`/restapi/v1.0/glip/groups/${groupId}/posts`)
       commit('setPosts', { groupId, posts: r.data.records })
     }

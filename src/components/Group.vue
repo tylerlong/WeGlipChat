@@ -22,7 +22,7 @@
 <script>
 import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message } from 'framework7-vue'
 import { mapGetters } from 'vuex'
-import { test } from 'ramda'
+import { test, reverse } from 'ramda'
 import { Markdown } from 'glipdown'
 
 export default {
@@ -37,9 +37,8 @@ export default {
     posts: function () {
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (posts) {
-        posts.reverse()
+        return reverse(posts)
       }
-      return posts
     }
   },
   mounted: function () {
