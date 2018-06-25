@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { isNil, find } from 'ramda'
+import * as R from 'ramda'
 import Cookies from 'js-cookie'
 import delay from 'timeout-as-promise'
+import multipartMixedParser from 'multipart-mixed-parser'
 
 import rc from '../api/ringcentral'
 import router from '../router'
@@ -15,11 +16,12 @@ const store = new Vuex.Store({
     loginModalVisible: false,
     extension: undefined,
     groups: undefined,
-    posts: {}
+    posts: {},
+    persons: {}
   },
   getters: {
     getGroupById: state => id => {
-      return find(g => g.id === id, state.groups || [])
+      return R.find(g => g.id === id, state.groups || [])
     },
     getPostsByGroupId: state => groupId => {
       return state.posts[groupId]
@@ -29,6 +31,11 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    setPersons (state, persons) {
+      for (const person of persons) {
+        Vue.set(state.persons, person.id, person)
+      }
+    },
     setPosts (state, { groupId, posts }) {
       Vue.set(state.posts, groupId, posts)
     },
@@ -57,12 +64,23 @@ const store = new Vuex.Store({
       const r = await rcGet('/restapi/v1.0/glip/groups', { params: { recordCount: 250 } })
       commit('setGroups', r.data.records)
     },
-    async fetchPosts ({ commit, state }, groupId, force = false) {
-      if (!force && state.posts[groupId]) {
+    async fetchPosts ({ commit, state }, groupId) {
+      if (state.posts[groupId]) {
         return // Use data in cache
       }
       const r = await rcGet(`/restapi/v1.0/glip/groups/${groupId}/posts`)
       commit('setPosts', { groupId, posts: r.data.records })
+    },
+    async fetchPersons ({ commit, state }, personIds) {
+      const idsToFetch = R.pipe(
+        R.uniq,
+        R.filter(id => !(id in state.persons))
+      )(personIds)
+      for (const ids of R.splitEvery(30, idsToFetch)) {
+        const r = await rcGet(`/restapi/v1.0/glip/persons/${ids.join(',')}`)
+        const persons = multipartMixedParser.parse(r.data).slice(1)
+        commit('setPersons', persons)
+      }
     }
   }
 })
@@ -82,12 +100,18 @@ const rcGet = async (...args) => {
   }
 }
 
-const tokenCallback = token => {
-  if (!isNil(token)) {
+const tokenCallback = async token => {
+  if (!R.isNil(token)) {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
     rc.token(token)
     store.dispatch('fetchExtension')
-    store.dispatch('fetchGroups')
+    await store.dispatch('fetchGroups')
+    const personIds = R.pipe(
+      R.filter(g => g.type === 'PrivateChat'),
+      R.map(g => g.members),
+      R.reduce(R.concat, [])
+    )(store.state.groups)
+    store.dispatch('fetchPersons', personIds)
     if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
       router.push({ name: 'root' })
     }
@@ -102,11 +126,11 @@ store.watch(state => state.token, tokenCallback)
 
 router.afterEach((to, from) => {
   // for guests, the only available page is the login page
-  if (to.name !== 'login' && (isNil(store.state.token) || isNil(store.state.token.access_token))) {
+  if (to.name !== 'login' && (R.isNil(store.state.token) || R.isNil(store.state.token.access_token))) {
     router.push({ name: 'login' })
   }
   // for users, the only unavailable page is the login page
-  if (to.name === 'login' && (!isNil(store.state.token) && !isNil(store.state.token.access_token))) {
+  if (to.name === 'login' && (!R.isNil(store.state.token) && !R.isNil(store.state.token.access_token))) {
     router.push({ name: 'root' })
   }
 })

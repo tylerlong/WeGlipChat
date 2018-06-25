@@ -11,7 +11,7 @@
           :key="group.id"
           @click="openGroup(group.id)"
         >
-        <img slot="media" src="https://via.placeholder.com/64x64" width="42" />
+        <img slot="media" :src="groupImage(group)" width="42" />
         </f7-list-item>
       </f7-list>
     </div>
@@ -30,11 +30,19 @@ export default {
     f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, Settings, Tabs
   },
   computed: {
-    ...mapState(['groups'])
+    ...mapState(['groups', 'extension', 'persons'])
   },
   methods: {
     openGroup (id) {
       this.$router.push({ name: 'group', params: { id } })
+    },
+    groupImage (group) {
+      if (group.type === 'PrivateChat') {
+        const memberId = group.members.filter(m => m.id !== this.extension.id.toString())[0]
+        return this.persons[memberId].avatar
+      } else {
+        return 'https://via.placeholder.com/64x64'
+      }
     }
   }
 }
