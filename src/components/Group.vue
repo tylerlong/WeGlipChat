@@ -9,7 +9,7 @@
           <div v-if="post.attachments">
             <template v-for="file in post.attachments">
               <img v-if="isImage(file)" :src="file.contentUri" style="width: 100%; height: auto;"/>
-              <a v-else :href="file.contentUri">{{ file.name }}</a>
+              <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
             </template>
           </div>
         </div>
@@ -21,7 +21,7 @@
 <script>
 import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message } from 'framework7-vue'
 import { mapGetters } from 'vuex'
-import { isNil, test } from 'ramda'
+import { test } from 'ramda'
 import { Markdown } from 'glipdown'
 
 export default {
@@ -53,19 +53,6 @@ export default {
     },
     isImage (file) {
       return test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
-    },
-    postAttachments: function (post) {
-      let attachments = []
-      if (!isNil(post.attachments)) {
-        for (const file of post.attachments) {
-          if (test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)) {
-            attachments.push(`<img src="${file.contentUri}" style="width: 100%; height: auto;"/>`)
-          } else {
-            attachments.push(`<a download href="${file.contentUri}">${file.name}</a>`)
-          }
-        }
-      }
-      return attachments.join('')
     }
   }
 }
