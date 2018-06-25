@@ -2,13 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as R from 'ramda'
 import Cookies from 'js-cookie'
-import delay from 'timeout-as-promise'
-import multipartMixedParser from 'multipart-mixed-parser'
 
 import rc from '../api/ringcentral'
 import router from '../router'
 import * as getters from './getters'
 import * as mutations from './mutations'
+import * as actions from './actions'
 
 Vue.use(Vuex)
 
@@ -23,55 +22,16 @@ const store = new Vuex.Store({
   },
   getters,
   mutations,
-  actions: {
-    async fetchExtension ({ commit }) {
-      const r = await rcGet('/restapi/v1.0/account/~/extension/~')
-      commit('setExtension', r.data)
-    },
-    async fetchGroups ({ commit }) {
-      const r = await rcGet('/restapi/v1.0/glip/groups', { params: { recordCount: 250 } })
-      commit('setGroups', r.data.records)
-    },
-    async fetchPosts ({ commit, state }, groupId) {
-      if (state.posts[groupId]) {
-        return // Use data in cache
-      }
-      const r = await rcGet(`/restapi/v1.0/glip/groups/${groupId}/posts`)
-      commit('setPosts', { groupId, posts: r.data.records })
-    },
-    async fetchPersons ({ commit, state }, personIds) {
-      const idsToFetch = R.pipe(
-        R.uniq,
-        R.filter(id => !(id in state.persons))
-      )(personIds)
-      for (const ids of R.splitEvery(30, idsToFetch)) {
-        const r = await rcGet(`/restapi/v1.0/glip/persons/${ids.join(',')}`)
-        const persons = multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)
-        commit('setPersons', persons)
-      }
-    }
-  }
+  actions
 })
-
-const rcGet = async (...args) => {
-  while (rc.token() === undefined) {
-    await delay(1000) // wait for token
-  }
-  try {
-    return await rc.get(...args)
-  } catch (e) {
-    if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
-      // token expired
-      store.commit('setToken', undefined)
-    }
-    throw e
-  }
-}
 
 const tokenCallback = async token => {
   if (!R.isNil(token)) {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
     rc.token(token)
+    if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
+      router.push({ name: 'root' })
+    }
     store.dispatch('fetchExtension')
     await store.dispatch('fetchGroups')
     const personIds = R.pipe(
@@ -80,9 +40,6 @@ const tokenCallback = async token => {
       R.reduce(R.concat, [])
     )(store.state.groups)
     store.dispatch('fetchPersons', personIds)
-    if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
-      router.push({ name: 'root' })
-    }
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
     rc.token(undefined)
