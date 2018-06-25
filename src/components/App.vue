@@ -50,19 +50,29 @@ export default {
       }
       return 'https://via.placeholder.com/64x64'
     },
-    groupName (group) {
-      if (group.type === 'PrivateChat') {
-        const memberId = group.members.filter(m => m !== this.extension.id.toString())[0]
-        const person = this.persons[memberId]
-        if (person) {
-          if (!R.isNil(person.firstName) || !R.isNil(person.lastName)) {
-            return `${person.firstName} ${person.lastName}`
-          } else {
-            return person.email
-          }
-        }
+    personName (person) {
+      if (R.isNil(person)) {
+        return undefined
       }
-      return group.name
+      if (!R.isNil(person.firstName) || !R.isNil(person.lastName)) {
+        return `${R.isNil(person.firstName) ? '' : person.firstName} ${R.isNil(person.lastName) ? '' : person.lastName}`
+      } else {
+        return person.email
+      }
+    },
+    groupName (group) {
+      switch (group.type) {
+        case 'PrivateChat':
+          const memberId = group.members.filter(m => m !== this.extension.id.toString())[0]
+          const person = this.persons[memberId]
+          return this.personName(person)
+        case 'Group':
+          const memberIds = group.members.filter(m => m !== this.extension.id.toString())
+          const personNames = memberIds.map(id => this.personName(this.persons[id])).filter(name => !R.isNil(name))
+          return personNames.join(', ')
+        default:
+          return group.name
+      }
     }
   }
 }

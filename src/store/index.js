@@ -40,6 +40,7 @@ const store = new Vuex.Store({
       Vue.set(state.posts, groupId, posts)
     },
     setGroups (state, groups) {
+      console.log(groups.filter(g => g.id === '11067785218'))
       state.groups = groups
     },
     setExtension (state, extension) {
@@ -107,7 +108,7 @@ const tokenCallback = async token => {
     store.dispatch('fetchExtension')
     await store.dispatch('fetchGroups')
     const personIds = R.pipe(
-      R.filter(g => g.type === 'PrivateChat'),
+      R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
       R.map(g => g.members),
       R.reduce(R.concat, [])
     )(store.state.groups)
