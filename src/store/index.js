@@ -8,18 +8,12 @@ import router from '../router'
 import * as getters from './getters'
 import * as mutations from './mutations'
 import * as actions from './actions'
+import { initialState } from './state'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  state: {
-    token: undefined,
-    loginModalVisible: false,
-    extension: undefined,
-    groups: undefined,
-    posts: {},
-    persons: {}
-  },
+  state: initialState,
   getters,
   mutations,
   actions
@@ -43,7 +37,7 @@ const tokenCallback = async token => {
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
     rc.token(undefined)
-    store.commit('setExtension', undefined)
+    store.commit('reset')
     router.push({ name: 'login' })
   }
 }
