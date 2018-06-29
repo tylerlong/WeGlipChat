@@ -19,6 +19,18 @@ const store = new Vuex.Store({
   actions
 })
 
+const rcRequest = rc.request.bind(rc)
+rc.request = (...args) => {
+  try {
+    return rcRequest(...args)
+  } catch (e) {
+    if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
+      store.commit('setToken', undefined) // token expired
+    }
+    throw e
+  }
+}
+
 const tokenCallback = async token => {
   if (!R.isNil(token)) {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
