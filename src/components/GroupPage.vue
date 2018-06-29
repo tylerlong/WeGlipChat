@@ -30,6 +30,7 @@ import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Me
 import { mapGetters } from 'vuex'
 import { test, reverse } from 'ramda'
 import { Markdown } from 'glipdown'
+import cheerio from 'cheerio'
 
 export default {
   components: {
@@ -55,7 +56,10 @@ export default {
       this.$router.push({ name: 'root' })
     },
     postText (post) {
-      return Markdown(post.text).replace(/\n/g, '<br/>')
+      const html = Markdown(post.text).replace(/\n/g, '<br/>')
+      const $ = cheerio.load(html)
+      $('a').addClass('external')
+      return $.html()
     },
     isImage (file) {
       return test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
