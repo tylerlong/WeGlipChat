@@ -3,6 +3,17 @@ import multipartMixedParser from 'multipart-mixed-parser'
 
 import rc from '../api/ringcentral'
 
+export const init = async ({ dispatch, state }) => {
+  await dispatch('fetchExtension')
+  await dispatch('fetchGroups')
+  const personIds = R.pipe(
+    R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
+    R.map(g => g.members),
+    R.reduce(R.concat, [])
+  )(state.groups)
+  dispatch('fetchPersons', personIds)
+}
+
 export const fetchExtension = async ({ commit }) => {
   const r = await rc.get('/restapi/v1.0/account/~/extension/~')
   commit('setExtension', r.data)

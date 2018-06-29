@@ -38,14 +38,7 @@ const tokenCallback = async token => {
     if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
       router.push({ name: 'root' })
     }
-    store.dispatch('fetchExtension')
-    await store.dispatch('fetchGroups')
-    const personIds = R.pipe(
-      R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
-      R.map(g => g.members),
-      R.reduce(R.concat, [])
-    )(store.state.groups)
-    store.dispatch('fetchPersons', personIds)
+    store.dispatch('init')
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
     rc.token(undefined)
