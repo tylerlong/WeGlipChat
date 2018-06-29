@@ -15,19 +15,25 @@
           <div v-if="post.text === null && post.attachments === null">Unsupported message</div>
         </div>
       </f7-message>
+      <f7-block v-if="!posts()" class="text-align-center">
+        <f7-preloader color="orange"></f7-preloader>
+      </f7-block>
     </f7-messages>
   </f7-page>
+  <f7-block v-else class="text-align-center">
+    <f7-preloader color="orange"></f7-preloader>
+  </f7-block>
 </template>
 
 <script>
-import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message } from 'framework7-vue'
+import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import { test, reverse } from 'ramda'
 import { Markdown } from 'glipdown'
 
 export default {
   components: {
-    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message
+    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader
   },
   computed: {
     ...mapGetters(['getGroupById', 'getPostsByGroupId', 'isMyself']),
@@ -40,7 +46,8 @@ export default {
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (posts) {
         return reverse(posts)
-      } else {
+      } else if (!this.fetched) {
+        this.fetched = true // avoid duplicate fetching
         this.$store.dispatch('fetchPosts', this.$route.params.id)
       }
     },
