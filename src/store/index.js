@@ -20,9 +20,12 @@ const store = new Vuex.Store({
 })
 
 const rcRequest = rc.request.bind(rc)
-rc.request = (...args) => {
+rc.request = async (...args) => {
   try {
-    return rcRequest(...args)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(...args)
+    }
+    return await rcRequest(...args)
   } catch (e) {
     if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
       store.commit('setToken', undefined) // token expired
