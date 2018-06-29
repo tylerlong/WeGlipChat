@@ -3,7 +3,7 @@
     <f7-navbar :title="group.name || group.members.join(', ')" back-link="Back" @back-click="goToRoot">
     </f7-navbar>
     <f7-messages>
-      <f7-message v-for="post in posts" :type="isMyself(post.creatorId) ? 'sent' : 'received'" :key="post.id">
+      <f7-message v-for="post in posts()" :type="isMyself(post.creatorId) ? 'sent' : 'received'" :key="post.id">
         <div slot="text">
           <div v-if="post.text" v-html="postText(post)"></div>
           <div v-if="post.attachments">
@@ -33,18 +33,17 @@ export default {
     ...mapGetters(['getGroupById', 'getPostsByGroupId', 'isMyself']),
     group: function () {
       return this.getGroupById(this.$route.params.id)
-    },
-    posts: function () {
+    }
+  },
+  methods: {
+    posts () {
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (posts) {
         return reverse(posts)
+      } else {
+        this.$store.dispatch('fetchPosts', this.$route.params.id)
       }
-    }
-  },
-  mounted: function () {
-    this.$store.dispatch('fetchPosts', this.$route.params.id)
-  },
-  methods: {
+    },
     goToRoot () {
       this.$router.push({ name: 'root' })
     },
