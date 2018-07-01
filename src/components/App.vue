@@ -5,7 +5,7 @@
       <f7-list media-list v-if="groups">
         <f7-list-item
           link="#"
-          :title="groupName(group)"
+          :title="getGroupNameById(group.id)"
           text="..."
           v-for="group in groups"
           :key="group.id"
@@ -23,7 +23,7 @@
 
 <script>
 import { f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Preloader, f7Block } from 'framework7-vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import * as R from 'ramda'
 
 import Settings from './Settings.vue'
@@ -34,7 +34,8 @@ export default {
     Settings, Tabs, f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Preloader, f7Block
   },
   computed: {
-    ...mapState(['groups', 'extension', 'persons'])
+    ...mapState(['groups', 'extension', 'persons']),
+    ...mapGetters(['getGroupNameById'])
   },
   methods: {
     openGroup (id) {
@@ -52,33 +53,6 @@ export default {
         }
       }
       return 'https://via.placeholder.com/64x64'
-    },
-    personName (person) {
-      if (R.isNil(person)) {
-        return undefined
-      }
-      if (!R.isNil(person.firstName) || !R.isNil(person.lastName)) {
-        return `${R.isNil(person.firstName) ? '' : person.firstName} ${R.isNil(person.lastName) ? '' : person.lastName}`
-      } else {
-        return person.email
-      }
-    },
-    groupName (group) {
-      switch (group.type) {
-        case 'PrivateChat':
-          const memberId = group.members.filter(m => m !== this.extension.id.toString())[0]
-          const person = this.persons[memberId]
-          return this.personName(person)
-        case 'Group':
-          const memberIds = group.members.filter(m => m !== this.extension.id.toString())
-          const personNames = memberIds.map(id => this.personName(this.persons[id])).filter(name => !R.isNil(name))
-          return personNames.join(', ')
-        case 'PersonalChat':
-          const self = this.persons[this.extension.id.toString()]
-          return this.personName(self)
-        default:
-          return group.name
-      }
     }
   }
 }

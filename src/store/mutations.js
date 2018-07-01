@@ -24,6 +24,7 @@ export const setGroups = (state, groups) => {
 }
 
 export const setExtension = (state, extension) => {
+  extension.id = extension.id.toString()
   state.extension = extension
 }
 
