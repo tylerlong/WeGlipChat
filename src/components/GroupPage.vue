@@ -11,18 +11,21 @@
       ></f7-link>
     </f7-messagebar>
     <f7-messages>
-      <f7-message v-for="post in posts()" :type="isMyself(post.creatorId) ? 'sent' : 'received'" :key="post.id">
-        <div slot="text">
-          <div v-if="post.text" v-html="postText(post)"></div>
-          <div v-if="post.attachments">
-            <template v-for="file in post.attachments">
-              <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
-              <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
-            </template>
+      <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts()" :key="post.id">
+        <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar"></div>
+        <div class="message-content">
+          <div class="message-bubble">
+            <div class="message-text" v-if="post.text" v-html="postText(post)"></div>
+            <div v-if="post.attachments">
+              <template v-for="file in post.attachments">
+                <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
+                <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
+              </template>
+            </div>
+            <div v-if="post.text === null && post.attachments === null">Unsupported message</div>
           </div>
-          <div v-if="post.text === null && post.attachments === null">Unsupported message</div>
         </div>
-      </f7-message>
+      </div>
       <f7-block v-if="!posts()" class="text-align-center">
         <f7-preloader color="orange"></f7-preloader>
       </f7-block>
@@ -45,7 +48,7 @@ export default {
     f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar
   },
   computed: {
-    ...mapGetters(['getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself']),
+    ...mapGetters(['getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar']),
     group: function () {
       return this.getGroupById(this.$route.params.id)
     },

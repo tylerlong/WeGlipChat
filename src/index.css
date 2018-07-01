@@ -3,3 +3,7 @@
   height: auto;
   display: block;
 }
+
+.message-avatar {
+  opacity: 1 !important;
+}
