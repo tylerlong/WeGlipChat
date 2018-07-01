@@ -2,6 +2,14 @@
   <f7-page v-if="group">
     <f7-navbar :title="group.name || group.members.join(', ')" back-link="Back" @back-click="goToRoot">
     </f7-navbar>
+    <f7-messagebar placeholder="Message" ref="messagebar">
+      <f7-link
+        icon-if-ios="f7:arrow_up_fill"
+        icon-if-md="material:send"
+        slot="inner-end"
+        @click="sendMessage"
+      ></f7-link>
+    </f7-messagebar>
     <f7-messages>
       <f7-message v-for="post in posts()" :type="isMyself(post.creatorId) ? 'sent' : 'received'" :key="post.id">
         <div slot="text">
@@ -26,7 +34,7 @@
 </template>
 
 <script>
-import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader } from 'framework7-vue'
+import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import { test, reverse } from 'ramda'
 import { Markdown } from 'glipdown'
@@ -34,7 +42,7 @@ import cheerio from 'cheerio'
 
 export default {
   components: {
-    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader
+    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar
   },
   computed: {
     ...mapGetters(['getGroupById', 'getPostsByGroupId', 'isMyself']),
@@ -63,6 +71,15 @@ export default {
     },
     isImage (file) {
       return test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
+    },
+    sendMessage () {
+      const messageBar = this.$refs.messagebar.f7Messagebar
+      const text = messageBar.getValue()
+      if (text === '') {
+        return
+      }
+      this.$store.dispatch('sendMessage', { groupId: this.group.id, text })
+      messageBar.setValue('')
     }
   }
 }

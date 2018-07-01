@@ -3,6 +3,10 @@ import multipartMixedParser from 'multipart-mixed-parser'
 
 import rc from '../api/ringcentral'
 
+export const sendMessage = async (context, { groupId, text }) => {
+  rc.post('/restapi/v1.0/glip/posts', { groupId, text })
+}
+
 export const init = async ({ dispatch, state }) => {
   await dispatch('fetchExtension')
   await dispatch('fetchGroups')
