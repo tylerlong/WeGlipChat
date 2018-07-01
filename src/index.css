@@ -7,3 +7,7 @@
 .message-avatar {
   opacity: 1 !important;
 }
+
+.message-name {
+  display: block !important;
+}

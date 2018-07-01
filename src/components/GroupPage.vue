@@ -14,6 +14,7 @@
       <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts()" :key="post.id">
         <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar"></div>
         <div class="message-content">
+          <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
           <div class="message-bubble">
             <div class="message-text" v-if="post.text" v-html="postText(post)"></div>
             <div v-if="post.attachments">
@@ -48,7 +49,7 @@ export default {
     f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar
   },
   computed: {
-    ...mapGetters(['getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar']),
+    ...mapGetters(['getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar']),
     group: function () {
       return this.getGroupById(this.$route.params.id)
     },
