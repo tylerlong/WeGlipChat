@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapState(['groups', 'extension', 'persons']),
-    ...mapGetters(['getGroupNameById'])
+    ...mapGetters(['getGroupNameById', 'isMyself'])
   },
   methods: {
     openGroup (id) {
@@ -43,7 +43,7 @@ export default {
     },
     groupImage (group) {
       if (group.type === 'PrivateChat') {
-        const memberId = group.members.filter(m => m !== this.extension.id.toString())[0]
+        const memberId = group.members.filter(id => !this.isMyself(id))[0]
         if (this.persons[memberId]) {
           const avatar = this.persons[memberId].avatar
           if (R.isNil(avatar)) {

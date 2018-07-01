@@ -16,10 +16,10 @@ export const getGroupNameById = state => id => {
   const group = getGroupById(state)(id)
   switch (group.type) {
     case 'PrivateChat':
-      const memberId = group.members.filter(m => m !== state.extension.id.toString())[0]
+      const memberId = group.members.filter(id => !isMyself(state)(id))[0]
       return getPersonNameById(state)(memberId)
     case 'Group':
-      const memberIds = group.members.filter(m => m !== state.extension.id.toString())
+      const memberIds = group.members.filter(id => !isMyself(state)(id))
       const personNames = memberIds.map(id => getPersonNameById(state)(id)).filter(name => !R.isNil(name))
       return personNames.join(', ')
     case 'PersonalChat':
@@ -38,5 +38,5 @@ export const getPostsByGroupId = state => groupId => {
 }
 
 export const isMyself = state => personId => {
-  return state.extension && personId === state.extension.id.toString()
+  return state.extension && personId === state.extension.id
 }
