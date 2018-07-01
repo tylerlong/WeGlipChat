@@ -33,8 +33,8 @@ export default {
     Settings, Tabs, f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Preloader, f7Block
   },
   computed: {
-    ...mapState(['groups', 'extension', 'persons']),
-    ...mapGetters(['getGroupNameById', 'isMyself', 'getGroupAvatar'])
+    ...mapState(['groups']),
+    ...mapGetters(['getGroupNameById', 'getGroupAvatar'])
   },
   methods: {
     openGroup (id) {
