@@ -55,6 +55,11 @@ export default {
     },
     groupName: function () {
       return this.getGroupNameById(this.$route.params.id)
+    },
+    members: function () {
+      if (this.group) {
+        return this.group.members
+      }
     }
   },
   methods: {
@@ -87,6 +92,11 @@ export default {
       }
       this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text })
       messageBar.setValue('')
+    }
+  },
+  watch: {
+    members: function (val) {
+      this.$store.dispatch('fetchPersons', val)
     }
   }
 }
