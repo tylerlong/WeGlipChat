@@ -21,7 +21,14 @@ export default {
         test: /\.(woff|woff2|eot|ttf)$/,
         loader: 'url-loader',
         options: {
-          limit: 102400
+          limit: 10240
+        }
+      },
+      {
+        test: /\.(png)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10240
         }
       }
     ]

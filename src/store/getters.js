@@ -1,5 +1,32 @@
 import * as R from 'ramda'
 
+import userAvatar from '../user-avatar.png'
+import groupAvatar from '../group-avatar.png'
+
+export const getGroupAvatar = state => group => {
+  switch (group.type) {
+    case 'PrivateChat':
+      const userId = group.members.filter(id => !isMyself(state)(id))[0]
+      return getPersonAvatar(state)(userId)
+    case 'PersonalChat':
+      return getPersonAvatar(state)(state.extension.id)
+    default:
+      return groupAvatar
+  }
+}
+
+export const getPersonAvatar = state => id => {
+  const person = state.persons[id]
+  if (!person) {
+    return userAvatar
+  }
+  const avatar = person.avatar
+  if (R.isNil(avatar)) {
+    return userAvatar
+  }
+  return avatar
+}
+
 export const getPersonNameById = state => id => {
   const person = state.persons[id]
   if (R.isNil(person)) {

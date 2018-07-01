@@ -11,7 +11,7 @@
           :key="group.id"
           @click="openGroup(group.id)"
         >
-        <img slot="media" :src="groupImage(group)" width="42" height="42" />
+        <img slot="media" :src="getGroupAvatar(group)" width="42" height="42" />
         </f7-list-item>
       </f7-list>
       <f7-block v-else class="text-align-center">
@@ -24,7 +24,6 @@
 <script>
 import { f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Preloader, f7Block } from 'framework7-vue'
 import { mapState, mapGetters } from 'vuex'
-import * as R from 'ramda'
 
 import Settings from './Settings.vue'
 import Tabs from './Tabs.vue'
@@ -35,24 +34,11 @@ export default {
   },
   computed: {
     ...mapState(['groups', 'extension', 'persons']),
-    ...mapGetters(['getGroupNameById', 'isMyself'])
+    ...mapGetters(['getGroupNameById', 'isMyself', 'getGroupAvatar'])
   },
   methods: {
     openGroup (id) {
       this.$router.push({ name: 'group', params: { id } })
-    },
-    groupImage (group) {
-      if (group.type === 'PrivateChat') {
-        const memberId = group.members.filter(id => !this.isMyself(id))[0]
-        if (this.persons[memberId]) {
-          const avatar = this.persons[memberId].avatar
-          if (R.isNil(avatar)) {
-            return 'https://via.placeholder.com/64x64'
-          }
-          return avatar
-        }
-      }
-      return 'https://via.placeholder.com/64x64'
     }
   }
 }
