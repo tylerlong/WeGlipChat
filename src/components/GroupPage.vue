@@ -1,6 +1,6 @@
 <template>
   <f7-page v-if="group">
-    <f7-navbar :title="group.name || group.members.join(', ')" back-link="Back" @back-click="goToRoot">
+    <f7-navbar :title="groupName" back-link="Back" @back-click="goToRoot">
     </f7-navbar>
     <f7-messagebar placeholder="Message" ref="messagebar">
       <f7-link
@@ -45,9 +45,12 @@ export default {
     f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar
   },
   computed: {
-    ...mapGetters(['getGroupById', 'getPostsByGroupId', 'isMyself']),
+    ...mapGetters(['getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself']),
     group: function () {
       return this.getGroupById(this.$route.params.id)
+    },
+    groupName: function () {
+      return this.getGroupNameById(this.$route.params.id)
     }
   },
   methods: {
@@ -78,7 +81,7 @@ export default {
       if (text === '') {
         return
       }
-      this.$store.dispatch('sendMessage', { groupId: this.group.id, text })
+      this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text })
       messageBar.setValue('')
     }
   }

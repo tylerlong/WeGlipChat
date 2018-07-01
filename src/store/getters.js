@@ -14,6 +14,9 @@ export const getPersonNameById = state => id => {
 
 export const getGroupNameById = state => id => {
   const group = getGroupById(state)(id)
+  if (R.isNil(group)) {
+    return undefined
+  }
   switch (group.type) {
     case 'PrivateChat':
       const memberId = group.members.filter(id => !isMyself(state)(id))[0]
