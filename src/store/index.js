@@ -35,8 +35,14 @@ rc.request = async (...args) => {
   }
 }
 
-const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], message => {
-  console.log(message)
+const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
+  switch (event.body.eventType) {
+    case 'PostAdded':
+      store.commit('addPost', event.body)
+      break
+    default:
+      break
+  }
 })
 const tokenCallback = async token => {
   if (!R.isNil(token)) {

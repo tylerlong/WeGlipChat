@@ -13,6 +13,10 @@ export const set = (state, { key, value }) => {
   Vue.set(state, key, value)
 }
 
+export const addPost = (state, post) => {
+  state.posts[post.groupId].unshift(post)
+}
+
 export const setPersons = (state, persons) => {
   for (const person of persons) {
     Vue.set(state.persons, person.id, person)
