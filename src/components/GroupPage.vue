@@ -55,11 +55,6 @@ export default {
     },
     groupName: function () {
       return this.getGroupNameById(this.$route.params.id)
-    },
-    members: function () {
-      if (this.group) {
-        return this.group.members
-      }
     }
   },
   methods: {
@@ -94,10 +89,9 @@ export default {
       messageBar.setValue('')
     }
   },
-  watch: {
-    members: function (val) {
-      this.$store.dispatch('fetchPersons', val)
-    }
+  mounted () {
+    console.log('mounted GroupPage')
+    this.$store.dispatch('fetchPersons', this.group.members)
   }
 }
 </script>
