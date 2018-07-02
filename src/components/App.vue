@@ -11,7 +11,7 @@
           :key="group.id"
           @click="openGroup(group.id)"
         >
-        <img slot="media" :src="getGroupAvatar(group)" width="42" height="42" />
+        <img slot="media" :src="getGroupAvatar(group)" class="avatar-image" />
         </f7-list-item>
       </f7-list>
       <f7-block v-else class="text-align-center">
