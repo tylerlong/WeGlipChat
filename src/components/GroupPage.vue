@@ -60,12 +60,13 @@ export default {
   },
   methods: {
     posts () {
+      if (!this.fetched) {
+        this.fetched = true // avoid duplicate fetching
+        this.$store.dispatch('fetchPosts', this.$route.params.id)
+      }
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (posts) {
         return R.reverse(posts)
-      } else if (!this.fetched) {
-        this.fetched = true // avoid duplicate fetching
-        this.$store.dispatch('fetchPosts', this.$route.params.id)
       }
     },
     goToRoot () {

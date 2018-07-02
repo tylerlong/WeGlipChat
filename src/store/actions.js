@@ -37,9 +37,6 @@ export const fetchGroups = async ({ commit, state }) => {
 }
 
 export const fetchPosts = async ({ commit, state }, groupId) => {
-  if (state.posts[groupId]) {
-    return // Use data in cache
-  }
   const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`)
   commit('setPosts', { groupId, posts: r.data.records })
   localforage.setItem(`wgc.${state.extension.id}`, state)
