@@ -40,9 +40,10 @@
 <script>
 import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar } from 'framework7-vue'
 import { mapGetters } from 'vuex'
-import { test, reverse } from 'ramda'
+import * as R from 'ramda'
 import { Markdown } from 'glipdown'
 import cheerio from 'cheerio'
+import delay from 'timeout-as-promise'
 
 export default {
   components: {
@@ -61,7 +62,7 @@ export default {
     posts () {
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (posts) {
-        return reverse(posts)
+        return R.reverse(posts)
       } else if (!this.fetched) {
         this.fetched = true // avoid duplicate fetching
         this.$store.dispatch('fetchPosts', this.$route.params.id)
@@ -77,7 +78,7 @@ export default {
       return $.html()
     },
     isImage (file) {
-      return test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
+      return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
     },
     sendMessage () {
       const messageBar = this.$refs.messagebar.f7Messagebar
@@ -89,7 +90,10 @@ export default {
       messageBar.setValue('')
     }
   },
-  mounted () {
+  async mounted () {
+    while (R.isNil(this.group)) {
+      await delay(1000)
+    }
     this.$store.dispatch('fetchPersons', this.group.members)
   }
 }
