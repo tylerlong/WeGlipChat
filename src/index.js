@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Framework7 from './framework7'
+import Framework7 from './framework7.esm.bundle'
 import 'framework7/dist/css/framework7.css'
 import Framework7Vue from 'framework7-vue'
 import 'framework7-icons'

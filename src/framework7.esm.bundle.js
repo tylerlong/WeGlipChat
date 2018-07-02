@@ -10,12 +10,12 @@
  * Released on: June 1, 2018
  */
 
-import { window as window$1, document } from 'ssr-window';
-import $ from 'dom7';
-export { default as Dom7 } from 'dom7';
-import Template7 from 'template7';
-export { default as Template7 } from 'template7';
-import PathToRegexp from 'path-to-regexp';
+import { window as window$1, document } from 'ssr-window'
+import $ from 'dom7'
+import Template7 from 'template7'
+import PathToRegexp from 'path-to-regexp'
+export { default as Dom7 } from 'dom7'
+export { default as Template7 } from 'template7'
 
 /**
  * https://github.com/gre/bezier-easing
