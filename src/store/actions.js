@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import multipartMixedParser from 'multipart-mixed-parser'
+import localforage from 'localforage'
 
 import rc from '../api/ringcentral'
 
@@ -15,7 +16,8 @@ export const init = async ({ dispatch, state }) => {
     R.map(g => g.members),
     R.reduce(R.concat, [])
   )(state.groups)
-  dispatch('fetchPersons', personIds)
+  await dispatch('fetchPersons', personIds)
+  localforage.setItem(`wgc.${state.extension.id}`, state)
 }
 
 export const fetchExtension = async ({ commit }) => {

@@ -90,7 +90,6 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted GroupPage')
     this.$store.dispatch('fetchPersons', this.group.members)
   }
 }

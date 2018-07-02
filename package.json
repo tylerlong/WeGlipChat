@@ -18,6 +18,7 @@
     "framework7-vue": "2.3.0",
     "glipdown": "^0.0.40",
     "js-cookie": "^2.2.0",
+    "localforage": "^1.7.2",
     "material-design-icons": "^3.0.1",
     "multipart-mixed-parser": "^0.1.2",
     "ramda": "^0.25.0",
