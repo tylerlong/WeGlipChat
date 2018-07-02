@@ -5885,11 +5885,10 @@ function initClicks(app) {
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
         const target = clickedLink.attr('target');
         if (url && (target === '_system' || target === '_blank' || target === '_browser')) {
-          e.preventDefault();
           if (target !== '_browser' && window$1.cordova && window$1.cordova.InAppBrowser) {
+            e.preventDefault();
             window$1.cordova.InAppBrowser.open(url, target);
           } else {
-            window$1.open(url, target);
           }
         }
         return;
