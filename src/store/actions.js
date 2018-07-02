@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 import multipartMixedParser from 'multipart-mixed-parser'
 import localforage from 'localforage'
+import delay from 'timeout-as-promise'
 
 import rc from '../api/ringcentral'
 
@@ -23,6 +24,10 @@ export const init = async ({ dispatch, commit, state }) => {
     R.reduce(R.concat, [])
   )(state.groups)
   await dispatch('fetchPersons', personIds)
+  for (const group of state.groups) {
+    await delay(5000)
+    await dispatch('fetchPosts', group.id)
+  }
 }
 
 export const fetchExtension = async ({ commit }) => {
