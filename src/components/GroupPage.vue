@@ -42,7 +42,7 @@ import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Me
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import { Markdown } from 'glipdown'
-import cheerio from 'cheerio'
+// import cheerio from 'cheerio'
 import delay from 'timeout-as-promise'
 
 export default {
@@ -74,9 +74,10 @@ export default {
     },
     postText (post) {
       const html = Markdown(post.text).replace(/\n/g, '<br/>')
-      const $ = cheerio.load(html)
-      $('a').addClass('external')
-      return $.html()
+      return html
+      // const $ = cheerio.load(html)
+      // $('a').addClass('external')
+      // return $.html()
     },
     isImage (file) {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
