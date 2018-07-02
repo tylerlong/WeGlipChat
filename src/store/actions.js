@@ -8,16 +8,23 @@ export const sendMessage = async (context, { groupId, text }) => {
   rc.post('/restapi/v1.0/glip/posts', { groupId, text })
 }
 
-export const init = async ({ dispatch, state }) => {
+export const init = async ({ dispatch, commit, state }) => {
   await dispatch('fetchExtension')
-  await dispatch('fetchGroups')
-  const personIds = R.pipe(
-    R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
-    R.map(g => g.members),
-    R.reduce(R.concat, [])
-  )(state.groups)
-  await dispatch('fetchPersons', personIds)
-  localforage.setItem(`wgc.${state.extension.id}`, state)
+  const cachedState = await localforage.getItem(`wgc.${state.extension.id}`)
+  if (!R.isNil(cachedState)) {
+    commit('set', { key: 'groups', value: cachedState.groups })
+    commit('set', { key: 'posts', value: cachedState.posts })
+    commit('set', { key: 'persons', value: cachedState.persons })
+  } else {
+    await dispatch('fetchGroups')
+    const personIds = R.pipe(
+      R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
+      R.map(g => g.members),
+      R.reduce(R.concat, [])
+    )(state.groups)
+    await dispatch('fetchPersons', personIds)
+    localforage.setItem(`wgc.${state.extension.id}`, state)
+  }
 }
 
 export const fetchExtension = async ({ commit }) => {
@@ -36,6 +43,7 @@ export const fetchPosts = async ({ commit, state }, groupId) => {
   }
   const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`)
   commit('setPosts', { groupId, posts: r.data.records })
+  localforage.setItem(`wgc.${state.extension.id}`, state)
 }
 
 export const fetchPersons = async ({ commit, state }, personIds) => {
@@ -47,5 +55,6 @@ export const fetchPersons = async ({ commit, state }, personIds) => {
     const r = await rc.get(`/restapi/v1.0/glip/persons/${ids.join(',')}`)
     const persons = multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)
     commit('setPersons', persons)
+    localforage.setItem(`wgc.${state.extension.id}`, state)
   }
 }

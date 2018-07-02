@@ -9,6 +9,10 @@ export const reset = state => {
   })
 }
 
+export const set = (state, { key, value }) => {
+  Vue.set(state, key, value)
+}
+
 export const setPersons = (state, persons) => {
   for (const person of persons) {
     Vue.set(state.persons, person.id, person)
