@@ -15,16 +15,14 @@ export const init = async ({ dispatch, commit, state }) => {
     commit('set', { key: 'groups', value: cachedState.groups })
     commit('set', { key: 'posts', value: cachedState.posts })
     commit('set', { key: 'persons', value: cachedState.persons })
-  } else {
-    await dispatch('fetchGroups')
-    const personIds = R.pipe(
-      R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
-      R.map(g => g.members),
-      R.reduce(R.concat, [])
-    )(state.groups)
-    await dispatch('fetchPersons', personIds)
-    localforage.setItem(`wgc.${state.extension.id}`, state)
   }
+  await dispatch('fetchGroups')
+  const personIds = R.pipe(
+    R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
+    R.map(g => g.members),
+    R.reduce(R.concat, [])
+  )(state.groups)
+  await dispatch('fetchPersons', personIds)
 }
 
 export const fetchExtension = async ({ commit }) => {
