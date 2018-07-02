@@ -3,6 +3,19 @@ import * as R from 'ramda'
 import userAvatar from '../user-avatar.png'
 import groupAvatar from '../group-avatar.png'
 
+export const getGroupMessagePreviewText = state => group => {
+  const posts = state.posts[group.id]
+  if (R.isNil(posts)) {
+    return ''
+  }
+  const post = posts[0]
+  if (R.isNil(post)) {
+    return ''
+  }
+  const personName = getPersonNameById(state)(post.creatorId)
+  return `${personName}: ${post.text}`
+}
+
 export const getGroupAvatar = state => group => {
   switch (group.type) {
     case 'PrivateChat':

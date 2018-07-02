@@ -6,7 +6,7 @@
         <f7-list-item
           link="#"
           :title="getGroupNameById(group.id)"
-          text="..."
+          :text="getGroupMessagePreviewText(group)"
           v-for="group in groups"
           :key="group.id"
           @click="openGroup(group.id)"
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     ...mapState(['groups']),
-    ...mapGetters(['getGroupNameById', 'getGroupAvatar'])
+    ...mapGetters(['getGroupNameById', 'getGroupAvatar', 'getGroupMessagePreviewText'])
   },
   methods: {
     openGroup (id) {
