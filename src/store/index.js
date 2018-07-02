@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as R from 'ramda'
 import Cookies from 'js-cookie'
+import PubNub from 'ringcentral-js-concise/src/pubnub'
 
 import rc from '../api/ringcentral'
 import router from '../router'
@@ -34,6 +35,9 @@ rc.request = async (...args) => {
   }
 }
 
+const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], message => {
+  console.log(message)
+})
 const tokenCallback = async token => {
   if (!R.isNil(token)) {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
@@ -42,6 +46,7 @@ const tokenCallback = async token => {
       router.push({ name: 'root' })
     }
     store.dispatch('init')
+    pubnub.subscribe()
   } else {
     Cookies.remove('RINGCENTRAL_TOKEN')
     rc.token(undefined)
