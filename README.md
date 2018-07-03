@@ -29,13 +29,6 @@ I want to see how simple a project I can manage to produce.
 - [Framework7](http://framework7.io/)
 
 
-## Roadmap
-
-- [x] log in & log out
-- [ ] keep the user logged
-- [ ] list Glip groups
-
-
 ## Release
 
 ```
