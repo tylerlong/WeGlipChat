@@ -21,6 +21,7 @@
     "localforage": "^1.7.2",
     "material-design-icons": "^3.0.1",
     "multipart-mixed-parser": "^0.1.2",
+    "push.js": "^1.0.5",
     "ramda": "^0.25.0",
     "ringcentral-js-concise": "^0.4.7",
     "timeout-as-promise": "^1.0.0",

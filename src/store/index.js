@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import * as R from 'ramda'
 import Cookies from 'js-cookie'
 import PubNub from 'ringcentral-js-concise/src/pubnub'
+import Push from 'push.js'
 
 import rc from '../api/ringcentral'
 import router from '../router'
@@ -38,7 +39,17 @@ rc.request = async (...args) => {
 const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
   switch (event.body.eventType) {
     case 'PostAdded':
-      store.commit('addPost', event.body)
+      const post = event.body
+      store.commit('addPost', post)
+      Push.create(getters.getPersonNameById(store.state)(post.creatorId), {
+        body: post.text,
+        icon: getters.getPersonAvatar(store.state)(post.creatorId),
+        timeout: 4000,
+        onClick: function () {
+          window.focus()
+          this.close()
+        }
+      })
       break
     default:
       break
