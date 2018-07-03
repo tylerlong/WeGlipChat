@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import * as R from 'ramda'
 
 import { initialState } from './state'
 
@@ -15,7 +16,11 @@ export const set = (state, { key, value }) => {
 
 export const addPost = (state, post) => {
   state.posts[post.groupId].unshift(post)
-  // todo: move chat group to the first in list
+  const group = state.groups.find(g => g.id === post.groupId)
+  if (R.isNil(group)) {
+    return
+  }
+  state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
 }
 
 export const setPersons = (state, persons) => {
