@@ -15,6 +15,7 @@ export const set = (state, { key, value }) => {
 
 export const addPost = (state, post) => {
   state.posts[post.groupId].unshift(post)
+  // todo: move chat group to the first in list
 }
 
 export const setPersons = (state, persons) => {
