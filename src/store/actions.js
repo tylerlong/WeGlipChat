@@ -22,9 +22,9 @@ export const init = async ({ dispatch, commit, state }) => {
     R.map(g => g.members),
     R.reduce(R.concat, [])
   )(state.groups)
-  await dispatch('fetchPersons', personIds)
+  dispatch('fetchPersons', personIds)
   for (const group of state.groups.slice(0, 16)) {
-    await dispatch('fetchPosts', group.id)
+    dispatch('fetchPosts', group.id)
   }
 }
 
