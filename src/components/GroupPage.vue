@@ -82,13 +82,11 @@ export default {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
     },
     sendMessage () {
-      const messageBar = this.$refs.messagebar.f7Messagebar
-      const text = messageBar.getValue()
-      if (text === '') {
+      if (this.textarea.val() === '') {
         return
       }
-      this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text })
-      messageBar.setValue('')
+      this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text: this.textarea.val() })
+      this.textarea.val('')
     }
   },
   async mounted () {
@@ -96,15 +94,13 @@ export default {
       await delay(1000)
     }
     this.$store.dispatch('fetchPersons', this.group.members)
-    const messageBar = this.$refs.messagebar.f7Messagebar
-    const textarea = messageBar.$textareaEl
-    textarea.focus()
-    const self = this
-    textarea.on('keypress', function (e) {
+    this.textarea = this.$refs.messagebar.f7Messagebar.$textareaEl
+    this.textarea.focus()
+    this.textarea.on('keypress', (e) => {
       if (e.keyCode === 13) {
         if (!e.shiftKey) {
           e.preventDefault()
-          self.sendMessage()
+          this.sendMessage()
         }
       }
     })
