@@ -48,6 +48,7 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
         onClick: function () {
           window.focus()
           this.close()
+          router.push({ name: 'group', params: { id: post.groupId } })
         }
       })
       break
