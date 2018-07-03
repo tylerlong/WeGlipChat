@@ -41,16 +41,18 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
     case 'PostAdded':
       const post = event.body
       store.commit('addPost', post)
-      Push.create(getters.getPersonNameById(store.state)(post.creatorId), {
-        body: post.text,
-        icon: getters.getPersonAvatar(store.state)(post.creatorId),
-        timeout: 4000,
-        onClick: function () {
-          window.focus()
-          this.close()
-          router.push({ name: 'group', params: { id: post.groupId } })
-        }
-      })
+      if (!document.hasFocus() || !(router.currentRoute.name === 'group' && router.currentRoute.params.id === post.groupId)) {
+        Push.create(getters.getPersonNameById(store.state)(post.creatorId), {
+          body: post.text,
+          icon: getters.getPersonAvatar(store.state)(post.creatorId),
+          timeout: 4000,
+          onClick: function () {
+            window.focus()
+            this.close()
+            router.push({ name: 'group', params: { id: post.groupId } })
+          }
+        })
+      }
       break
     default:
       break
