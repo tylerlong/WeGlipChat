@@ -96,6 +96,18 @@ export default {
       await delay(1000)
     }
     this.$store.dispatch('fetchPersons', this.group.members)
+    const messageBar = this.$refs.messagebar.f7Messagebar
+    const textarea = messageBar.$textareaEl
+    textarea.focus()
+    const self = this
+    textarea.on('keypress', function (e) {
+      if (e.keyCode === 13) {
+        if (!e.shiftKey) {
+          e.preventDefault()
+          self.sendMessage()
+        }
+      }
+    })
   }
 }
 </script>
