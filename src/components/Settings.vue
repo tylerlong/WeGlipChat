@@ -3,7 +3,7 @@
     <tabs active="settings"></tabs>
     <div class="page-content">
       <p>Welcome<span v-if="extension"> {{ extension.name }}</span>!</p>
-      <f7-button fill v-if="token" @click="logOut">Log Out</f7-button>
+      <p><f7-button color="green" fill v-if="token" @click="logOut">Log Out</f7-button></p>
     </div>
   </f7-page>
 </template>

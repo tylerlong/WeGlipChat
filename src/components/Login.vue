@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f7-button fill @click="logIn">Log In</f7-button>
+    <p><f7-button color="green" fill @click="logIn">Log In</f7-button></p>
   </div>
 </template>
 

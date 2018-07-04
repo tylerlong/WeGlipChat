@@ -6,20 +6,20 @@
       <p><img :src="avatar" width="256px"/></p>
       <p><strong>{{ name }}</strong></p>
       <p v-if="person">{{ person.email }}</p>
-
+      <p><f7-button color="green" fill @click="startChatWithPerson">Start Chat</f7-button></p>
     </div>
   </f7-page>
 </template>
 
 <script>
-import { f7Page, f7Navbar } from 'framework7-vue'
+import { f7Page, f7Navbar, f7Button } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 
 import Tabs from './Tabs.vue'
 
 export default {
   components: {
-    f7Page, f7Navbar, Tabs
+    f7Page, f7Navbar, f7Button, Tabs
   },
   computed: {
     ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson']),
@@ -36,6 +36,9 @@ export default {
   methods: {
     goBack () {
       this.$router.go(-1)
+    },
+    startChatWithPerson () {
+
     }
   }
 }
