@@ -2212,6 +2212,10 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
+eventemitter3@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+
 eventemitter3@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
@@ -5683,6 +5687,18 @@ text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
+textarea-caret@^3.0.1:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/textarea-caret/-/textarea-caret-3.1.0.tgz#5d5a35bb035fd06b2ff0e25d5359e97f2655087f"
+
+textcomplete@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/textcomplete/-/textcomplete-0.17.1.tgz#7f72626a6783c29e62297740f21d762c665fbd49"
+  dependencies:
+    eventemitter3 "^2.0.3"
+    textarea-caret "^3.0.1"
+    undate "^0.2.3"
+
 through2@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
@@ -5817,6 +5833,10 @@ uglifyjs-webpack-plugin@^1.2.4:
     uglify-es "^3.3.4"
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
+
+undate@^0.2.3:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/undate/-/undate-0.2.4.tgz#ccb2a8cf38edc035d1006fcb2909c4c6024a8400"
 
 underscore@1.5.x:
   version "1.5.2"

@@ -5,7 +5,7 @@
   "private": true,
   "author": "Tyler Long <tyler4long@gmail.com>",
   "scripts": {
-    "upgrade": "yarn-upgrade-all && yarn remove framework7 framework7-vue && yarn add framework7@2.3.1 framework7-vue@2.3.0",
+    "upgrade": "yarn-upgrade-all && yarn remove framework7 framework7-vue && yarn add framework7@2.3.1 framework7-vue@2.3.0 && curl https://api.github.com/emojis > src/emojis.json",
     "prepush": "standard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --open --progress --colors --config webpack.dev.babel.js",
     "build": "webpack --progress --colors --config webpack.dev.babel.js",
@@ -25,6 +25,7 @@
     "push.js": "^1.0.5",
     "ramda": "^0.25.0",
     "ringcentral-js-concise": "^0.4.7",
+    "textcomplete": "^0.17.1",
     "timeout-as-promise": "^1.0.0",
     "urijs": "^1.19.1",
     "vue": "^2.5.16",

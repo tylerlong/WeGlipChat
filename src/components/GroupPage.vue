@@ -46,6 +46,8 @@ import cheerio from 'cheerio'
 import delay from 'timeout-as-promise'
 import emojione from 'emojione'
 
+import { enableEmojiAutoComplete } from '../emoji'
+
 export default {
   components: {
     f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar
@@ -105,6 +107,7 @@ export default {
         }
       }
     })
+    enableEmojiAutoComplete(this.textarea[0])
   }
 }
 </script>
