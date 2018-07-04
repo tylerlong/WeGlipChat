@@ -35,7 +35,7 @@ export const emojiToImage = text => {
   R.forEach(shortname => {
     const word = R.tail(R.init(shortname))
     if (word in emojis) {
-      result = result.replace(shortname, `<img src="${emojis[word]}" class="emoji-image" alt="${shortname}" />`)
+      result = result.replace(shortname, `<img src="${emojis[word]}" class="emoji-image" alt="${shortname}" title="${shortname}" /><span style="display: none;">${shortname}</span>`)
     }
   }, R.match(/:[a-z0-9_+-]+:/g, text))
   return result
