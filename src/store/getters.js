@@ -31,8 +31,14 @@ export const getGroupMessagePreviewText = state => group => {
   if (R.isNil(post)) {
     return ''
   }
-  const personName = getPersonNameById(state)(post.creatorId)
-  return `${personName}: ${post.text}`
+  const personName = getPersonNameById(state)(post.creatorId) || 'Unknown user'
+  let text = ''
+  if (!R.isNil(post.text) && !R.isEmpty(post.text)) {
+    text = getPostText(state)(post)
+    const $ = cheerio.load(text)
+    text = $.text()
+  }
+  return `${personName}: ${text}`
 }
 
 export const getGroupAvatar = state => group => {
