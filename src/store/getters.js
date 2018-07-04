@@ -38,6 +38,12 @@ export const getGroupMessagePreviewText = state => group => {
     const $ = cheerio.load(text)
     text = $.text()
   }
+  if (text === '' && !R.isNil(post.attachments) && post.attachments.length > 0) {
+    text = `Uploaded ${post.attachments[0].name}`
+  }
+  if (text === '') {
+    text = 'Unsupported message'
+  }
   return `${personName}: ${text}`
 }
 
