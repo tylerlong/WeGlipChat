@@ -10,7 +10,12 @@ export const getPostText = state => post => {
   const html = Markdown(post.text).replace(/\n/g, '<br/>')
   const $ = cheerio.load(html)
   $('a').addClass('external')
-  return emojiToImage($('body').html())
+  let result = $('body').html()
+  result = R.replace(/!\[:Person\]\(((?:glip-)?\d+)\)/g, (_, id) => {
+    return `<a href="#">@${getPersonNameById(state)(id)}</a>`
+  }, result)
+  result = emojiToImage(result)
+  return result
 }
 
 export const getGroupMessagePreviewText = state => group => {
