@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "emojione": "^3.1.6",
     "framework7": "2.3.1",
     "framework7-icons": "^0.9.1",
     "framework7-vue": "2.3.0",

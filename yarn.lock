@@ -1929,6 +1929,10 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emojione@^3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/emojione/-/emojione-3.1.6.tgz#ab09c530c3a5165986b7db1909f349a4a6106b50"
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"

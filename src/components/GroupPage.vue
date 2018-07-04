@@ -44,6 +44,7 @@ import * as R from 'ramda'
 import { Markdown } from 'glipdown'
 import cheerio from 'cheerio'
 import delay from 'timeout-as-promise'
+import emojione from 'emojione'
 
 export default {
   components: {
@@ -76,7 +77,7 @@ export default {
       const html = Markdown(post.text).replace(/\n/g, '<br/>')
       const $ = cheerio.load(html)
       $('a').addClass('external')
-      return $.html()
+      return emojione.shortnameToImage($.html())
     },
     isImage (file) {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
