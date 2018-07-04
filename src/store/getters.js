@@ -6,6 +6,10 @@ import { emojiToImage } from '../emoji'
 import userAvatar from '../user-avatar.png'
 import groupAvatar from '../group-avatar.png'
 
+export const getPerson = state => id => {
+  return state.persons[id]
+}
+
 export const getPostText = state => post => {
   const html = Markdown(post.text).replace(/\n/g, '<br/>')
   const $ = cheerio.load(html)
