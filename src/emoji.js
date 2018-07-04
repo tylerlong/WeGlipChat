@@ -12,10 +12,10 @@ const emojiStrategy = {
     }))
   },
   template: function (name) {
-    return '<img src="' + emojis[name] + '"></img> ' + name
+    return `<img src="${emojis[name]}"/> ${name}`
   },
   replace: function (name) {
-    return '$1:' + name + ': '
+    return `$1:${name}: `
   }
 }
 
