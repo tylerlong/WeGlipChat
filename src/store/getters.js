@@ -22,15 +22,7 @@ export const getPostText = state => post => {
   return result
 }
 
-export const getGroupMessagePreviewText = state => group => {
-  const posts = state.posts[group.id]
-  if (R.isNil(posts)) {
-    return ''
-  }
-  const post = posts[0]
-  if (R.isNil(post)) {
-    return ''
-  }
+export const GetPostPreviewText = state => post => {
   const personName = getPersonNameById(state)(post.creatorId) || 'Unknown user'
   let text = ''
   if (!R.isNil(post.text) && !R.isEmpty(post.text)) {
@@ -45,6 +37,18 @@ export const getGroupMessagePreviewText = state => group => {
     text = 'Unsupported message'
   }
   return `${personName}: ${text}`
+}
+
+export const getGroupMessagePreviewText = state => group => {
+  const posts = state.posts[group.id]
+  if (R.isNil(posts)) {
+    return ''
+  }
+  const post = posts[0]
+  if (R.isNil(post)) {
+    return ''
+  }
+  return GetPostPreviewText(state)(post)
 }
 
 export const getGroupAvatar = state => group => {

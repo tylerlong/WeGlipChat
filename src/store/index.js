@@ -49,7 +49,7 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
       }
       // show system notification
       Push.create(getters.getPersonNameById(store.state)(post.creatorId), {
-        body: post.text,
+        body: getters.GetPostPreviewText(store.state)(post),
         icon: getters.getPersonAvatar(store.state)(post.creatorId),
         timeout: 4000,
         onClick: function () {
