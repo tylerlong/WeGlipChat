@@ -12,7 +12,7 @@ export const getPostText = state => post => {
   $('a').addClass('external')
   let result = $('body').html()
   result = R.replace(/!\[:Person\]\(((?:glip-)?\d+)\)/g, (_, id) => {
-    return `<a href="#">@${getPersonNameById(state)(id)}</a>`
+    return `<a class="external" href="#/person/${id}">@${getPersonNameById(state)(id)}</a>`
   }, result)
   result = emojiToImage(result)
   return result
