@@ -12,7 +12,7 @@
     </f7-messagebar>
     <f7-messages>
       <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts()" :key="post.id">
-        <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar"></div>
+        <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
         <div class="message-content">
           <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
           <div class="message-bubble">
@@ -81,6 +81,9 @@ export default {
       }
       this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text: this.textarea.val() })
       this.textarea.val('')
+    },
+    openPerson (id) {
+      this.$router.push({ name: 'person', params: { id } })
     }
   },
   async mounted () {

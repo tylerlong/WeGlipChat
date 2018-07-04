@@ -6,6 +6,7 @@
 
 .message-avatar {
   opacity: 1 !important;
+  cursor: pointer;
 }
 
 .message-name {
