@@ -121,3 +121,7 @@ export const isMyself = state => personId => {
 export const getPersonalGroup = state => () => {
   return R.find(g => g.type === 'PersonalChat', state.groups)
 }
+
+export const getPrivateGroup = state => personId => {
+  return R.find(g => g.type === 'PrivateChat' && g.members.indexOf(personId) !== -1, state.groups)
+}

@@ -22,7 +22,7 @@ export default {
     f7Page, f7Navbar, f7Button, Tabs
   },
   computed: {
-    ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson', 'isMyself', 'getPersonalGroup']),
+    ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson', 'isMyself', 'getPersonalGroup', 'getPrivateGroup']),
     person: function () {
       return this.getPerson(this.$route.params.id)
     },
@@ -43,7 +43,8 @@ export default {
         const group = this.getPersonalGroup()
         this.$router.push({ name: 'group', params: { id: group.id } })
       } else {
-
+        const group = this.getPrivateGroup(personId)
+        this.$router.push({ name: 'group', params: { id: group.id } })
       }
     }
   }
