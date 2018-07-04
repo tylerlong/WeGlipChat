@@ -117,3 +117,7 @@ export const getPostsByGroupId = state => groupId => {
 export const isMyself = state => personId => {
   return state.extension && personId === state.extension.id
 }
+
+export const getPersonalGroup = state => () => {
+  return R.find(g => g.type === 'PersonalChat', state.groups)
+}

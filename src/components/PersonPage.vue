@@ -22,7 +22,7 @@ export default {
     f7Page, f7Navbar, f7Button, Tabs
   },
   computed: {
-    ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson']),
+    ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson', 'isMyself', 'getPersonalGroup']),
     person: function () {
       return this.getPerson(this.$route.params.id)
     },
@@ -38,7 +38,13 @@ export default {
       this.$router.go(-1)
     },
     startChatWithPerson () {
+      const personId = this.$route.params.id
+      if (this.isMyself(personId)) {
+        const group = this.getPersonalGroup()
+        this.$router.push({ name: 'group', params: { id: group.id } })
+      } else {
 
+      }
     }
   }
 }
