@@ -16,7 +16,7 @@
         <div class="message-content">
           <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
           <div class="message-bubble">
-            <div class="message-text" v-if="post.text" v-html="postText(post)"></div>
+            <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
             <div v-if="post.attachments">
               <template v-for="file in post.attachments">
                 <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
@@ -41,18 +41,16 @@
 import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
-import { Markdown } from 'glipdown'
-import cheerio from 'cheerio'
 import delay from 'timeout-as-promise'
 
-import { enableEmojiAutoComplete, emojiToImage } from '../emoji'
+import { enableEmojiAutoComplete } from '../emoji'
 
 export default {
   components: {
     f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar
   },
   computed: {
-    ...mapGetters(['getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar']),
+    ...mapGetters(['getPostText', 'getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar']),
     group: function () {
       return this.getGroupById(this.$route.params.id)
     },
@@ -73,12 +71,6 @@ export default {
     },
     goToRoot () {
       this.$router.push({ name: 'root' })
-    },
-    postText (post) {
-      const html = Markdown(post.text).replace(/\n/g, '<br/>')
-      const $ = cheerio.load(html)
-      $('a').addClass('external')
-      return emojiToImage($('body').html())
     },
     isImage (file) {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)

@@ -1,7 +1,17 @@
 import * as R from 'ramda'
+import { Markdown } from 'glipdown'
+import cheerio from 'cheerio'
 
+import { emojiToImage } from '../emoji'
 import userAvatar from '../user-avatar.png'
 import groupAvatar from '../group-avatar.png'
+
+export const getPostText = state => post => {
+  const html = Markdown(post.text).replace(/\n/g, '<br/>')
+  const $ = cheerio.load(html)
+  $('a').addClass('external')
+  return emojiToImage($('body').html())
+}
 
 export const getGroupMessagePreviewText = state => group => {
   const posts = state.posts[group.id]
