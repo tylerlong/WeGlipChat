@@ -18,6 +18,10 @@
   border-radius: 50%;
 }
 
+.emoji-image {
+  height: 20px;
+}
+
 
 /* for emoji auto complete */
 /* copied from https://github.com/yuku/textcomplete/blob/master/src/doc/main.css */

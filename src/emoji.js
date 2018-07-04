@@ -1,4 +1,5 @@
 import { Textcomplete, Textarea } from 'textcomplete'
+import * as R from 'ramda'
 
 import emojis from './emojis.json'
 
@@ -7,7 +8,7 @@ const emojiStrategy = {
   match: /(^|\s):([a-z0-9+\-_]*)$/,
   search: function (term, callback) {
     callback(Object.keys(emojis).filter(function (name) {
-      return name.startsWith(term)
+      return name.indexOf(term) !== -1
     }))
   },
   template: function (name) {
@@ -27,4 +28,15 @@ export const enableEmojiAutoComplete = textarea => {
     }
   })
   textcomplete.register([emojiStrategy])
+}
+
+export const emojiToImage = text => {
+  let result = text
+  R.forEach(shortname => {
+    const word = R.tail(R.init(shortname))
+    if (word in emojis) {
+      result = result.replace(shortname, `<img src="${emojis[word]}" class="emoji-image" alt="${shortname}" />`)
+    }
+  }, R.match(/:[a-z0-9_+-]+:/g, text))
+  return result
 }

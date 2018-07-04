@@ -44,9 +44,8 @@ import * as R from 'ramda'
 import { Markdown } from 'glipdown'
 import cheerio from 'cheerio'
 import delay from 'timeout-as-promise'
-import emojione from 'emojione'
 
-import { enableEmojiAutoComplete } from '../emoji'
+import { enableEmojiAutoComplete, emojiToImage } from '../emoji'
 
 export default {
   components: {
@@ -79,7 +78,7 @@ export default {
       const html = Markdown(post.text).replace(/\n/g, '<br/>')
       const $ = cheerio.load(html)
       $('a').addClass('external')
-      return emojione.shortnameToImage($.html())
+      return emojiToImage($('body').html())
     },
     isImage (file) {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
