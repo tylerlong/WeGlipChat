@@ -77,6 +77,7 @@ rc.on('tokenChanged', async token => {
   if (R.isNil(token)) { // logout
     Cookies.remove('RINGCENTRAL_TOKEN')
     store.commit('reset')
+    inited = false
     router.push({ name: 'login' })
   } else {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 7 })
