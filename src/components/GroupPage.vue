@@ -77,7 +77,7 @@ export default {
       } else if (date.year() === today.year() && date.week() === today.week()) { // this week
         return date.format('ddd H:mm A')
       } else if (date.year() === today.year()) { // this year
-        return date.format('ddd, MMM D H:mm A')
+        return date.format('ddd MMM D H:mm A')
       } else {
         return date.format('YYYY-MM-DD HH:mm')
       }
