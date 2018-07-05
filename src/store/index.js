@@ -64,7 +64,7 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
       Push.create(who, {
         body: getters.getPostPreviewText(store.state)(post),
         icon: getters.getPersonAvatar(store.state)(post.creatorId),
-        timeout: 4000,
+        timeout: process.env.NODE_ENV === 'production' ? 4000 : 16000,
         onClick: function () {
           window.focus()
           this.close()
