@@ -101,7 +101,7 @@ export const getGroupNameById = state => id => {
       return personNames.join(', ')
     case 'PersonalChat':
       return getPersonNameById(state)(state.extension.id)
-    default:
+    default: // Team
       return group.name
   }
 }

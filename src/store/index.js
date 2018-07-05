@@ -25,8 +25,7 @@ const rcRequest = rc.request.bind(rc)
 rc.request = async (config) => {
   try {
     if (process.env.NODE_ENV !== 'production') {
-      console.log(new Date())
-      console.log(config)
+      console.log(new Date() + '\n' + JSON.stringify(config, null, 2))
     }
     return await rcRequest(config)
   } catch (e) {
@@ -57,7 +56,12 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
         break
       }
       // show system notification
-      Push.create(getters.getPersonNameById(store.state)(post.creatorId) || 'Unknown user', {
+      let who = getters.getPersonNameById(store.state)(post.creatorId) || 'Unknown user'
+      const group = getters.getGroupById(post.groupId)
+      if (!R.isNil(group) && !R.isNil(group.name)) {
+        who += ` from ${group.name}`
+      }
+      Push.create(who, {
         body: getters.getPostPreviewText(store.state)(post),
         icon: getters.getPersonAvatar(store.state)(post.creatorId),
         timeout: 4000,
