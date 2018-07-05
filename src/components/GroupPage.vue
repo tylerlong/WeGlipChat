@@ -71,15 +71,15 @@ export default {
       const today = dayjs(new Date())
       const yesterday = today.subtract(1, 'day')
       if (date.diff(today, 'days') === 0 && date.day() === today.day()) { // today
-        return date.format('H:mm A')
+        return date.format('h:mm A')
       } else if (date.diff(yesterday, 'days') === 0 && date.day() === yesterday.day()) { // yesterday
-        return 'Yesterday ' + date.format('H:mm A')
+        return 'Yesterday ' + date.format('h:mm A')
       } else if (date.year() === today.year() && date.week() === today.week()) { // this week
-        return date.format('ddd H:mm A')
+        return date.format('ddd h:mm A')
       } else if (date.year() === today.year()) { // this year
-        return date.format('ddd MMM D H:mm A')
-      } else {
-        return date.format('YYYY-MM-DD HH:mm')
+        return date.format('ddd MMM D h:mm A')
+      } else { // past years
+        return date.format('YYYY-MM-DD h:mm A')
       }
     },
     posts () {
