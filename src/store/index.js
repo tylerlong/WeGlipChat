@@ -58,13 +58,14 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
       // show system notification
       let who = getters.getPersonNameById(store.state)(post.creatorId) || 'Unknown user'
       const group = getters.getGroupById(post.groupId)
-      if (!R.isNil(group) && !R.isNil(group.name)) {
+      if (!R.isNil(group) && !R.isNil(group.name) && !R.isEmpty(group.name)) {
         who += ` from ${group.name}`
       }
       Push.create(who, {
         body: getters.getPostPreviewText(store.state)(post),
         icon: getters.getPersonAvatar(store.state)(post.creatorId),
         timeout: process.env.NODE_ENV === 'production' ? 4000 : 16000,
+        requireInteraction: process.env.NODE_ENV !== 'production',
         onClick: function () {
           window.focus()
           this.close()
