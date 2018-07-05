@@ -45,6 +45,7 @@ export default {
       } else {
         const group = this.getPrivateGroup(personId)
         this.$router.push({ name: 'group', params: { id: group.id } })
+        // todo: what if group is undefined?
       }
     }
   }

@@ -50,7 +50,10 @@ export const fetchPersons = async ({ commit, state }, personIds) => {
     R.uniq,
     R.filter(id => !(id in state.persons))
   )(personIds)
-  for (const ids of R.splitEvery(30, idsToFetch)) {
+  for (let ids of R.splitEvery(30, idsToFetch)) {
+    if (ids.length === 1) { // turn a normal get to a batch get
+      ids = [...ids, state.extension.id]
+    }
     const r = await rc.get(`/restapi/v1.0/glip/persons/${ids.join(',')}`)
     const persons = multipartMixedParser.parse(r.data).slice(1).filter(p => 'id' in p)
     commit('setPersons', persons)
