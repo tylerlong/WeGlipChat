@@ -44,7 +44,7 @@ rc.request = async (config) => {
   }
 }
 
-const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
+const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/groups'], event => {
   switch (event.body.eventType) {
     case 'PostAdded':
       const post = event.body
@@ -74,6 +74,9 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
       })
       break
     default:
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(JSON.stringify(event.body, null, 2))
+      }
       break
   }
 })
