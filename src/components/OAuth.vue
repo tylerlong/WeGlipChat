@@ -29,18 +29,19 @@ export default {
     ...mapState(['token', 'loginModalVisible'])
   },
   created: function () {
-    window.addEventListener('message', ({ origin, data: { type, redirectUri } }) => {
+    window.addEventListener('message', async ({ origin, data: { type, redirectUri } }) => {
       if (origin !== window.location.origin || type !== 'REDIRECT_URI') {
         return
       }
       if (redirectUri.indexOf(config.OAUTH_REDIRECT_URI) === -1) {
         return // unexpected uri
       }
-      const token = URI(redirectUri.replace('#', '?')).search(true)
-      if (token.access_token === undefined) { // unexpected data
-        throw new Error(JSON.stringify(token))
+      const params = URI(redirectUri.replace('#', '?')).search(true)
+      if (params.code === undefined) { // unexpected data
+        throw new Error(JSON.stringify(params))
       }
-      this.$store.commit('setToken', token)
+      await rc.authorize({ code: params.code, redirectUri: config.OAUTH_REDIRECT_URI })
+      this.$store.commit('setToken', rc.token())
       this.$store.commit('hideLoginModal')
     })
   }
