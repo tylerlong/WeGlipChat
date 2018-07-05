@@ -30,8 +30,12 @@ rc.request = async (...args) => {
     return await rcRequest(...args)
   } catch (e) {
     if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
-      await rc.refresh()
-      // todo: what if refresh token is expired?
+      try {
+        await rc.refresh()
+      } catch (e) { // refresh token expired
+        rc.token(undefined)
+        throw e
+      }
       return rcRequest(...args)
     }
     throw e
