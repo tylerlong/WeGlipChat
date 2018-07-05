@@ -5091,13 +5091,14 @@ rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
   dependencies:
     glob "^7.0.5"
 
-ringcentral-js-concise@^0.4.9:
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.4.9.tgz#7193b3045a29084e2bf4647287308bd270c9242a"
+ringcentral-js-concise@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.5.0.tgz#59c902aed953c0b6cc58d9893c7f85182ce29f54"
   dependencies:
     axios "^0.18.0"
     js-base64 "^2.4.5"
     pubnub "^4.21.2"
+    ramda "^0.25.0"
     urijs "^1.19.1"
 
 ripemd160@^2.0.0, ripemd160@^2.0.1:

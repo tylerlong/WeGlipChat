@@ -22,21 +22,21 @@ const store = new Vuex.Store({
 })
 
 const rcRequest = rc.request.bind(rc)
-rc.request = async (...args) => {
+rc.request = async (config) => {
   try {
     if (process.env.NODE_ENV !== 'production') {
-      console.log(...args)
+      console.log(config)
     }
-    return await rcRequest(...args)
+    return await rcRequest(config)
   } catch (e) {
-    if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
+    if (e.response && e.response.status === 401 && e.response.data.errorCode === 'TokenInvalid') {
       try {
         await rc.refresh()
       } catch (e) { // refresh token expired
         rc.token(undefined)
         throw e
       }
-      return rcRequest(...args)
+      return rcRequest(config)
     }
     throw e
   }
@@ -82,7 +82,7 @@ rc.on('tokenChanged', async token => {
       router.push({ name: 'root' })
     }
     if (R.isNil(oldToken)) {
-      store.dispatch('init')
+      await store.dispatch('init')
     }
     if (R.isNil(pubnub.subscription())) {
       pubnub.subscribe()
