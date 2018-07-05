@@ -25,6 +25,7 @@ const rcRequest = rc.request.bind(rc)
 rc.request = async (config) => {
   try {
     if (process.env.NODE_ENV !== 'production') {
+      console.log(new Date())
       console.log(config)
     }
     return await rcRequest(config)
