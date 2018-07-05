@@ -3,3 +3,4 @@
 
 --ignore-file=match:/^yarn\.lock$/
 --ignore-file=match:/^yarn-error\.log$/
+--ignore-file=match:/^framework7\.esm\.bundle\.js$/

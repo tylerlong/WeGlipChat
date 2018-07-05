@@ -23,8 +23,8 @@ export default {
     f7Popup, f7Page, f7Navbar, f7Block
   },
   computed: {
-    oauthUri: function (prompt = true) {
-      return rc.oauthUri(prompt)
+    oauthUri: function () {
+      return rc.oauthUri()
     },
     ...mapState(['token', 'loginModalVisible'])
   },
