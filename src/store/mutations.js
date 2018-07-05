@@ -42,10 +42,6 @@ export const setExtension = (state, extension) => {
   state.extension = extension
 }
 
-export const setToken = (state, token) => {
-  state.token = token
-}
-
 export const showLoginModal = state => {
   state.loginModalVisible = true
 }

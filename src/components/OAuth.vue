@@ -26,7 +26,7 @@ export default {
     oauthUri: function () {
       return rc.oauthUri()
     },
-    ...mapState(['token', 'loginModalVisible'])
+    ...mapState(['loginModalVisible'])
   },
   created: function () {
     window.addEventListener('message', async ({ origin, data: { type, redirectUri } }) => {
@@ -41,7 +41,6 @@ export default {
         throw new Error(JSON.stringify(params))
       }
       await rc.authorize({ code: params.code, redirectUri: config.OAUTH_REDIRECT_URI })
-      this.$store.commit('setToken', rc.token())
       this.$store.commit('hideLoginModal')
     })
   }

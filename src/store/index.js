@@ -30,7 +30,9 @@ rc.request = async (...args) => {
     return await rcRequest(...args)
   } catch (e) {
     if (e.response && e.response.status === 401 && e.response.statusText === 'Unauthorized') {
-      store.commit('setToken', undefined) // token expired
+      await rc.refresh()
+      // todo: what if refresh token is expired?
+      return rcRequest(...args)
     }
     throw e
   }
@@ -63,35 +65,39 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
       break
   }
 })
-const tokenCallback = async token => {
-  if (!R.isNil(token)) {
-    Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 1 / 24 })
-    rc.token(token)
+
+let oldToken
+rc.on('tokenChanged', async token => {
+  if (R.isNil(token)) { // logout
+    Cookies.remove('RINGCENTRAL_TOKEN')
+    store.commit('reset')
+    router.push({ name: 'login' })
+  } else {
+    Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 7 })
     if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
       router.push({ name: 'root' })
     }
-    store.dispatch('init')
-    pubnub.subscribe()
-  } else {
-    Cookies.remove('RINGCENTRAL_TOKEN')
-    rc.token(undefined)
-    store.commit('reset')
-    router.push({ name: 'login' })
+    if (R.isNil(oldToken)) {
+      store.dispatch('init')
+    }
+    if (R.isNil(pubnub.subscription())) {
+      pubnub.subscribe()
+    }
   }
-}
-store.watch(state => state.token, tokenCallback)
+  oldToken = token
+})
 
 router.afterEach((to, from) => {
   // for guests, the only available page is the login page
-  if (to.name !== 'login' && (R.isNil(store.state.token) || R.isNil(store.state.token.access_token))) {
+  if (to.name !== 'login' && R.isNil(rc.token())) {
     router.push({ name: 'login' })
   }
   // for users, the only unavailable page is the login page
-  if (to.name === 'login' && (!R.isNil(store.state.token) && !R.isNil(store.state.token.access_token))) {
+  if (to.name === 'login' && !R.isNil(rc.token())) {
     router.push({ name: 'root' })
   }
 })
 
-store.commit('setToken', Cookies.getJSON('RINGCENTRAL_TOKEN'))
+rc.token(Cookies.getJSON('RINGCENTRAL_TOKEN'))
 
 export default store
