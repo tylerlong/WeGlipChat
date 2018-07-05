@@ -29,11 +29,13 @@ rc.request = async (config) => {
     }
     return await rcRequest(config)
   } catch (e) {
-    if (e.response && e.response.status === 401 && e.response.data.errorCode === 'TokenInvalid') {
+    if (e.response && R.any(error => R.test(/\btoken\b/i, error.message), e.response.data.errors)) {
       try {
-        await rc.refresh()
-      } catch (e) { // refresh token expired
-        rc.token(undefined)
+        await rc.refresh() // access token expired, try to refresh it
+      } catch (e) {
+        if (e.response && R.any(error => R.test(/\btoken\b/i, error.message), e.response.data.errors)) {
+          rc.token(undefined) // refresh token expired, then token is useless
+        }
         throw e
       }
       return rcRequest(config)
@@ -70,7 +72,7 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts'], event => {
   }
 })
 
-let oldToken
+let inited = false
 rc.on('tokenChanged', async token => {
   if (R.isNil(token)) { // logout
     Cookies.remove('RINGCENTRAL_TOKEN')
@@ -81,14 +83,14 @@ rc.on('tokenChanged', async token => {
     if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
       router.push({ name: 'root' })
     }
-    if (R.isNil(oldToken)) {
+    if (!inited) {
+      inited = true
       await store.dispatch('init')
     }
     if (R.isNil(pubnub.subscription())) {
       pubnub.subscribe()
     }
   }
-  oldToken = token
 })
 
 router.afterEach((to, from) => {
