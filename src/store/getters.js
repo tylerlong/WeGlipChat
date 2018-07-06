@@ -18,6 +18,9 @@ export const getPostText = state => post => {
   result = R.replace(/!\[:Person\]\(((?:glip-)?\d+)\)/g, (_, id) => {
     return `<a class="external" href="#/person/${id}">@${getPersonNameById(state)(id)}</a>`
   }, result)
+  result = R.replace(/!\[:Team\]\((\d+)\)/g, (_, id) => {
+    return `<a class="external" href="#/group/${id}">@${getGroupNameById(state)(id)}</a>`
+  }, result)
   result = emojiToImage(result)
   return result
 }
