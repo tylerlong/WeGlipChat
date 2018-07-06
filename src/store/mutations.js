@@ -30,6 +30,11 @@ export const setPersons = (state, persons) => {
 }
 
 export const setPosts = (state, { groupId, posts }) => {
+  const oldPosts = state.posts[groupId] || []
+  if (R.isEmpty(R.difference(posts, oldPosts))) {
+    // console.log('no new or changed posts')
+    return
+  }
   Vue.set(state.posts, groupId, posts)
 }
 
