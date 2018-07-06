@@ -19,6 +19,7 @@ export const addPost = (state, post) => {
   const group = state.groups.find(g => g.id === post.groupId)
   if (R.isNil(group)) {
     return
+    // todo: should fetch the group from server
   }
   state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
 }
@@ -39,6 +40,11 @@ export const setPosts = (state, { groupId, posts }) => {
 }
 
 export const setGroups = (state, groups) => {
+  const oldGroups = state.groups || []
+  if (R.isEmpty(R.difference(groups, oldGroups))) {
+    // console.log('no new or changed groups')
+    return
+  }
   state.groups = groups
 }
 
