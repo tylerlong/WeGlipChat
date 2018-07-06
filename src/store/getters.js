@@ -11,7 +11,11 @@ export const getPerson = state => id => {
 }
 
 export const getPostText = state => post => {
-  const html = Markdown(post.text).replace(/\n/g, '<br/>')
+  let text = post.text
+  if (post.type === 'PersonsAdded') {
+    text = `Added ${post.addedPersonIds.map(id => `![:Person](${id})`).join(', ')} to the team`
+  }
+  const html = Markdown(text).replace(/\n/g, '<br/>')
   const $ = cheerio.load(html)
   $('a').addClass('external')
   let result = $('body').html()

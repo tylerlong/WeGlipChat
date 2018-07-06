@@ -18,13 +18,18 @@
           <div class="message-content">
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
             <div class="message-bubble">
-              <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
-              <div v-if="post.attachments">
-                <template v-for="file in post.attachments">
-                  <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
-                  <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
-                </template>
-              </div>
+              <template v-if="post.type === 'TextMessage'">
+                <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
+                <div v-if="post.attachments">
+                  <template v-for="file in post.attachments">
+                    <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
+                    <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
+                  </template>
+                </div>
+              </template>
+              <template v-if="post.type === 'PersonsAdded'">
+                <div class="message-text" v-if="post.addedPersonIds" v-html="getPostText(post)"></div>
+              </template>
               <div v-if="!isSupportedPost(post)">Unsupported message</div>
             </div>
           </div>
