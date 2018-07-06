@@ -25,7 +25,7 @@
                   <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
                 </template>
               </div>
-              <div v-if="(post.text === null || post.text === '') && (post.attachments === null || post.attachments.length === 0)">Unsupported message</div>
+              <div v-if="!isSupportedPost(post)">Unsupported message</div>
             </div>
           </div>
         </div>
@@ -116,6 +116,18 @@ export default {
     },
     openPerson (id) {
       this.$router.push({ name: 'person', params: { id } })
+    },
+    isSupportedPost (post) {
+      if (post.type === 'TextMessage') {
+        if ((!R.isNil(post.text) && !R.isEmpty(post.text)) || (!R.isNil(post.attachments) && !R.isEmpty(post.attachments))) {
+          return true
+        }
+      } else if (post.type === 'PersonsAdded') {
+        if (!R.isNil(post.addedPersonIds) && !R.isEmpty(post.addedPersonIds)) {
+          return true
+        }
+      }
+      return false
     }
   },
   async mounted () {
