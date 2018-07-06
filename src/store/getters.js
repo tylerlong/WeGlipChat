@@ -15,16 +15,16 @@ export const getPostText = state => post => {
   if (post.type === 'PersonsAdded') {
     text = `Added ${post.addedPersonIds.map(id => `![:Person](${id})`).join(', ')} to the team`
   }
-  const html = Markdown(text).replace(/\n/g, '<br/>')
+  let html = Markdown(text).replace(/\n/g, '<br/>')
+  html = R.replace(/!\[:Person\]\(((?:glip-)?\d+)\)/g, (_, id) => {
+    return `<a href="#/person/${id}">@${getPersonNameById(state)(id)}</a>`
+  }, html)
+  html = R.replace(/!\[:Team\]\((\d+)\)/g, (_, id) => {
+    return `<a href="#/group/${id}">@${getGroupNameById(state)(id)}</a>`
+  }, html)
   const $ = cheerio.load(html)
   $('a').addClass('external')
   let result = $('body').html()
-  result = R.replace(/!\[:Person\]\(((?:glip-)?\d+)\)/g, (_, id) => {
-    return `<a class="external" href="#/person/${id}">@${getPersonNameById(state)(id)}</a>`
-  }, result)
-  result = R.replace(/!\[:Team\]\((\d+)\)/g, (_, id) => {
-    return `<a class="external" href="#/group/${id}">@${getGroupNameById(state)(id)}</a>`
-  }, result)
   result = emojiToImage(result)
   return result
 }
