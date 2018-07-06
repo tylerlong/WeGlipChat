@@ -93,9 +93,11 @@ rc.on('tokenChanged', async token => {
     router.push({ name: 'login' })
   } else {
     Cookies.set('RINGCENTRAL_TOKEN', token, { expires: 7 })
-    if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
-      router.push({ name: 'root' })
-    }
+    setTimeout(() => {
+      if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
+        router.push({ name: 'root' })
+      }
+    }, 100) // wait for vue-router to be ready
     if (!inited) {
       inited = true
       await store.dispatch('init')
