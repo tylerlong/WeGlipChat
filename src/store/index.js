@@ -57,9 +57,9 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
       }
       // show system notification
       let who = getters.getPersonNameById(store.state)(post.creatorId) || 'Unknown user'
-      const group = getters.getGroupById(post.groupId)
+      const group = getters.getGroupById(store.state)(post.groupId)
       if (!R.isNil(group) && !R.isNil(group.name) && !R.isEmpty(group.name)) {
-        who += ` from ${group.name}`
+        who += ` in ${group.name}`
       }
       Push.create(who, {
         body: getters.getPostPreviewText(store.state)(post),
