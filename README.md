@@ -27,6 +27,9 @@ I want to see how simple a project I can manage to produce.
 - [Vuex](https://vuex.vuejs.org/)
 - [Vue Router](https://router.vuejs.org/)
 - [Framework7](http://framework7.io/)
+- [localForage](https://github.com/localForage/localForage)
+- [Ramda](https://ramdajs.com/)
+- [RingCentral JS Concise](https://github.com/tylerlong/ringcentral-js-concise)
 
 
 ## Release

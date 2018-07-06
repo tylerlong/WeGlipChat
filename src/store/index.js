@@ -73,6 +73,9 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
         }
       })
       break
+    case 'PostChanged':
+    case 'GroupLeft':
+    case 'GroupChanged':
     default:
       if (process.env.NODE_ENV !== 'production') {
         console.log(JSON.stringify(event.body, null, 2))
