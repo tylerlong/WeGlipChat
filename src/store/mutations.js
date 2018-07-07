@@ -35,21 +35,17 @@ export const setPersons = (state, persons) => {
 }
 
 export const setPosts = (state, { groupId, posts }) => {
-  const oldPosts = state.posts[groupId] || []
-  if (R.isEmpty(R.difference(posts, oldPosts))) {
-    // console.log('no new or changed posts')
-    return
+  const oldPosts = state.posts[groupId]
+  if (R.isNil(oldPosts) || R.difference(posts, oldPosts).length > 0) {
+    Vue.set(state.posts, groupId, posts)
   }
-  Vue.set(state.posts, groupId, posts)
 }
 
 export const setGroups = (state, groups) => {
-  const oldGroups = state.groups || []
-  if (R.isEmpty(R.difference(groups, oldGroups))) {
-    // console.log('no new or changed groups')
-    return
+  const oldGroups = state.groups
+  if (R.isNil(oldGroups) || R.difference(groups, oldGroups).length > 0) {
+    state.groups = groups
   }
-  state.groups = groups
 }
 
 export const setExtension = (state, extension) => {
