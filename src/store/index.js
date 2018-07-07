@@ -73,6 +73,9 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
         }
       })
       break
+    case 'GroupJoined':
+      store.commit('addGroup', event.body)
+      break
     case 'PostChanged':
     case 'GroupLeft':
     case 'GroupChanged':
