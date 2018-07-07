@@ -22,7 +22,7 @@ export default {
     f7Page, f7Navbar, f7Button, Tabs
   },
   computed: {
-    ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson', 'isMyself', 'getPersonalGroup', 'getPrivateGroup']),
+    ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson', 'isMyself', 'getPersonalGroup']),
     person: function () {
       return this.getPerson(this.$route.params.id)
     },
@@ -37,15 +37,14 @@ export default {
     goBack () {
       this.$router.go(-1)
     },
-    startChatWithPerson () {
+    async startChatWithPerson () {
       const personId = this.$route.params.id
       if (this.isMyself(personId)) {
         const group = this.getPersonalGroup()
         this.$router.push({ name: 'group', params: { id: group.id } })
       } else {
-        const group = this.getPrivateGroup(personId)
+        const group = await this.$store.dispatch('ensurePrivateGroup', personId)
         this.$router.push({ name: 'group', params: { id: group.id } })
-        // todo: what if group is undefined?
       }
     }
   }

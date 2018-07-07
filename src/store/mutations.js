@@ -14,6 +14,10 @@ export const set = (state, { key, value }) => {
   Vue.set(state, key, value)
 }
 
+export const addGroup = (state, group) => {
+  state.groups.unshift(group)
+}
+
 export const addPost = (state, post) => {
   state.posts[post.groupId].unshift(post)
   const group = state.groups.find(g => g.id === post.groupId)

@@ -4,6 +4,19 @@ import localforage from 'localforage'
 
 import rc from '../api/ringcentral'
 
+export const ensurePrivateGroup = async ({ state, commit }, personId) => {
+  let group = R.find(g => g.type === 'PrivateChat' && g.members.indexOf(personId) !== -1, state.groups)
+  if (!group) {
+    const r = await rc.post('/restapi/v1.0/glip/groups', {
+      type: 'PrivateChat',
+      members: [state.extension.id, personId]
+    })
+    group = r.data
+    commit('addGroup', group)
+  }
+  return group
+}
+
 export const sendMessage = async (context, { groupId, text }) => {
   rc.post('/restapi/v1.0/glip/posts', { groupId, text })
 }
