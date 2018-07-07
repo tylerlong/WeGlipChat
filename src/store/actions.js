@@ -81,7 +81,7 @@ export const fetchPosts = async ({ commit, state }, groupId) => {
 export const fetchPersons = async ({ commit, state }, personIds) => {
   const idsToFetch = R.pipe(
     R.uniq,
-    R.filter(id => !(id in state.persons))
+    R.filter(id => !(id in state.persons) || new Date().getTime() - (state.persons[id].lastFetchedTime || 0) > 86400000)
   )(personIds)
   for (let ids of R.splitEvery(30, idsToFetch)) {
     if (ids.length === 1) { // turn a normal get to a batch get

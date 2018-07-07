@@ -20,6 +20,7 @@ export const addGroup = (state, group) => {
 
 export const setPersons = (state, persons) => {
   for (const person of persons) {
+    person.lastFetchedTime = new Date().getTime()
     Vue.set(state.persons, person.id, person)
   }
 }
