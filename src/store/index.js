@@ -48,7 +48,7 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
   switch (event.body.eventType) {
     case 'PostAdded':
       const post = event.body
-      store.commit('addPost', post)
+      store.dispatch('addPost', post)
       if (getters.isMyself(store.state)(post.creatorId)) {
         break
       }

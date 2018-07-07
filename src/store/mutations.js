@@ -18,16 +18,6 @@ export const addGroup = (state, group) => {
   state.groups.unshift(group)
 }
 
-export const addPost = (state, post) => {
-  state.posts[post.groupId].unshift(post)
-  const group = state.groups.find(g => g.id === post.groupId)
-  if (R.isNil(group)) {
-    return
-    // todo: should fetch the group from server
-  }
-  state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
-}
-
 export const setPersons = (state, persons) => {
   for (const person of persons) {
     Vue.set(state.persons, person.id, person)

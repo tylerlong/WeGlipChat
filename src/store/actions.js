@@ -4,6 +4,26 @@ import localforage from 'localforage'
 
 import rc from '../api/ringcentral'
 
+export const addPost = async ({ state, dispatch }, post) => {
+  const posts = state.posts[post.groupId]
+  if (R.isNil(posts)) {
+    await dispatch('fetchPosts', post.groupId)
+  } else {
+    posts.unshift(post)
+  }
+  const group = await dispatch('ensureGroup', post.groupId)
+  state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
+}
+
+export const ensureGroup = async ({ state }, groupId) => {
+  let group = state.groups.find(g => g.id === groupId)
+  if (R.isNil(group)) {
+    const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}`)
+    group = r.data
+  }
+  return group
+}
+
 export const ensurePrivateGroup = async ({ state, commit }, personId) => {
   let group = R.find(g => g.type === 'PrivateChat' && g.members.indexOf(personId) !== -1, state.groups)
   if (!group) {
