@@ -5,3 +5,5 @@ config.js
 config.prod.js
 confix.sandbox.js
 yarn-error.log
+
+temp.spec.js

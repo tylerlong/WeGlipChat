@@ -5097,9 +5097,9 @@ rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
   dependencies:
     glob "^7.0.5"
 
-ringcentral-js-concise@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.5.1.tgz#792f0a8be9081fb0037d5bc2f4e9ccf89bbe9473"
+ringcentral-js-concise@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ringcentral-js-concise/-/ringcentral-js-concise-0.5.3.tgz#1ae6b3dc2dc125f961762a7e32c3ae331b02bda2"
   dependencies:
     axios "^0.18.0"
     js-base64 "^2.4.5"
