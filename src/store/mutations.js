@@ -3,6 +3,23 @@ import * as R from 'ramda'
 
 import { initialState } from './state'
 
+export const removePost = (state, postId) => {
+  for (const posts of R.values(state.posts)) {
+    const index = R.findIndex(p => p.id === postId, posts)
+    if (index === -1) {
+      continue
+    }
+    posts.splice(index, 1)
+    break
+  }
+}
+
+export const updatePost = (state, post) => {
+  const posts = state.posts[post.groupId]
+  const index = R.findIndex(p => p.id === post.id, posts)
+  Vue.set(posts, index, post)
+}
+
 export const reset = state => {
   const s = initialState()
   Object.keys(s).forEach(key => {

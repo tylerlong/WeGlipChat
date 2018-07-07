@@ -45,6 +45,7 @@ rc.request = async (config) => {
 }
 
 const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/groups'], event => {
+  console.log(event.body.eventType)
   switch (event.body.eventType) {
     case 'PostAdded':
       const post = event.body
@@ -77,6 +78,11 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
       store.commit('addGroup', event.body)
       break
     case 'PostChanged':
+      store.commit('updatePost', event.body)
+      break
+    case 'PostRemoved':
+      store.commit('removePost', event.body.id)
+      break
     case 'GroupLeft':
     case 'GroupChanged':
     default:
