@@ -3,11 +3,12 @@
     <f7-navbar :title="groupName" back-link="Back" @back-click="goToRoot">
     </f7-navbar>
     <f7-messagebar placeholder="Message" ref="messagebar">
+      <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
       <f7-link
         icon-if-ios="f7:arrow_up_fill"
         icon-if-md="material:attachment"
         slot="inner-start"
-        @click="shareFile"
+        onclick="document.getElementById('file-input').click()"
         title="Share file"
       ></f7-link>
       <f7-link
@@ -127,8 +128,10 @@ export default {
       this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text: this.textarea.val() })
       this.textarea.val('')
     },
-    shareFile () {
-      console.log('share file')
+    async shareFile (e) {
+      const file = e.target.files[0]
+      await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
+      e.target.value = ''
     },
     openPerson (id) {
       this.$router.push({ name: 'person', params: { id } })

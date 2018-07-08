@@ -37,6 +37,12 @@ export const ensurePrivateGroup = async ({ state, commit }, personId) => {
   return group
 }
 
+export const shareFile = async (context, { groupId, file }) => {
+  const data = new window.FormData()
+  data.append('file', file)
+  rc.post('/restapi/v1.0/glip/files', data, { params: { groupId } })
+}
+
 export const sendMessage = async (context, { groupId, text }) => {
   rc.post('/restapi/v1.0/glip/posts', { groupId, text })
 }
