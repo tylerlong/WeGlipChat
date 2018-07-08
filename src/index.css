@@ -23,6 +23,10 @@
   height: 20px;
 }
 
+.sending-loader {
+  margin-right: 20px;
+}
+
 
 /* for emoji auto complete */
 /* copied from https://github.com/yuku/textcomplete/blob/master/src/doc/main.css */

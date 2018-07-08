@@ -44,7 +44,7 @@ export const shareFile = async (context, { groupId, file }) => {
 }
 
 export const sendMessage = async (context, { groupId, text }) => {
-  rc.post('/restapi/v1.0/glip/posts', { groupId, text })
+  await rc.post('/restapi/v1.0/glip/posts', { groupId, text })
 }
 
 export const init = async ({ dispatch, commit, state }, subscribe) => {

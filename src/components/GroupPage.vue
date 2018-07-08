@@ -18,7 +18,9 @@
         @click="sendMessage"
         title="Send"
         id="send-button"
+        v-if="!sending"
       ></f7-link>
+      <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
     </f7-messagebar>
     <f7-messages>
       <template v-for="posts in groupedPosts()">
@@ -80,6 +82,11 @@ export default {
       return this.getGroupNameById(this.$route.params.id)
     }
   },
+  data: function () {
+    return {
+      sending: false
+    }
+  },
   methods: {
     timestamp (creationTime) {
       const date = dayjs(creationTime)
@@ -122,12 +129,15 @@ export default {
     isImage (file) {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
     },
-    sendMessage () {
+    async sendMessage () {
       if (this.textarea.val() === '') {
         return
       }
-      this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text: this.textarea.val() })
+      const text = this.textarea.val()
       this.textarea.val('')
+      this.sending = true
+      await this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text })
+      this.sending = false
     },
     async shareFile (e) {
       const file = e.target.files[0]
