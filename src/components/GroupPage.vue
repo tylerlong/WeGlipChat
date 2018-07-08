@@ -9,7 +9,6 @@
         icon-if-md="material:attachment"
         slot="inner-start"
         onclick="document.getElementById('file-input').click()"
-        title="Share file"
       ></f7-link>
       <f7-link
         icon-if-ios="f7:share_fill"
@@ -141,7 +140,9 @@ export default {
     },
     async shareFile (e) {
       const file = e.target.files[0]
+      this.sending = true
       await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
+      this.sending = false
       e.target.value = ''
     },
     openPerson (id) {
