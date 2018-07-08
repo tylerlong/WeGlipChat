@@ -5,7 +5,6 @@ import Framework7Vue from 'framework7-vue'
 import 'framework7-icons'
 import 'material-design-icons/iconfont/material-icons.css'
 
-import OAuth from './components/OAuth.vue'
 import store from './store'
 import router from './router'
 
@@ -23,12 +22,3 @@ const app = new Vue({
   }
 })
 app.$mount('#app')
-
-const oauth = new Vue({
-  render: h => h(OAuth),
-  store,
-  framework7: {
-    theme
-  }
-})
-oauth.$mount('#oauth')

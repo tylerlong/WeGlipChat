@@ -68,11 +68,3 @@ export const setExtension = (state, extension) => {
   extension.id = extension.id.toString()
   state.extension = extension
 }
-
-export const showLoginModal = state => {
-  state.loginModalVisible = true
-}
-
-export const hideLoginModal = state => {
-  state.loginModalVisible = false
-}
