@@ -3,6 +3,14 @@ import * as R from 'ramda'
 
 import { initialState } from './state'
 
+export const moveGroupToFirst = (state, group) => {
+  state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
+}
+
+export const addPost = (state, post) => {
+  state.posts[post.groupId].unshift(post)
+}
+
 export const removePost = (state, postId) => {
   for (const posts of R.values(state.posts)) {
     const index = R.findIndex(p => p.id === postId, posts)

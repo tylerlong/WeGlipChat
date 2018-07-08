@@ -4,15 +4,15 @@ import localforage from 'localforage'
 
 import rc from '../api/ringcentral'
 
-export const addPost = async ({ state, dispatch }, post) => {
+export const addPost = async ({ state, dispatch, commit }, post) => {
   const posts = state.posts[post.groupId]
   if (R.isNil(posts)) {
     await dispatch('fetchPosts', post.groupId)
   } else {
-    posts.unshift(post)
+    commit('addPost', post)
   }
   const group = await dispatch('ensureGroup', post.groupId)
-  state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
+  commit('moveGroupToFirst', group)
 }
 
 export const ensureGroup = async ({ state }, groupId) => {

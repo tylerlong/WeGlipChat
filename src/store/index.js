@@ -18,7 +18,8 @@ const store = new Vuex.Store({
   state: initialState,
   getters,
   mutations,
-  actions
+  actions,
+  strict: process.env.NODE_ENV !== 'production'
 })
 
 const rcRequest = rc.request.bind(rc)
