@@ -17,6 +17,7 @@
         slot="inner-end"
         @click="sendMessage"
         title="Send"
+        id="send-button"
       ></f7-link>
     </f7-messagebar>
     <f7-messages>
@@ -160,7 +161,7 @@ export default {
       if (e.keyCode === 13) {
         if (!e.shiftKey) {
           e.preventDefault()
-          this.sendMessage()
+          document.getElementById('send-button').click()
         }
       }
     })
