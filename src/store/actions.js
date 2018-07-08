@@ -41,7 +41,7 @@ export const sendMessage = async (context, { groupId, text }) => {
   rc.post('/restapi/v1.0/glip/posts', { groupId, text })
 }
 
-export const init = async ({ dispatch, commit, state }, watch) => {
+export const init = async ({ dispatch, commit, state }, subscribe) => {
   await dispatch('fetchExtension')
   const cachedState = await localforage.getItem(`wgc.${state.extension.id}`)
   if (!R.isNil(cachedState)) {
@@ -49,9 +49,11 @@ export const init = async ({ dispatch, commit, state }, watch) => {
     commit('set', { key: 'posts', value: cachedState.posts })
     commit('set', { key: 'persons', value: cachedState.persons })
   }
-  watch((state) => state.groups, () => { localforage.setItem(`wgc.${state.extension.id}`, state) })
-  watch((state) => state.posts, () => { localforage.setItem(`wgc.${state.extension.id}`, state) })
-  watch((state) => state.persons, () => { localforage.setItem(`wgc.${state.extension.id}`, state) })
+  subscribe((_, state) => {
+    if (!R.isNil(state.extension)) {
+      localforage.setItem(`wgc.${state.extension.id}`, state)
+    }
+  })
   await dispatch('fetchGroups')
   const personIds = R.pipe(
     R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),

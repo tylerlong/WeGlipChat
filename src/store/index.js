@@ -110,7 +110,7 @@ rc.on('tokenChanged', async token => {
     }, 100) // wait for vue-router to be ready
     if (!inited) {
       inited = true
-      await store.dispatch('init', store.watch.bind(store))
+      await store.dispatch('init', store.subscribe.bind(store))
     }
     if (R.isNil(pubnub.subscription())) {
       pubnub.subscribe()
