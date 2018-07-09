@@ -2,7 +2,14 @@
   <f7-page :page-content="false">
     <tabs active="settings"></tabs>
     <div class="page-content">
-      <p>Welcome<span v-if="extension"> {{ extension.name }}</span>!</p>
+      <div class="settings-content">
+        <p>Welcome<span v-if="extension"> {{ extension.name }}</span>!</p>
+        Enable desktop notification
+        <label class="toggle">
+          <input type="checkbox" v-model="enableNotifications">
+          <span class="toggle-icon"></span>
+        </label>
+      </div>
       <p><f7-button color="green" fill v-if="loggedIn" @click="logOut">Log Out</f7-button></p>
     </div>
   </f7-page>
@@ -24,6 +31,14 @@ export default {
     ...mapState(['extension']),
     loggedIn: function () {
       return !R.isNil(rc.token())
+    },
+    enableNotifications: {
+      get () {
+        return this.$store.state.config.enableNotifications
+      },
+      set (value) {
+        this.$store.commit('setEnableNotifications', value)
+      }
     }
   },
   methods: {

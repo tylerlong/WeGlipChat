@@ -5,6 +5,6 @@ export const initialState = () => ({
   persons: {},
   groupPageTokens: {},
   config: {
-    showNotification: true
+    enableNotifications: true
   }
 })

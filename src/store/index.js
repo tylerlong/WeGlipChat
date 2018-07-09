@@ -58,22 +58,24 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
         break
       }
       // show system notification
-      let who = getters.getPersonNameById(store.state)(post.creatorId) || 'Unknown user'
-      const group = getters.getGroupById(store.state)(post.groupId)
-      if (!R.isNil(group) && !R.isNil(group.name) && !R.isEmpty(group.name)) {
-        who += ` in ${group.name}`
-      }
-      Push.create(who, {
-        body: getters.getPostPreviewText(store.state)(post),
-        icon: getters.getPersonAvatar(store.state)(post.creatorId),
-        timeout: process.env.NODE_ENV === 'production' ? 4000 : 16000,
-        requireInteraction: process.env.NODE_ENV !== 'production',
-        onClick: function () {
-          window.focus()
-          this.close()
-          router.push({ name: 'group', params: { id: post.groupId } })
+      if (store.state.config.enableNotifications) {
+        let who = getters.getPersonNameById(store.state)(post.creatorId) || 'Unknown user'
+        const group = getters.getGroupById(store.state)(post.groupId)
+        if (!R.isNil(group) && !R.isNil(group.name) && !R.isEmpty(group.name)) {
+          who += ` in ${group.name}`
         }
-      })
+        Push.create(who, {
+          body: getters.getPostPreviewText(store.state)(post),
+          icon: getters.getPersonAvatar(store.state)(post.creatorId),
+          timeout: process.env.NODE_ENV === 'production' ? 4000 : 16000,
+          requireInteraction: process.env.NODE_ENV !== 'production',
+          onClick: function () {
+            window.focus()
+            this.close()
+            router.push({ name: 'group', params: { id: post.groupId } })
+          }
+        })
+      }
       break
     case 'GroupJoined':
       store.commit('addGroup', event.body)
