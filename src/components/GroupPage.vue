@@ -22,6 +22,7 @@
       <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
     </f7-messagebar>
     <f7-messages ref="messageList" :scroll-messages="false">
+      <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
       <template v-for="posts in groupedPosts()">
         <f7-messages-title>{{ timestamp(posts[0].creationTime) }}</f7-messages-title>
         <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts" :key="post.id">
@@ -84,7 +85,8 @@ export default {
   },
   data: function () {
     return {
-      sending: false
+      sending: false,
+      loadingMore: false
     }
   },
   methods: {
@@ -185,8 +187,10 @@ export default {
       const topElement = messagesListEl.find('.message-content')[0]
       const top = topElement.getBoundingClientRect().top
       if (top >= 60) {
+        this.loadingMore = true
         await this.$store.dispatch('fetchMorePosts', this.$route.params.id)
-        $f7Messages.scroll(0, topElement.getBoundingClientRect().top - top)
+        this.loadingMore = false
+        $f7Messages.scroll(0, topElement.getBoundingClientRect().top - top - 32)
       }
     }, 100)
     messagesListEl.on('scroll', debouncedScroll)
