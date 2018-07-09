@@ -83,7 +83,7 @@ export const fetchGroups = async ({ commit, state }) => {
 }
 
 export const fetchPosts = async ({ commit, state }, groupId) => {
-  const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`)
+  const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`, { params: { recordCount: 30 } })
   commit('setPosts', { groupId, posts: r.data.records })
 }
 
