@@ -21,7 +21,7 @@
       ></f7-link>
       <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
     </f7-messagebar>
-    <f7-messages>
+    <f7-messages ref="messageList">
       <template v-for="posts in groupedPosts()">
         <f7-messages-title>{{ timestamp(posts[0].creationTime) }}</f7-messages-title>
         <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts" :key="post.id">
@@ -63,6 +63,7 @@ import * as R from 'ramda'
 import delay from 'timeout-as-promise'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import debounce from 'lodash.debounce'
 
 import { enableEmojiAutoComplete } from '../emoji'
 
@@ -177,6 +178,15 @@ export default {
       }
     })
     enableEmojiAutoComplete(this.textarea[0])
+
+    const $f7Messages = this.$refs.messageList.f7Messages
+    const messagesListEl = $f7Messages.$pageContentEl
+    const debouncedScroll = debounce(function (e) {
+      if (messagesListEl.find('.messages-title')[0].getBoundingClientRect().top >= 60) {
+        console.log('scrolled to the top')
+      }
+    }, 100)
+    messagesListEl.on('scroll', debouncedScroll)
   }
 }
 </script>
