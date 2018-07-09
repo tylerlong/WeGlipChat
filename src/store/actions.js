@@ -51,10 +51,7 @@ export const init = async ({ dispatch, commit, state }, subscribe) => {
   await dispatch('fetchExtension')
   const cachedState = await localforage.getItem(`wgc.${state.extension.id}`)
   if (!R.isNil(cachedState)) {
-    commit('set', { key: 'groups', value: cachedState.groups })
-    commit('set', { key: 'posts', value: cachedState.posts })
-    commit('set', { key: 'persons', value: cachedState.persons })
-    commit('set', { key: 'groupPageTokens', value: cachedState.groupPageTokens })
+    commit('loadCache', cachedState)
   }
   subscribe((_, state) => {
     if (!R.isNil(state.extension)) {

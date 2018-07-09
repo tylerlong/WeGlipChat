@@ -35,8 +35,13 @@ export const reset = state => {
   })
 }
 
-export const set = (state, { key, value }) => {
-  Vue.set(state, key, value)
+export const loadCache = (state, cachedState) => {
+  const s = initialState()
+  Object.keys(s).forEach(key => {
+    if (key !== 'extension' && !R.isNil(cachedState[key])) {
+      state[key] = cachedState[key]
+    }
+  })
 }
 
 export const addGroup = (state, group) => {

@@ -3,5 +3,8 @@ export const initialState = () => ({
   groups: undefined,
   posts: {},
   persons: {},
-  groupPageTokens: {}
+  groupPageTokens: {},
+  config: {
+    showNotification: true
+  }
 })
