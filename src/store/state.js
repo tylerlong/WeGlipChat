@@ -2,5 +2,6 @@ export const initialState = () => ({
   extension: undefined,
   groups: undefined,
   posts: {},
-  persons: {}
+  persons: {},
+  groupPageTokens: {}
 })

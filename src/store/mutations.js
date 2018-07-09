@@ -57,6 +57,10 @@ export const setPosts = (state, { groupId, posts }) => {
   }
 }
 
+export const setGroupPageToken = (state, { groupId, pageToken }) => {
+  Vue.set(state.groupPageTokens, groupId, pageToken)
+}
+
 export const setGroups = (state, groups) => {
   const oldGroups = state.groups
   if (R.isNil(oldGroups) || R.difference(groups, oldGroups).length > 0) {

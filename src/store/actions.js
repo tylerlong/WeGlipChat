@@ -54,6 +54,7 @@ export const init = async ({ dispatch, commit, state }, subscribe) => {
     commit('set', { key: 'groups', value: cachedState.groups })
     commit('set', { key: 'posts', value: cachedState.posts })
     commit('set', { key: 'persons', value: cachedState.persons })
+    commit('set', { key: 'groupPageTokens', value: cachedState.groupPageTokens })
   }
   subscribe((_, state) => {
     if (!R.isNil(state.extension)) {
@@ -85,6 +86,8 @@ export const fetchGroups = async ({ commit, state }) => {
 export const fetchPosts = async ({ commit, state }, groupId) => {
   const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`, { params: { recordCount: 30 } })
   commit('setPosts', { groupId, posts: r.data.records })
+  const pageToken = r.data.navigation.prevPageToken
+  commit('setGroupPageToken', { groupId, pageToken })
 }
 
 export const fetchPersons = async ({ commit, state }, personIds) => {
