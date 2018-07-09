@@ -50,14 +50,16 @@ export const setPersons = (state, persons) => {
   }
 }
 
-export const setPosts = (state, { groupId, posts }) => {
+export const setPosts = (state, { groupId, posts, pageToken }) => {
   const oldPosts = state.posts[groupId]
-  if (R.isNil(oldPosts) || R.difference(posts, oldPosts).length > 0) {
+  if (R.isNil(oldPosts) || R.difference(posts, R.slice(0, posts.length, oldPosts)).length > 0) {
     Vue.set(state.posts, groupId, posts)
+    Vue.set(state.groupPageTokens, groupId, pageToken)
   }
 }
 
-export const setGroupPageToken = (state, { groupId, pageToken }) => {
+export const appendPosts = (state, { groupId, posts, pageToken }) => {
+  state.posts[groupId] = [...state.posts[groupId], ...posts]
   Vue.set(state.groupPageTokens, groupId, pageToken)
 }
 

@@ -85,9 +85,15 @@ export const fetchGroups = async ({ commit, state }) => {
 
 export const fetchPosts = async ({ commit, state }, groupId) => {
   const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`, { params: { recordCount: 30 } })
-  commit('setPosts', { groupId, posts: r.data.records })
-  const pageToken = r.data.navigation.prevPageToken
-  commit('setGroupPageToken', { groupId, pageToken })
+  commit('setPosts', { groupId, posts: r.data.records, pageToken: r.data.navigation.prevPageToken })
+}
+
+export const fetchMorePosts = async ({ commit, state }, groupId) => {
+  const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`, { params: {
+    recordCount: 30,
+    pageToken: state.groupPageTokens[groupId]
+  } })
+  commit('appendPosts', { groupId, posts: r.data.records, pageToken: r.data.navigation.prevPageToken })
 }
 
 export const fetchPersons = async ({ commit, state }, personIds) => {

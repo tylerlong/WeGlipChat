@@ -181,9 +181,9 @@ export default {
 
     const $f7Messages = this.$refs.messageList.f7Messages
     const messagesListEl = $f7Messages.$pageContentEl
-    const debouncedScroll = debounce(function (e) {
+    const debouncedScroll = debounce((e) => {
       if (messagesListEl.find('.messages-title')[0].getBoundingClientRect().top >= 60) {
-        console.log('scrolled to the top')
+        this.$store.dispatch('fetchMorePosts', this.$route.params.id)
       }
     }, 100)
     messagesListEl.on('scroll', debouncedScroll)
