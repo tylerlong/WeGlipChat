@@ -65,13 +65,17 @@ export const init = async ({ dispatch, commit, state }, subscribe) => {
   })
   await dispatch('fetchGroups')
   const personIds = R.pipe(
-    R.filter(g => g.type === 'PrivateChat' || g.type === 'Group'),
     R.map(g => g.members),
     R.reduce(R.concat, [])
   )(state.groups)
   dispatch('fetchPersons', personIds)
   for (const group of state.groups.slice(0, 16)) {
     dispatch('fetchPosts', group.id)
+  }
+  for (const group of state.groups.slice(16)) {
+    if (R.isNil(state.posts[group.id])) {
+      await dispatch('fetchPosts', group.id)
+    }
   }
 }
 
