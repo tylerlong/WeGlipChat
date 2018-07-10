@@ -81,12 +81,25 @@ export default {
     },
     groupName: function () {
       return this.getGroupNameById(this.$route.params.id)
+    },
+    latestPostId: function () {
+      const posts = this.getPostsByGroupId(this.$route.params.id)
+      if (R.isNil(posts)) {
+        return undefined
+      }
+      return posts[0].id
     }
   },
   data: function () {
     return {
       sending: false,
       loadingMore: false
+    }
+  },
+  watch: {
+    latestPostId: async function (val) { // scroll to bottom upon new post
+      await delay(100)
+      this.$refs.messageList.f7Messages.scroll(0, 1000000)
     }
   },
   methods: {
