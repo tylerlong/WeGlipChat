@@ -88,8 +88,11 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
     case 'PostRemoved':
       store.commit('removePost', event.body.id)
       break
-    case 'GroupLeft':
+    case 'GroupRenamed':
     case 'GroupChanged':
+      store.commit('updateGroup', event.body)
+      break
+    case 'GroupLeft':
     default:
       if (process.env.NODE_ENV !== 'production') {
         console.log(JSON.stringify(event.body, null, 2))

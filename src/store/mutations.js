@@ -37,6 +37,11 @@ export const updatePost = (state, post) => {
   Vue.set(posts, index, post)
 }
 
+export const updateGroup = (state, group) => {
+  const index = R.findIndex(g => g.id === group.id, state.groups)
+  Vue.set(state.groups, index, group)
+}
+
 export const reset = state => {
   const s = initialState()
   Object.keys(s).forEach(key => {
@@ -55,6 +60,7 @@ export const loadCache = (state, cachedState) => {
 
 export const addGroup = (state, group) => {
   state.groups.unshift(group)
+  Vue.set(state.readTimestamps, group.id, dayjs(new Date()).subtract(1, 'hour').valueOf())
 }
 
 export const setPersons = (state, persons) => {
