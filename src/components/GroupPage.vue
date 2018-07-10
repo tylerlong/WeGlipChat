@@ -99,7 +99,7 @@ export default {
   watch: {
     latestPostId: async function (val) { // scroll to bottom upon new post
       await delay(100)
-      this.$refs.messageList.f7Messages.scroll(0, 1000000)
+      this.$refs.messageList.f7Messages.scroll(100, 1000000)
     }
   },
   methods: {
