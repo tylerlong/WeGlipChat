@@ -74,7 +74,9 @@ export default {
       },
       set (value) {
         this.$store.commit('setTheme', value)
-        window.location.reload(false)
+        setTimeout(() => {
+          window.location.reload(false)
+        }, 100) // wait for localforage writing
       }
     }
   },
