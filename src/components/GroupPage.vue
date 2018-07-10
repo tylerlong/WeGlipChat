@@ -67,6 +67,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import debounce from 'lodash.debounce'
 
 import { enableEmojiAutoComplete } from '../emoji'
+import { enableMentionAutoComplete } from '../mention'
 
 dayjs.extend(weekOfYear)
 
@@ -193,6 +194,7 @@ export default {
       }
     })
     enableEmojiAutoComplete(this.textarea[0])
+    enableMentionAutoComplete(this.textarea[0])
 
     const $f7Messages = this.$refs.messageList.f7Messages
     const messagesListEl = $f7Messages.$pageContentEl
