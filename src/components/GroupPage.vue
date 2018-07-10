@@ -211,6 +211,8 @@ export default {
     messagesListEl.on('scroll', debouncedScroll)
 
     $f7Messages.scroll(0, 1000000)
+
+    this.$store.commit('updateReadTimestamp', this.$route.params.id)
   }
 }
 </script>

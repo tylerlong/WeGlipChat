@@ -7,5 +7,6 @@ export const initialState = () => ({
   config: {
     enableNotifications: true,
     theme: 'auto'
-  }
+  },
+  readTimestamps: {}
 })

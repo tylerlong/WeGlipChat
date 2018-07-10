@@ -10,6 +10,8 @@
           v-for="group in groups"
           :key="group.id"
           @click="openGroup(group.id)"
+          :badge="getUnreadCounts(group.id)"
+          badge-color="red"
         >
         <img slot="media" :src="getGroupAvatar(group)" class="avatar-image" />
         </f7-list-item>
@@ -34,7 +36,7 @@ export default {
   },
   computed: {
     ...mapState(['groups']),
-    ...mapGetters(['getGroupNameById', 'getGroupAvatar', 'getGroupMessagePreviewText'])
+    ...mapGetters(['getGroupNameById', 'getGroupAvatar', 'getGroupMessagePreviewText', 'getUnreadCounts'])
   },
   methods: {
     openGroup (id) {

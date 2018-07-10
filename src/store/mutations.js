@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import * as R from 'ramda'
+import dayjs from 'dayjs'
 
 import { initialState } from './state'
 
@@ -80,10 +81,19 @@ export const setGroups = (state, groups) => {
   const oldGroups = state.groups
   if (R.isNil(oldGroups) || R.difference(groups, oldGroups).length > 0) {
     state.groups = groups
+    for (const group of groups) {
+      if (R.isNil(state.readTimestamps[group.id])) {
+        Vue.set(state.readTimestamps, group.id, dayjs(new Date()).subtract(1, 'hour').valueOf())
+      }
+    }
   }
 }
 
 export const setExtension = (state, extension) => {
   extension.id = extension.id.toString()
   state.extension = extension
+}
+
+export const updateReadTimestamp = (state, groupId) => {
+  Vue.set(state.readTimestamps, groupId, dayjs(new Date()).valueOf())
 }

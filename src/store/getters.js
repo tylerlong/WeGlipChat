@@ -1,10 +1,21 @@
 import * as R from 'ramda'
 import { Markdown } from 'glipdown'
 import cheerio from 'cheerio'
+import dayjs from 'dayjs'
 
 import { emojiToImage } from '../emoji'
 import userAvatar from '../user-avatar.png'
 import groupAvatar from '../group-avatar.png'
+
+export const getUnreadCounts = state => groupId => {
+  const posts = getPostsByGroupId(state)(groupId)
+  if (R.isNil(posts)) {
+    return undefined
+  }
+  const timestamp = state.readTimestamps[groupId] || dayjs(new Date()).subtract(1, 'hour').valueOf()
+  const day = dayjs(timestamp)
+  return posts.filter(p => dayjs(p.creationTime).diff(day) > 0).length
+}
 
 export const getPerson = state => id => {
   return state.persons[id]
