@@ -194,7 +194,7 @@ export default {
       }
     })
     enableEmojiAutoComplete(this.textarea[0])
-    enableMentionAutoComplete(this.textarea[0])
+    enableMentionAutoComplete(this.textarea[0], this.group.members.map(id => ({ id, name: this.getPersonNameById(id) })))
 
     const $f7Messages = this.$refs.messageList.f7Messages
     const messagesListEl = $f7Messages.$pageContentEl
