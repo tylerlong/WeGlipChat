@@ -30,7 +30,7 @@
           <div class="message-content">
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
             <div class="wrapped-bubble">
-              <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)">
+              <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="setCurrentPost(post)">
                 <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
               </f7-link>
               <div class="message-bubble">
@@ -57,8 +57,8 @@
       </f7-block>
     </f7-messages>
     <f7-popover class="popover-menu">
-      <f7-list>
-        <f7-list-item link="#" popover-close title="Edit" @click="editPost('123456')"></f7-list-item>
+      <f7-list v-if="currentPost">
+        <f7-list-item v-if="currentPost.text && isMyself(currentPost.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
       </f7-list>
     </f7-popover>
   </f7-page>
@@ -104,7 +104,8 @@ export default {
   data: function () {
     return {
       sending: false,
-      loadingMore: false
+      loadingMore: false,
+      currentPost: undefined
     }
   },
   watch: {
@@ -114,6 +115,12 @@ export default {
     }
   },
   methods: {
+    setCurrentPost (post) {
+      this.currentPost = post
+    },
+    editPost () {
+      console.log('editPost', this.currentPost)
+    },
     timestamp (creationTime) {
       const date = dayjs(creationTime)
       const today = dayjs(new Date())
