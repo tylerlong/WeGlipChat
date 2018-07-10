@@ -1,6 +1,7 @@
 import { Textcomplete, Textarea } from 'textcomplete'
 
-export const enableMentionAutoComplete = (textarea, persons) => {
+export const enableMentionAutoComplete = (textarea, _persons) => {
+  const persons = [{ id: 'ALL', name: 'All' }, ..._persons]
   const mentionStrategy = {
     id: 'mention',
     match: /(^|\s)@([A-Za-z ]*)$/,
@@ -11,7 +12,11 @@ export const enableMentionAutoComplete = (textarea, persons) => {
       return `${person.name} (${person.id})`
     },
     replace: function (person) {
-      return `$1![:Person](${person.id}) `
+      if (person.id === 'ALL') {
+        return _persons.map(p => `$1![:Person](${p.id}) `).join('')
+      } else {
+        return `$1![:Person](${person.id}) `
+      }
     }
   }
   const editor = new Textarea(textarea)
