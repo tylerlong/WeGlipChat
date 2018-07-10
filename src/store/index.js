@@ -46,7 +46,9 @@ rc.request = async (config) => {
 }
 
 const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/groups'], event => {
-  console.log(event.body.eventType)
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(event.body.eventType)
+  }
   switch (event.body.eventType) {
     case 'PostAdded':
       const post = event.body
@@ -109,7 +111,7 @@ rc.on('tokenChanged', async token => {
       if (router.currentRoute.name === 'login' || router.currentRoute.name === null) {
         router.push({ name: 'root' })
       }
-    }, 100) // wait for vue-router to be ready
+    }, 1000) // wait for vue-router to be ready
     if (!inited) {
       inited = true
       await store.dispatch('init', store.subscribe.bind(store))

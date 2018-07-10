@@ -67,6 +67,7 @@ export default {
       },
       set (value) {
         this.$store.commit('setTheme', value)
+        window.location.reload(false)
       }
     }
   },
