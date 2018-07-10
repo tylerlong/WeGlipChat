@@ -27,6 +27,11 @@
   margin-right: 20px;
 }
 
+.wrapped-bubble {
+  display: flex;
+  flex-direction: row;
+}
+
 
 /* for emoji auto complete */
 /* copied from https://github.com/yuku/textcomplete/blob/master/src/doc/main.css */
