@@ -213,6 +213,12 @@ export default {
     $f7Messages.scroll(0, 1000000)
 
     this.$store.commit('updateReadTimestamp', this.$route.params.id)
+    this.readTimestampInterval = setInterval(() => {
+      this.$store.commit('updateReadTimestamp', this.$route.params.id)
+    }, 3000)
+  },
+  beforeDestroy: function () {
+    clearInterval(this.readTimestampInterval)
   }
 }
 </script>
