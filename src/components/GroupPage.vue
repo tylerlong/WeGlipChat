@@ -29,20 +29,25 @@
           <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
           <div class="message-content">
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
-            <div class="message-bubble">
-              <template v-if="post.type === 'TextMessage'">
-                <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
-                <div v-if="post.attachments">
-                  <template v-for="file in post.attachments">
-                    <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
-                    <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
-                  </template>
-                </div>
-              </template>
-              <template v-if="post.type === 'PersonsAdded'">
-                <div class="message-text" v-if="post.addedPersonIds" v-html="getPostText(post)"></div>
-              </template>
-              <div v-if="!isSupportedPost(post)">Unsupported message</div>
+            <div class="wrapped-bubble">
+              <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)">
+                <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
+              </f7-link>
+              <div class="message-bubble">
+                <template v-if="post.type === 'TextMessage'">
+                  <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
+                  <div v-if="post.attachments">
+                    <template v-for="file in post.attachments">
+                      <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
+                      <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
+                    </template>
+                  </div>
+                </template>
+                <template v-if="post.type === 'PersonsAdded'">
+                  <div class="message-text" v-if="post.addedPersonIds" v-html="getPostText(post)"></div>
+                </template>
+                <div v-if="!isSupportedPost(post)">Unsupported message</div>
+              </div>
             </div>
           </div>
         </div>
@@ -51,6 +56,11 @@
         <f7-preloader color="orange"></f7-preloader>
       </f7-block>
     </f7-messages>
+    <f7-popover class="popover-menu">
+      <f7-list>
+        <f7-list-item link="#" popover-close title="Edit" @click="editPost('123456')"></f7-list-item>
+      </f7-list>
+    </f7-popover>
   </f7-page>
   <f7-block v-else class="text-align-center">
     <f7-preloader color="orange"></f7-preloader>
@@ -58,7 +68,7 @@
 </template>
 
 <script>
-import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle } from 'framework7-vue'
+import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import delay from 'timeout-as-promise'
@@ -73,7 +83,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle
+    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7NavRight, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
   },
   computed: {
     ...mapGetters(['getPostText', 'getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar']),
