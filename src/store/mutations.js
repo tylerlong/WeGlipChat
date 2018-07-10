@@ -8,7 +8,7 @@ export const setEnableNotifications = (state, value) => {
 }
 
 export const setTheme = (state, value) => {
-  state.config.setTheme = value
+  state.config.theme = value
 }
 
 export const moveGroupToFirst = (state, group) => {
