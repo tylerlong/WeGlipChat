@@ -85,7 +85,7 @@ export default {
     },
     latestPostId: function () {
       const posts = this.getPostsByGroupId(this.$route.params.id)
-      if (R.isNil(posts)) {
+      if (R.isNil(posts) || R.isEmpty(posts)) {
         return undefined
       }
       return posts[0].id
