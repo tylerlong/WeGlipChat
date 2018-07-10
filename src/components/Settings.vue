@@ -4,11 +4,32 @@
     <div class="page-content">
       <div class="settings-content">
         <p>Welcome<span v-if="extension"> {{ extension.name }}</span>!</p>
-        Enable desktop notification
-        <label class="toggle">
-          <input type="checkbox" v-model="enableNotifications">
-          <span class="toggle-icon"></span>
-        </label>
+        <p>Enable desktop notification:
+          <label class="toggle">
+            <input type="checkbox" v-model="enableNotifications">
+            <span class="toggle-icon"></span>
+          </label>
+        </p>
+        <p>Theme:
+          <f7-radio
+            name="theme"
+            value="auto"
+            :checked="theme === 'auto' || theme === undefined"
+            @change="theme = $event.target.value"
+          ></f7-radio> Auto |
+          <f7-radio
+            name="theme"
+            value="md"
+            :checked="theme === 'md'"
+            @change="theme = $event.target.value"
+          ></f7-radio> Material Design |
+          <f7-radio
+            name="theme"
+            value="ios"
+            :checked="theme === 'ios'"
+            @change="theme = $event.target.value"
+          ></f7-radio> iOS
+        </p>
       </div>
       <p><f7-button color="green" fill v-if="loggedIn" @click="logOut">Log Out</f7-button></p>
     </div>
@@ -17,7 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { f7Button, f7Page } from 'framework7-vue'
+import { f7Button, f7Page, f7Radio } from 'framework7-vue'
 import * as R from 'ramda'
 
 import Tabs from './Tabs.vue'
@@ -25,7 +46,7 @@ import rc from '../api/ringcentral'
 
 export default {
   components: {
-    f7Button, f7Page, Tabs
+    f7Button, f7Page, f7Radio, Tabs
   },
   computed: {
     ...mapState(['extension']),
@@ -38,6 +59,14 @@ export default {
       },
       set (value) {
         this.$store.commit('setEnableNotifications', value)
+      }
+    },
+    theme: {
+      get () {
+        return this.$store.state.config.theme
+      },
+      set (value) {
+        this.$store.commit('setTheme', value)
       }
     }
   },
