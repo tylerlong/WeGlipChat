@@ -80,7 +80,7 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
       }
       break
     case 'GroupJoined':
-      store.commit('addGroup', event.body)
+      store.dispatch('addGroup', event.body)
       break
     case 'PostChanged':
       store.commit('updatePost', event.body)

@@ -24,7 +24,7 @@ export const ensureGroup = async ({ state }, groupId) => {
   return group
 }
 
-export const ensurePrivateGroup = async ({ state, commit }, personId) => {
+export const ensurePrivateGroup = async ({ state, dispatch }, personId) => {
   let group = R.find(g => g.type === 'PrivateChat' && g.members.indexOf(personId) !== -1, state.groups)
   if (!group) {
     const r = await rc.post('/restapi/v1.0/glip/groups', {
@@ -32,9 +32,14 @@ export const ensurePrivateGroup = async ({ state, commit }, personId) => {
       members: [state.extension.id, personId]
     })
     group = r.data
-    commit('addGroup', group)
+    await dispatch('addGroup', group)
   }
   return group
+}
+
+export const addGroup = ({ dispatch, commit }, group) => {
+  commit('addGroup', group)
+  dispatch('fetchPersons', group.members)
 }
 
 export const shareFile = async (context, { groupId, file }) => {
