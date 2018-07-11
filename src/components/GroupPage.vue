@@ -29,7 +29,8 @@
           <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
           <div class="message-content">
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
-            <div class="wrapped-bubble">
+            <f7-input type="textarea" v-if="editing && currentPost.id === post.id" :value="post.text" :resizable="true"></f7-input>
+            <div v-else class="wrapped-bubble">
               <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="setCurrentPost(post)">
                 <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
               </f7-link>
@@ -105,7 +106,8 @@ export default {
     return {
       sending: false,
       loadingMore: false,
-      currentPost: undefined
+      currentPost: undefined,
+      editing: false
     }
   },
   watch: {
@@ -119,6 +121,7 @@ export default {
       this.currentPost = post
     },
     editPost () {
+      this.editing = true
       console.log('editPost', this.currentPost)
     },
     timestamp (creationTime) {
