@@ -8,5 +8,6 @@ export const initialState = () => ({
     enableNotifications: true,
     theme: 'auto'
   },
-  readTimestamps: {}
+  readTimestamps: {},
+  networkTimestamp: undefined
 })

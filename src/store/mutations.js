@@ -4,6 +4,10 @@ import dayjs from 'dayjs'
 
 import { initialState } from './state'
 
+export const setNetworkTimestamp = (state) => {
+  state.networkTimestamp = dayjs(new Date()).valueOf()
+}
+
 export const setEnableNotifications = (state, value) => {
   state.config.enableNotifications = value
 }

@@ -4,6 +4,7 @@ import * as R from 'ramda'
 import Cookies from 'js-cookie'
 import PubNub from 'ringcentral-js-concise/src/pubnub'
 import Push from 'push.js'
+import dayjs from 'dayjs'
 
 import rc from '../api/ringcentral'
 import router from '../router'
@@ -28,7 +29,9 @@ rc.request = async (config) => {
     if (process.env.NODE_ENV !== 'production') {
       console.log(new Date() + '\n' + JSON.stringify(config, null, 2))
     }
-    return await rcRequest(config)
+    const result = await rcRequest(config)
+    store.commit('setNetworkTimestamp')
+    return result
   } catch (e) {
     if (e.response && R.any(error => R.test(/\btoken\b/i, error.message), e.response.data.errors)) {
       try {
@@ -46,6 +49,7 @@ rc.request = async (config) => {
 }
 
 const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/groups'], event => {
+  store.commit('setNetworkTimestamp')
   if (process.env.NODE_ENV !== 'production') {
     console.log(event.body.eventType)
   }
@@ -137,5 +141,12 @@ router.afterEach((to, from) => {
 })
 
 rc.token(Cookies.getJSON('RINGCENTRAL_TOKEN'))
+
+store.commit('setNetworkTimestamp') // page load successfully implies network no problem
+setInterval(() => {
+  if (dayjs(new Date()).diff(store.state.networkTimestamp) > 600000) {
+    window.location.reload(true) // refresh the page if no network activity in 10 minutes
+  }
+}, 10000)
 
 export default store
