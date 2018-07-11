@@ -12,26 +12,26 @@
         <div class="title">{{ groupName }}</div>
       </div>
     </div>
+    <f7-messagebar placeholder="Message" ref="messagebar">
+      <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
+      <f7-link
+        icon-if-ios="f7:arrow_up_fill"
+        icon-if-md="material:attachment"
+        slot="inner-start"
+        onclick="document.getElementById('file-input').click()"
+      ></f7-link>
+      <f7-link
+        icon-if-ios="f7:share_fill"
+        icon-if-md="material:send"
+        slot="inner-end"
+        @click="sendMessage"
+        title="Send"
+        id="send-button"
+        v-if="!sending"
+      ></f7-link>
+      <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
+    </f7-messagebar>
     <div class="page-content">
-      <f7-messagebar placeholder="Message" ref="messagebar">
-        <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
-        <f7-link
-          icon-if-ios="f7:arrow_up_fill"
-          icon-if-md="material:attachment"
-          slot="inner-start"
-          onclick="document.getElementById('file-input').click()"
-        ></f7-link>
-        <f7-link
-          icon-if-ios="f7:share_fill"
-          icon-if-md="material:send"
-          slot="inner-end"
-          @click="sendMessage"
-          title="Send"
-          id="send-button"
-          v-if="!sending"
-        ></f7-link>
-        <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
-      </f7-messagebar>
       <f7-messages ref="messageList" :scroll-messages="false">
         <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
         <template v-for="posts in groupedPosts()">
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
+import { f7Block, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import delay from 'timeout-as-promise'
@@ -100,7 +100,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    f7Navbar, f7Page, f7Block, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
+    f7Block, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
   },
   computed: {
     ...mapGetters(['getPostText', 'getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar', 'getTotalUnreadCounts']),
