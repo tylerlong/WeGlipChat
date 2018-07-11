@@ -51,6 +51,9 @@ export const getPostText = state => post => {
     return `<a href="#/group/${id}">@${getGroupNameById(state)(id)}</a>`
   }, html)
 
+  // code
+  html = html.replace(/\[code\]/g, '<pre>').replace(/\[\/code\]/g, '</pre>')
+
   html = mdi.render(html)
   const $ = cheerio.load(html)
   $('p').replaceWith(function () {
