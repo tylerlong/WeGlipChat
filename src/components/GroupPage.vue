@@ -130,12 +130,15 @@ export default {
       this.current.text = this.current.post.text
       await delay(100)
       const textarea = this.$refs.editingTextarea[0].$el.querySelector('textarea')
-      textarea.addEventListener('keypress', (e) => {
+      textarea.addEventListener('keydown', (e) => {
         if (e.keyCode === 13) {
           if (!e.shiftKey) {
             e.preventDefault()
             console.log('save editing!')
           }
+        } else if (e.keyCode === 27) {
+          this.current.editing = false
+          this.current.text = undefined
         }
       })
     },
