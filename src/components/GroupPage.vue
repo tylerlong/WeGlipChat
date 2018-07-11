@@ -139,12 +139,10 @@ export default {
               postId: this.current.post.id,
               text: this.current.text
             })
-            this.current.editing = false
-            this.current.text = undefined
+            this.changeCurrent(undefined)
           }
         } else if (e.keyCode === 27) {
-          this.current.editing = false
-          this.current.text = undefined
+          this.changeCurrent(undefined)
         }
       })
     },
