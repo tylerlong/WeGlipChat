@@ -63,7 +63,7 @@
     <f7-popover class="popover-menu">
       <f7-list v-if="current.post">
         <f7-list-item v-if="current.post.text && isMyself(current.post.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
-        <f7-list-item v-if="current.post.text && !isMyself(current.post.creatorId)" link="#" popover-close title="Quote" @click="quotePost"></f7-list-item>
+        <f7-list-item v-if="current.post.text" link="#" popover-close title="Quote" @click="quotePost"></f7-list-item>
       </f7-list>
     </f7-popover>
   </f7-page>
