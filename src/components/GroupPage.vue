@@ -1,72 +1,84 @@
 <template>
-  <f7-page v-if="group">
-    <f7-navbar :title="groupName" back-link="Back" @back-click="goToRoot">
-    </f7-navbar>
-    <f7-messagebar placeholder="Message" ref="messagebar">
-      <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
-      <f7-link
-        icon-if-ios="f7:arrow_up_fill"
-        icon-if-md="material:attachment"
-        slot="inner-start"
-        onclick="document.getElementById('file-input').click()"
-      ></f7-link>
-      <f7-link
-        icon-if-ios="f7:share_fill"
-        icon-if-md="material:send"
-        slot="inner-end"
-        @click="sendMessage"
-        title="Send"
-        id="send-button"
-        v-if="!sending"
-      ></f7-link>
-      <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
-    </f7-messagebar>
-    <f7-messages ref="messageList" :scroll-messages="false">
-      <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
-      <template v-for="posts in groupedPosts()">
-        <f7-messages-title>{{ timestamp(posts[0].creationTime) }}</f7-messages-title>
-        <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts" :key="post.id">
-          <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
-          <div class="message-content">
-            <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
-            <f7-input type="textarea" v-if="current.editing && current.post.id === post.id" :resizable="true" :value="current.text" @input="current.text = $event.target.value" ref="editingTextarea"></f7-input>
-            <div v-else class="wrapped-bubble">
-              <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
-                <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
-              </f7-link>
-              <div class="message-bubble">
-                <template v-if="post.type === 'TextMessage'">
-                  <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
-                  <div v-if="post.attachments">
-                    <template v-for="file in post.attachments">
-                      <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
-                      <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
-                    </template>
-                  </div>
-                </template>
-                <template v-if="post.type === 'PersonsAdded'">
-                  <div class="message-text" v-if="post.addedPersonIds" v-html="getPostText(post)"></div>
-                </template>
-                <div v-if="!isSupportedPost(post)">Unsupported message</div>
+  <div class="page" v-if="group">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="back icon-only link" @click="goToRoot">
+            <i class="icon icon-back">
+              <span class="badge color-red">{{ getTotalUnreadCounts() }}</span>
+            </i>
+          </a>
+        </div>
+        <div class="title">{{ groupName }}</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <f7-messagebar placeholder="Message" ref="messagebar">
+        <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
+        <f7-link
+          icon-if-ios="f7:arrow_up_fill"
+          icon-if-md="material:attachment"
+          slot="inner-start"
+          onclick="document.getElementById('file-input').click()"
+        ></f7-link>
+        <f7-link
+          icon-if-ios="f7:share_fill"
+          icon-if-md="material:send"
+          slot="inner-end"
+          @click="sendMessage"
+          title="Send"
+          id="send-button"
+          v-if="!sending"
+        ></f7-link>
+        <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
+      </f7-messagebar>
+      <f7-messages ref="messageList" :scroll-messages="false">
+        <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
+        <template v-for="posts in groupedPosts()">
+          <f7-messages-title>{{ timestamp(posts[0].creationTime) }}</f7-messages-title>
+          <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts" :key="post.id">
+            <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
+            <div class="message-content">
+              <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
+              <f7-input type="textarea" v-if="current.editing && current.post.id === post.id" :resizable="true" :value="current.text" @input="current.text = $event.target.value" ref="editingTextarea"></f7-input>
+              <div v-else class="wrapped-bubble">
+                <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
+                  <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
+                </f7-link>
+                <div class="message-bubble">
+                  <template v-if="post.type === 'TextMessage'">
+                    <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
+                    <div v-if="post.attachments">
+                      <template v-for="file in post.attachments">
+                        <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
+                        <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
+                      </template>
+                    </div>
+                  </template>
+                  <template v-if="post.type === 'PersonsAdded'">
+                    <div class="message-text" v-if="post.addedPersonIds" v-html="getPostText(post)"></div>
+                  </template>
+                  <div v-if="!isSupportedPost(post)">Unsupported message</div>
+                </div>
+                <f7-link popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
+                  <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
+                </f7-link>
               </div>
-              <f7-link popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
-                <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
-              </f7-link>
             </div>
           </div>
-        </div>
-      </template>
-      <f7-block v-if="!posts()" class="text-align-center">
-        <f7-preloader color="orange"></f7-preloader>
-      </f7-block>
-    </f7-messages>
-    <f7-popover class="popover-menu">
-      <f7-list v-if="current.post">
-        <f7-list-item v-if="current.post.text && isMyself(current.post.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
-        <f7-list-item v-if="current.post.text" link="#" popover-close title="Quote" @click="quotePost"></f7-list-item>
-      </f7-list>
-    </f7-popover>
-  </f7-page>
+        </template>
+        <f7-block v-if="!posts()" class="text-align-center">
+          <f7-preloader color="orange"></f7-preloader>
+        </f7-block>
+      </f7-messages>
+      <f7-popover class="popover-menu">
+        <f7-list v-if="current.post">
+          <f7-list-item v-if="current.post.text && isMyself(current.post.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
+          <f7-list-item v-if="current.post.text" link="#" popover-close title="Quote" @click="quotePost"></f7-list-item>
+        </f7-list>
+      </f7-popover>
+    </div>
+  </div>
   <f7-block v-else class="text-align-center">
     <f7-preloader color="orange"></f7-preloader>
   </f7-block>
