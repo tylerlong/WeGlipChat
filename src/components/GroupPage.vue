@@ -15,13 +15,13 @@
     <f7-messagebar placeholder="Message" ref="messagebar">
       <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
       <f7-link
-        icon-if-ios="f7:arrow_up_fill"
+        icon-if-ios="f7:share_fill"
         icon-if-md="material:attachment"
         slot="inner-start"
         onclick="document.getElementById('file-input').click()"
       ></f7-link>
       <f7-link
-        icon-if-ios="f7:share_fill"
+        icon-if-ios="f7:paper_plane_fill"
         icon-if-md="material:send"
         slot="inner-end"
         @click="sendMessage"
