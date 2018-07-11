@@ -29,9 +29,9 @@
           <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
           <div class="message-content">
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
-            <f7-input type="textarea" v-if="editing && currentPost.id === post.id" :resizable="true" :value="editingText" @input="editingText = $event.target.value" ref="editingTextarea"></f7-input>
+            <f7-input type="textarea" v-if="current.editing && current.post.id === post.id" :resizable="true" :value="current.text" @input="current.text = $event.target.value" ref="editingTextarea"></f7-input>
             <div v-else class="wrapped-bubble">
-              <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="setCurrentPost(post)">
+              <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
                 <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
               </f7-link>
               <div class="message-bubble">
@@ -58,8 +58,8 @@
       </f7-block>
     </f7-messages>
     <f7-popover class="popover-menu">
-      <f7-list v-if="currentPost">
-        <f7-list-item v-if="currentPost.text && isMyself(currentPost.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
+      <f7-list v-if="current.post">
+        <f7-list-item v-if="current.post.text && isMyself(current.post.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
       </f7-list>
     </f7-popover>
   </f7-page>
@@ -106,9 +106,11 @@ export default {
     return {
       sending: false,
       loadingMore: false,
-      currentPost: undefined,
-      editing: false,
-      editingText: undefined
+      current: {
+        post: undefined,
+        editing: false,
+        text: undefined
+      }
     }
   },
   watch: {
@@ -118,13 +120,14 @@ export default {
     }
   },
   methods: {
-    setCurrentPost (post) {
-      this.currentPost = post
-      this.editing = false
+    changeCurrent (post) {
+      this.current.post = post
+      this.current.editing = false
+      this.current.text = undefined
     },
     async editPost () {
-      this.editing = true
-      this.editingText = this.currentPost.text
+      this.current.editing = true
+      this.current.text = this.current.post.text
       await delay(100)
       const textarea = this.$refs.editingTextarea[0].$el.querySelector('textarea')
       textarea.addEventListener('keypress', (e) => {
