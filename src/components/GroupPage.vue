@@ -49,6 +49,9 @@
                 </template>
                 <div v-if="!isSupportedPost(post)">Unsupported message</div>
               </div>
+              <f7-link popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
+                <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
+              </f7-link>
             </div>
           </div>
         </div>
@@ -60,6 +63,7 @@
     <f7-popover class="popover-menu">
       <f7-list v-if="current.post">
         <f7-list-item v-if="current.post.text && isMyself(current.post.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
+        <f7-list-item v-if="current.post.text && !isMyself(current.post.creatorId)" link="#" popover-close title="Quote" @click="quotePost"></f7-list-item>
       </f7-list>
     </f7-popover>
   </f7-page>
@@ -124,6 +128,11 @@ export default {
       this.current.post = post
       this.current.editing = false
       this.current.text = undefined
+    },
+    quotePost () {
+      this.textarea.val(`![:Person](${this.current.post.creatorId}) wrote:\n` + this.current.post.text.split('\n').map(line => `> ${line}`).join('\n'))
+      this.textarea.trigger('change')
+      this.textarea.focus()
     },
     async editPost () {
       this.current.editing = true
@@ -193,6 +202,7 @@ export default {
       }
       const text = this.textarea.val()
       this.textarea.val('')
+      this.textarea.trigger('change')
       this.sending = true
       await this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text })
       this.sending = false
