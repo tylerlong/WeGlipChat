@@ -42,7 +42,7 @@
               <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
               <f7-input type="textarea" v-if="current.editing && current.post.id === post.id" :resizable="true" :value="current.text" @input="current.text = $event.target.value" ref="editingTextarea"></f7-input>
               <div v-else class="wrapped-bubble">
-                <f7-link popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
+                <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
                   <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
                 </f7-link>
                 <div class="message-bubble">
@@ -60,7 +60,7 @@
                   </template>
                   <div v-if="!isSupportedPost(post)">Unsupported message</div>
                 </div>
-                <f7-link popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
+                <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
                   <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
                 </f7-link>
               </div>
