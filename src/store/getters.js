@@ -30,7 +30,7 @@ export const getUnreadCounts = state => groupId => {
   }
   const timestamp = state.readTimestamps[groupId] || dayjs(new Date()).subtract(1, 'hour').valueOf()
   const day = dayjs(timestamp)
-  return posts.filter(p => dayjs(p.creationTime).diff(day) > 0).length
+  return posts.filter(p => !isMyself(state)(p.creatorId) && dayjs(p.creationTime).diff(day) > 0).length
 }
 
 export const getPerson = state => id => {
