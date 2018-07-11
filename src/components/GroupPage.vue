@@ -5,7 +5,7 @@
         <div class="left">
           <a href="#" class="back icon-only link" @click="goToRoot">
             <i class="icon icon-back">
-              <span class="badge color-red">{{ getTotalUnreadCounts() }}</span>
+              <span v-if="getTotalUnreadCounts()" class="badge color-red">{{ getTotalUnreadCounts() }}</span>
             </i>
           </a>
         </div>
