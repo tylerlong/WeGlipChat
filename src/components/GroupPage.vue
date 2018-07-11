@@ -134,7 +134,13 @@ export default {
         if (e.keyCode === 13) {
           if (!e.shiftKey) {
             e.preventDefault()
-            console.log('save editing!')
+            this.$store.dispatch('updatePostText', {
+              groupId: this.$route.params.id,
+              postId: this.current.post.id,
+              text: this.current.text
+            })
+            this.current.editing = false
+            this.current.text = undefined
           }
         } else if (e.keyCode === 27) {
           this.current.editing = false

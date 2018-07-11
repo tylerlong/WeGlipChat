@@ -4,6 +4,14 @@ import localforage from 'localforage'
 
 import rc from '../api/ringcentral'
 
+export const updatePostText = (_, { groupId, postId, text }) => {
+  rc.put(`/restapi/v1.0/glip/groups/${groupId}/posts/${postId}/text`, text, {
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  })
+}
+
 export const addPost = async ({ state, dispatch, commit }, post) => {
   const posts = state.posts[post.groupId]
   if (R.isNil(posts)) {
