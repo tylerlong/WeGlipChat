@@ -23,7 +23,7 @@ export const enableEmojiAutoComplete = textarea => {
   const editor = new Textarea(textarea)
   const textcomplete = new Textcomplete(editor, {
     dropdown: {
-      maxCount: 6,
+      maxCount: 8,
       placement: 'top'
     }
   })

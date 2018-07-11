@@ -1,4 +1,5 @@
 import { Textcomplete, Textarea } from 'textcomplete'
+import * as R from 'ramda'
 
 export const enableMentionAutoComplete = (textarea, _persons) => {
   const persons = [{ id: 'ALL', name: 'All' }, ..._persons]
@@ -6,7 +7,7 @@ export const enableMentionAutoComplete = (textarea, _persons) => {
     id: 'mention',
     match: /(^|\s)@([A-Za-z ]*)$/,
     search: function (term, callback) {
-      callback(persons.filter(person => person.name.toLowerCase().indexOf(term.toLowerCase()) !== -1))
+      callback(persons.filter(person => !R.isNil(person.name) && person.name.toLowerCase().indexOf(term.toLowerCase()) !== -1))
     },
     template: function (person) {
       return `${person.name} (${person.id})`
@@ -22,7 +23,7 @@ export const enableMentionAutoComplete = (textarea, _persons) => {
   const editor = new Textarea(textarea)
   const textcomplete = new Textcomplete(editor, {
     dropdown: {
-      maxCount: 6,
+      maxCount: 8,
       placement: 'top'
     }
   })
