@@ -69,7 +69,7 @@ export const getPostText = state => post => {
 
 export const getPostPreviewText = state => post => {
   let text = ''
-  if (!R.isNil(post.text) && !R.isEmpty(post.text)) {
+  if (post.type === 'PersonsAdded' || (!R.isNil(post.text) && !R.isEmpty(post.text))) {
     text = getPostText(state)(post)
     const $ = cheerio.load(text)
     text = $.text()
