@@ -32,6 +32,12 @@
   flex-direction: row;
 }
 
+blockquote {
+  padding: 0 0 0 8px;
+  margin: 0 0 0 8px;
+  border-left: 3px solid #bbb;
+  color: #666;
+}
 
 /* for emoji auto complete */
 /* copied from https://github.com/yuku/textcomplete/blob/master/src/doc/main.css */

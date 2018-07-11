@@ -1,11 +1,16 @@
 import * as R from 'ramda'
-import { Markdown } from 'glipdown'
+import MarkdownIt from 'markdown-it'
 import cheerio from 'cheerio'
 import dayjs from 'dayjs'
 
 import { emojiToImage } from '../emoji'
 import userAvatar from '../user-avatar.png'
 import groupAvatar from '../group-avatar.png'
+
+const mdi = new MarkdownIt({
+  html: true,
+  linkify: true
+})
 
 export const getUnreadCounts = state => groupId => {
   const posts = getPostsByGroupId(state)(groupId)
@@ -22,19 +27,30 @@ export const getPerson = state => id => {
 }
 
 export const getPostText = state => post => {
-  let text = post.text
+  let html = post.text
   if (post.type === 'PersonsAdded') {
-    text = `Added ${post.addedPersonIds.map(id => `![:Person](${id})`).join(', ')} to the team`
+    html = `Added ${post.addedPersonIds.map(id => `![:Person](${id})`).join(', ')} to the team`
   }
-  let html = Markdown(text).replace(/\n/g, '<br/>')
+
+  // mention person and team
   html = R.replace(/!\[:Person\]\(((?:glip-)?\d+)\)/g, (_, id) => {
     return `<a href="#/person/${id}">@${getPersonNameById(state)(id)}</a>`
   }, html)
   html = R.replace(/!\[:Team\]\((\d+)\)/g, (_, id) => {
     return `<a href="#/group/${id}">@${getGroupNameById(state)(id)}</a>`
   }, html)
+
+  html = mdi.render(html)
   const $ = cheerio.load(html)
-  $('a').addClass('external')
+  $('p').replaceWith(function () {
+    return $(this).html().trim().replace(/\n/g, '<br/>')
+  })
+  $('a').addClass('external') // external to framework7
+  $('a').each(function () {
+    if ($(this).attr('href').toLowerCase().startsWith('http')) {
+      $(this).attr('target', '_blank')
+    }
+  })
   let result = $('body').html()
   result = emojiToImage(result)
   return result
