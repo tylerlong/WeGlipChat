@@ -15,8 +15,7 @@ import * as actions from './actions'
 import { initialState } from './state'
 
 const favicon = new Favico({
-  animation: 'none',
-  position: 'up'
+  position: 'upleft'
 })
 
 Vue.use(Vuex)
@@ -160,8 +159,10 @@ store.watch((_, getters) => {
 }, (val) => {
   if (R.isNil(val)) {
     favicon.reset()
+    document.title = 'WeGlipChat'
   } else {
     favicon.badge(val)
+    document.title = `(${val}) WeGlipChat`
   }
 })
 
