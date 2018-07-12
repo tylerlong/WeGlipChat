@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import PubNub from 'ringcentral-js-concise/src/pubnub'
 import Push from 'push.js'
 import dayjs from 'dayjs'
+import Favico from 'favico.js'
 
 import rc from '../api/ringcentral'
 import router from '../router'
@@ -12,6 +13,11 @@ import * as getters from './getters'
 import * as mutations from './mutations'
 import * as actions from './actions'
 import { initialState } from './state'
+
+const favicon = new Favico({
+  animation: 'none',
+  position: 'up'
+})
 
 Vue.use(Vuex)
 
@@ -148,5 +154,15 @@ setInterval(() => {
     window.location.reload(true) // refresh the page if no network activity in 10 minutes
   }
 }, 10000)
+
+store.watch((_, getters) => {
+  return getters.getTotalUnreadCounts()
+}, (val) => {
+  if (R.isNil(val)) {
+    favicon.reset()
+  } else {
+    favicon.badge(val)
+  }
+})
 
 export default store

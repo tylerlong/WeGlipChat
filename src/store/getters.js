@@ -14,10 +14,12 @@ const mdi = new MarkdownIt({
 
 export const getTotalUnreadCounts = state => () => {
   let unreadCount = 0
-  for (const group of state.groups) {
-    unreadCount += getUnreadCounts(state)(group.id) || 0
-    if (unreadCount > 99) {
-      return '99+'
+  if (!R.isNil(state.groups)) {
+    for (const group of state.groups) {
+      unreadCount += getUnreadCounts(state)(group.id) || 0
+      if (unreadCount > 99) {
+        return '99+'
+      }
     }
   }
   return unreadCount === 0 ? undefined : unreadCount
