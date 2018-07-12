@@ -9,7 +9,7 @@
             </i>
           </a>
         </div>
-        <div class="title">{{ groupName }}</div>
+        <div class="title">{{ groupName }}<span v-if="group.type === 'Team'"> ({{ group.members.length }})</span></div>
       </div>
     </div>
     <f7-messagebar placeholder="Message" ref="messagebar">
