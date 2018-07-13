@@ -50,8 +50,10 @@
                     <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
                     <div v-if="post.attachments">
                       <template v-for="file in post.attachments">
-                        <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
-                        <a v-else :href="file.contentUri" class="external" target="_blank">{{ file.name }}</a>
+                        <a :href="file.contentUri" class="external" target="_blank">
+                          <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
+                          <span v-else>{{ file.name }}</span>
+                        </a>
                       </template>
                     </div>
                   </template>
