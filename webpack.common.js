@@ -36,7 +36,7 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      favicon: './src/favicon.png'
+      favicon: './src/favicon.ico'
     }),
     new HtmlWebpackPlugin({
       filename: 'oauth.html',

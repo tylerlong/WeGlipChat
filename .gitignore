@@ -7,3 +7,5 @@ confix.sandbox.js
 yarn-error.log
 
 temp.spec.js
+
+.DS_Store

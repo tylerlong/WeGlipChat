@@ -14,9 +14,7 @@ import * as mutations from './mutations'
 import * as actions from './actions'
 import { initialState } from './state'
 
-const favicon = new Favico({
-  position: 'upleft'
-})
+const favicon = new Favico({})
 
 Vue.use(Vuex)
 
