@@ -102,9 +102,15 @@ export const setGroups = (state, groups) => {
 export const setGroup = (state, group) => {
   const index = R.findIndex(g => g.id === group.id, state.groups)
   if (index === -1) {
-    state.groups.push(group)
+    if (group.isPublic) {
+      state.groups.unshift(group)
+    } else {
+      state.groups.push(group)
+    }
   } else {
-    Vue.set(state.groups, index, group)
+    if (!R.equals(state.groups[index], group)) {
+      Vue.set(state.groups, index, group)
+    }
   }
 }
 

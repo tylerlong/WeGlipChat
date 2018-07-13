@@ -97,9 +97,15 @@ export const fetchGroups = async ({ commit }) => {
   commit('setGroups', r.data.records)
 }
 
-export const fetchGroup = async ({ commit }, groupId) => {
+export const fetchGroup = async ({ commit, state }, groupId) => {
   const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}`)
-  commit('setGroup', r.data)
+  const group = r.data
+  if (!R.contains(state.extension.id, group.members)) { // auto join the team
+    await rc.post(`/restapi/v1.0/glip/groups/${groupId}/bulk-assign`, {
+      addedPersonIds: [state.extension.id]
+    })
+  }
+  commit('setGroup', group)
 }
 
 export const fetchPosts = async ({ commit, state }, groupId) => {
