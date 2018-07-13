@@ -2,7 +2,13 @@
 
 A Glip client inspired by WeChat.
 
-### [Start using WebGlipChat](https://tylerlong.github.io/wgc/)
+
+## Apps
+
+- [Web App](https://tylerlong.github.io/wgc/)
+- [macOS App](https://github.com/tylerlong/wgc-desktop/releases)
+- [Windows App](https://github.com/tylerlong/wgc-desktop/releases)
+- [Linux App](https://github.com/tylerlong/wgc-desktop/releases)
 
 
 ## Motivations
