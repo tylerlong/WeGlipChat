@@ -142,7 +142,7 @@ export default {
       this.current.text = undefined
     },
     quotePost () {
-      this.textarea.val(`![:Person](${this.current.post.creatorId}) wrote:\n` + this.current.post.text.split('\n').map(line => `> ${line}`).join('\n'))
+      this.textarea.val(`![:Person](${this.current.post.creatorId}) wrote:\n` + this.current.post.text.split('\n').map(line => `> ${line}`).join('\n') + '\n\n')
       this.textarea.trigger('change')
       this.textarea.focus()
     },
