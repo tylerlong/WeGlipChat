@@ -92,9 +92,14 @@ export const fetchExtension = async ({ commit }) => {
   commit('setExtension', r.data)
 }
 
-export const fetchGroups = async ({ commit, state }) => {
+export const fetchGroups = async ({ commit }) => {
   const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250 } })
   commit('setGroups', r.data.records)
+}
+
+export const fetchGroup = async ({ commit }, groupId) => {
+  const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}`)
+  commit('setGroup', r.data)
 }
 
 export const fetchPosts = async ({ commit, state }, groupId) => {

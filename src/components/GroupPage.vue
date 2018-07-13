@@ -243,6 +243,7 @@ export default {
     }
   },
   async mounted () {
+    this.$store.dispatch('fetchGroup', this.$route.params.id)
     while (R.isNil(this.group)) {
       await delay(1000)
     }

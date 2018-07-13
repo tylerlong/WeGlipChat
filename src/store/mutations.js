@@ -99,6 +99,15 @@ export const setGroups = (state, groups) => {
   }
 }
 
+export const setGroup = (state, group) => {
+  const index = R.findIndex(g => g.id === group.id, state.groups)
+  if (index === -1) {
+    state.groups.push(group)
+  } else {
+    Vue.set(state.groups, index, group)
+  }
+}
+
 export const setExtension = (state, extension) => {
   extension.id = extension.id.toString()
   state.extension = extension
