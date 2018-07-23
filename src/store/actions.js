@@ -114,6 +114,9 @@ export const fetchPosts = async ({ commit, state }, groupId) => {
 }
 
 export const fetchMorePosts = async ({ commit, state }, groupId) => {
+  if (R.isNil(state.groupPageTokens[groupId])) {
+    return // no more to fetch
+  }
   const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}/posts`, { params: {
     recordCount: 30,
     pageToken: state.groupPageTokens[groupId]
