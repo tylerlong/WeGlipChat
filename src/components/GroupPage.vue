@@ -266,9 +266,11 @@ export default {
         if (item.kind === 'file') {
           event.preventDefault()
           const file = item.getAsFile()
-          this.sending = true
-          await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
-          this.sending = false
+          if (!R.isNil(file)) {
+            this.sending = true
+            await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
+            this.sending = false
+          }
         }
       }
     })
@@ -278,9 +280,11 @@ export default {
         if (item.kind === 'file') {
           event.preventDefault()
           const file = item.getAsFile()
-          this.sending = true
-          await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
-          this.sending = false
+          if (!R.isNil(file)) {
+            this.sending = true
+            await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
+            this.sending = false
+          }
         }
       }
     })

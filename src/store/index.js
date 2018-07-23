@@ -36,7 +36,7 @@ rc.request = async (config) => {
     store.commit('setNetworkTimestamp')
     return result
   } catch (e) {
-    if (e.response && R.any(error => R.test(/\btoken\b/i, error.message), e.response.data.errors)) {
+    if (e.response && R.any(error => R.test(/\btoken\b/i, error.message), e.response.data.errors || [])) {
       try {
         await rc.refresh() // access token expired, try to refresh it
       } catch (e) {
