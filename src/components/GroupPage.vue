@@ -272,6 +272,18 @@ export default {
         }
       }
     })
+    this.textarea.on('drop', async (event) => {
+      const items = event.dataTransfer.items || []
+      for (const item of items) {
+        if (item.kind === 'file') {
+          event.preventDefault()
+          const file = item.getAsFile()
+          this.sending = true
+          await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
+          this.sending = false
+        }
+      }
+    })
     enableEmojiAutoComplete(this.textarea[0])
     enableMentionAutoComplete(this.textarea[0], this.group.members.map(id => ({ id, name: this.getPersonNameById(id) })))
 
