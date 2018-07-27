@@ -1,5 +1,5 @@
 <template>
-  <f7-page :page-content="false">
+  <div class="page">
     <tabs active="settings"></tabs>
     <div class="page-content">
       <h3>Welcome<span v-if="extension"> {{ extension.name }}</span>!</h3>
@@ -14,38 +14,49 @@
           </li>
         </ul>
       </div>
-      <f7-block-title>Theme</f7-block-title>
-      <f7-list>
-        <f7-list-item radio
-          name="theme"
-          value="auto"
-          :checked="theme === 'auto'"
-          @change="theme = $event.target.value"
-          title="Auto"
-        ></f7-list-item>
-        <f7-list-item radio
-          name="theme"
-          value="md"
-          :checked="theme === 'md'"
-          @change="theme = $event.target.value"
-          title="Material Design"
-        ></f7-list-item>
-        <f7-list-item radio
-          name="theme"
-          value="ios"
-          :checked="theme === 'ios' || theme === undefined"
-          @change="theme = $event.target.value"
-          title="iOS"
-        ></f7-list-item>
-      </f7-list>
-      <p><f7-button color="green" fill v-if="loggedIn" @click="logOut">Log Out</f7-button></p>
+
+      <div class="block-title">Theme</div>
+      <div class="list">
+        <ul>
+          <li>
+            <label class="item-radio item-content">
+              <input type="radio" name="theme" value="auto" :checked="theme === 'auto'" @change="theme = $event.target.value"/>
+              <i class="icon icon-radio"></i>
+              <div class="item-inner">
+                <div class="item-title">Auto</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <label class="item-radio item-content">
+              <input type="radio" name="theme" value="ios" :checked="theme === 'ios' || theme === undefined" @change="theme = $event.target.value"/>
+              <i class="icon icon-radio"></i>
+              <div class="item-inner">
+                <div class="item-title">iOS</div>
+              </div>
+            </label>
+          </li>
+          <li>
+            <label class="item-radio item-content">
+              <input type="radio" name="theme" value="md" :checked="theme === 'md'" @change="theme = $event.target.value"/>
+              <i class="icon icon-radio"></i>
+              <div class="item-inner">
+                <div class="item-title">Material Design</div>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        <button class="button button-fill color-green" v-if="loggedIn" @click="logOut">Log Out</button>
+      </p>
     </div>
-  </f7-page>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { f7Button, f7Page, f7BlockTitle, f7List, f7ListItem } from 'framework7-vue'
 import * as R from 'ramda'
 
 import Tabs from './Tabs.vue'
@@ -53,7 +64,7 @@ import rc from '../api/ringcentral'
 
 export default {
   components: {
-    f7Button, f7Page, f7BlockTitle, f7List, f7ListItem, Tabs
+    Tabs
   },
   computed: {
     ...mapState(['extension']),
