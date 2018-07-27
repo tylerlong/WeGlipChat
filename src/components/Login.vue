@@ -4,22 +4,29 @@
       <h1>WeGlipChat</h1>
       <p>A Glip client inspired by WeChat. <i class="f7-icons">social_github_fill</i> <a href="https://github.com/tylerlong/WeGlipChat" class="external" target="_blank">tylerlong/WeGlipChat</a></p>
       <h3><i class="f7-icons">cloud_download</i> <a href="https://github.com/tylerlong/wgc-desktop/releases" target="_blank" class="external">Download apps for macOS, Windows & Linux</a> <i class="f7-icons">cloud_download</i></h3>
-      <p><f7-button color="green" fill @click="showModal = true">Log In</f7-button></p>
+      <p><button class="button color-green button-fill" @click="showModal = true">Log In</button></p>
     </div>
     <f7-popup :opened="showModal">
-      <f7-page>
-        <f7-navbar title="Log In">
-        </f7-navbar>
-        <f7-block>
-          <iframe v-if="showModal" :src="oauthUri" width="100%" height="600" frameborder="0"></iframe>
-        </f7-block>
-      </f7-page>
+      <div class="page">
+        <div class="page-content">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left"></div>
+              <div class="title">Log In</div>
+              <div class="right"></div>
+            </div>
+          </div>
+          <div class="block">
+            <iframe v-if="showModal" :src="oauthUri" width="100%" height="600" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
     </f7-popup>
   </div>
 </template>
 
 <script>
-import { f7Button, f7Popup, f7Page, f7Navbar, f7Block } from 'framework7-vue'
+import { f7Popup } from 'framework7-vue'
 import URI from 'urijs'
 
 import rc from '../api/ringcentral'
@@ -27,7 +34,7 @@ import config from '../config'
 
 export default {
   components: {
-    f7Button, f7Popup, f7Page, f7Navbar, f7Block
+    f7Popup
   },
   data: function () {
     return { showModal: false }
