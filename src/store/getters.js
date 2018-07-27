@@ -176,7 +176,6 @@ export const getPersons = state => () => {
   return R.pipe(
     R.values,
     R.map(p => R.merge(p, { name: getPersonNameById(state)(p.id) })),
-    R.forEach(p => console.log(p.name)),
     R.filter(p => !R.isNil(p.name)),
     R.sortBy(R.pipe(R.prop('name'), R.toLower))
   )(state.persons)
