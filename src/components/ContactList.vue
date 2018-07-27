@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     openPerson (id) {
-      console.log(`open person ${id}`)
+      this.$router.push({ name: 'person', params: { id } })
     }
   }
 }
