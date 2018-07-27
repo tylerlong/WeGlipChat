@@ -4,9 +4,9 @@
       <h1>WeGlipChat</h1>
       <p>A Glip client inspired by WeChat. <i class="f7-icons">social_github_fill</i> <a href="https://github.com/tylerlong/WeGlipChat" class="external" target="_blank">tylerlong/WeGlipChat</a></p>
       <h3><i class="f7-icons">cloud_download</i> <a href="https://github.com/tylerlong/wgc-desktop/releases" target="_blank" class="external">Download apps for macOS, Windows & Linux</a> <i class="f7-icons">cloud_download</i></h3>
-      <p><button class="button color-green button-fill" @click="showModal = true">Log In</button></p>
+      <p><button class="button color-green button-fill" @click="openModal">Log In</button></p>
     </div>
-    <f7-popup :opened="showModal">
+    <div class="popup" id="login-popup">
       <div class="page">
         <div class="page-content">
           <div class="navbar">
@@ -21,21 +21,18 @@
           </div>
         </div>
       </div>
-    </f7-popup>
+    </div>
   </div>
 </template>
 
 <script>
-import { f7Popup } from 'framework7-vue'
 import URI from 'urijs'
 
 import rc from '../api/ringcentral'
 import config from '../config'
+import framework7 from '../framework7'
 
 export default {
-  components: {
-    f7Popup
-  },
   data: function () {
     return { showModal: false }
   },
@@ -57,8 +54,18 @@ export default {
         throw new Error(JSON.stringify(params))
       }
       await rc.authorize({ code: params.code, redirectUri: config.OAUTH_REDIRECT_URI })
-      this.showModal = false
+      this.closeModal()
     })
+  },
+  methods: {
+    openModal: function () {
+      this.showModal = true
+      framework7.popup.open('#login-popup', true)
+    },
+    closeModal: function () {
+      this.showModal = false
+      framework7.popup.close('#login-popup', true)
+    }
   }
 }
 </script>
