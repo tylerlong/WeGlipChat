@@ -146,11 +146,14 @@ router.afterEach((to, from) => {
 rc.token(Cookies.getJSON('RINGCENTRAL_TOKEN'))
 
 store.commit('setNetworkTimestamp') // page load successfully implies network no problem
-setInterval(() => {
-  if (dayjs(new Date()).diff(store.state.networkTimestamp) > 600000) {
-    window.location.reload(true) // refresh the page if no network activity in 10 minutes
+setInterval(async () => {
+  if (dayjs(new Date()).diff(store.state.networkTimestamp) > 1800000) {
+    try {
+      await rc.get('/restapi/v1.0')
+      window.location.reload(true) // refresh the page if no network activity in 30 minutes
+    } catch (e) {} // network offline, no need to refresh
   }
-}, 10000)
+}, 60000)
 
 store.watch((_, getters) => {
   return getters.getTotalUnreadCounts()
