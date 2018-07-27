@@ -10,6 +10,7 @@
           </a>
         </div>
         <div class="title">{{ groupName }}<span v-if="group.type === 'Team'"> ({{ group.members.length }})</span></div>
+        <div class="right"></div>
       </div>
     </div>
     <f7-messagebar placeholder="Message" ref="messagebar">
@@ -69,9 +70,9 @@
             </div>
           </div>
         </template>
-        <f7-block v-if="!posts()" class="text-align-center">
+        <div v-if="!posts()" class="block text-align-center">
           <f7-preloader color="orange"></f7-preloader>
-        </f7-block>
+        </div>
       </f7-messages>
       <f7-popover class="popover-menu">
         <f7-list v-if="current.post">
@@ -81,13 +82,13 @@
       </f7-popover>
     </div>
   </div>
-  <f7-block v-else class="text-align-center">
+  <div v-else class="block text-align-center">
     <f7-preloader color="orange"></f7-preloader>
-  </f7-block>
+  </div>
 </template>
 
 <script>
-import { f7Block, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import delay from 'timeout-as-promise'
@@ -102,7 +103,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    f7Block, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
+    f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
   },
   computed: {
     ...mapGetters(['getPostText', 'getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar', 'getTotalUnreadCounts']),
