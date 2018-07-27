@@ -1,25 +1,33 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar :title="name" back-link="Back" @back-click="goBack">
-    </f7-navbar>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a @click="goBack" class="link">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">{{ name }}</div>
+        <div class="right"></div>
+      </div>
+    </div>
     <div class="page-content text-align-center">
       <p><img :src="avatar" width="256px"/></p>
       <p><strong>{{ name }}</strong></p>
       <p v-if="person">{{ person.email }}</p>
-      <p><f7-button color="green" fill @click="startChatWithPerson">Start Chat</f7-button></p>
+      <p><button class="button color-green button-fill" @click="startChatWithPerson">Start Chat</button></p>
     </div>
-  </f7-page>
+  </div>
 </template>
 
 <script>
-import { f7Page, f7Navbar, f7Button } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 
 import Tabs from './Tabs.vue'
 
 export default {
   components: {
-    f7Page, f7Navbar, f7Button, Tabs
+    Tabs
   },
   computed: {
     ...mapGetters(['getPersonNameById', 'getPersonAvatar', 'getPerson', 'isMyself', 'getPersonalGroup']),
