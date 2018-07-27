@@ -46,13 +46,6 @@ export const updateGroup = (state, group) => {
   Vue.set(state.groups, index, group)
 }
 
-export const reset = state => {
-  const s = initialState()
-  Object.keys(s).forEach(key => {
-    state[key] = s[key]
-  })
-}
-
 export const loadCache = (state, cachedState) => {
   const s = initialState()
   Object.keys(s).forEach(key => {
