@@ -6,7 +6,7 @@ export const initialState = () => ({
   groupPageTokens: {},
   config: {
     enableNotifications: true,
-    theme: 'auto'
+    theme: 'ios'
   },
   readTimestamps: {},
   networkTimestamp: undefined

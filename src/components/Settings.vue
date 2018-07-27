@@ -19,7 +19,7 @@
         <f7-list-item radio
           name="theme"
           value="auto"
-          :checked="theme === 'auto' || theme === undefined"
+          :checked="theme === 'auto'"
           @change="theme = $event.target.value"
           title="Auto"
         ></f7-list-item>
@@ -33,7 +33,7 @@
         <f7-list-item radio
           name="theme"
           value="ios"
-          :checked="theme === 'ios'"
+          :checked="theme === 'ios' || theme === undefined"
           @change="theme = $event.target.value"
           title="iOS"
         ></f7-list-item>

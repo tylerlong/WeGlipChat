@@ -15,7 +15,7 @@ import './index.css'
 
 Vue.use(Framework7Vue, Framework7)
 
-let theme = 'auto'
+let theme = 'ios'
 
 ;(async () => {
   if (document.location.search.indexOf('theme=') >= 0) {
@@ -25,7 +25,7 @@ let theme = 'auto'
     if (!R.isNil(token)) {
       const state = await localforage.getItem(`wgc.${token.owner_id}`)
       if (!R.isNil(state) && !R.isNil(state.config)) {
-        theme = state.config.theme || 'auto'
+        theme = state.config.theme || 'ios'
       }
     }
   }
