@@ -2,7 +2,7 @@
   <f7-page :page-content="false">
     <tabs active="contacts"></tabs>
     <div class="page-content">
-      <f7-list media-list v-if="persons">
+      <f7-list media-list v-if="persons && persons.length > 0">
         <f7-list-item
           link="#"
           :title="person.name"
