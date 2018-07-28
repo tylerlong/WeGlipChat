@@ -30,7 +30,7 @@
         id="send-button"
         v-if="!sending"
       ></f7-link>
-      <Preloader v-else class="sending-loader"></Preloader>
+      <preloader v-else class="sending-loader"></preloader>
     </f7-messagebar>
     <div class="page-content">
       <f7-messages ref="messageList" :scroll-messages="false">
@@ -71,7 +71,7 @@
           </div>
         </template>
         <div v-if="!posts()" class="block text-align-center">
-          <Preloader></Preloader>
+          <preloader></preloader>
         </div>
       </f7-messages>
       <f7-popover class="popover-menu">
@@ -83,7 +83,7 @@
     </div>
   </div>
   <div v-else class="block text-align-center">
-    <Preloader></Preloader>
+    <preloader></preloader>
   </div>
 </template>
 

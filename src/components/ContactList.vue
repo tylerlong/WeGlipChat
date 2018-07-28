@@ -22,7 +22,7 @@
         </ul>
       </div>
       <div v-else class="block text-align-center">
-        <Preloader></Preloader>
+        <preloader></preloader>
       </div>
     </div>
   </div>

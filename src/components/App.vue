@@ -17,7 +17,7 @@
         </f7-list-item>
       </f7-list>
       <f7-block v-else class="text-align-center">
-        <Preloader></Preloader>
+        <preloader></preloader>
       </f7-block>
     </div>
   </f7-page>
