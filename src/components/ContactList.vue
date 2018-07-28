@@ -15,7 +15,7 @@
         </f7-list-item>
       </f7-list>
       <f7-block v-else class="text-align-center">
-        <f7-preloader color="orange"></f7-preloader>
+        <Preloader></Preloader>
       </f7-block>
     </div>
   </f7-page>
@@ -26,10 +26,11 @@ import { f7Page, f7List, f7Block, f7ListItem } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 
 import Tabs from './Tabs.vue'
+import Preloader from './Preloader.vue'
 
 export default {
   components: {
-    f7Page, f7List, f7Block, f7ListItem, Tabs
+    f7Page, f7List, f7Block, f7ListItem, Tabs, Preloader
   },
   computed: {
     ...mapGetters(['getPersons', 'getPersonAvatar']),

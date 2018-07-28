@@ -17,22 +17,23 @@
         </f7-list-item>
       </f7-list>
       <f7-block v-else class="text-align-center">
-        <f7-preloader color="orange"></f7-preloader>
+        <Preloader></Preloader>
       </f7-block>
     </div>
   </f7-page>
 </template>
 
 <script>
-import { f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Preloader, f7Block } from 'framework7-vue'
+import { f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Block } from 'framework7-vue'
 import { mapState, mapGetters } from 'vuex'
 
 import Settings from './Settings.vue'
 import Tabs from './Tabs.vue'
+import Preloader from './Preloader.vue'
 
 export default {
   components: {
-    Settings, Tabs, f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Preloader, f7Block
+    Settings, Tabs, Preloader, f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Block
   },
   computed: {
     ...mapState(['groups']),

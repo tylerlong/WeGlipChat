@@ -30,7 +30,7 @@
         id="send-button"
         v-if="!sending"
       ></f7-link>
-      <f7-preloader color="orange" v-else size="24" class="sending-loader"></f7-preloader>
+      <Preloader v-else class="sending-loader"></Preloader>
     </f7-messagebar>
     <div class="page-content">
       <f7-messages ref="messageList" :scroll-messages="false">
@@ -71,7 +71,7 @@
           </div>
         </template>
         <div v-if="!posts()" class="block text-align-center">
-          <f7-preloader color="orange"></f7-preloader>
+          <Preloader></Preloader>
         </div>
       </f7-messages>
       <f7-popover class="popover-menu">
@@ -83,12 +83,12 @@
     </div>
   </div>
   <div v-else class="block text-align-center">
-    <f7-preloader color="orange"></f7-preloader>
+    <Preloader></Preloader>
   </div>
 </template>
 
 <script>
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import delay from 'timeout-as-promise'
@@ -98,12 +98,13 @@ import debounce from 'lodash.debounce'
 
 import { enableEmojiAutoComplete } from '../emoji'
 import { enableMentionAutoComplete } from '../mention'
+import Preloader from './Preloader.vue'
 
 dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Preloader, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
+    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
   },
   computed: {
     ...mapGetters(['getPostText', 'getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar', 'getTotalUnreadCounts']),
