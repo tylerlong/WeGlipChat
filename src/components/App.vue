@@ -1,5 +1,5 @@
 <template>
-  <f7-page :page-content="false">
+  <div class="page">
     <tabs active="glip"></tabs>
     <div class="page-content">
       <f7-list media-list v-if="groups">
@@ -16,15 +16,15 @@
         <img slot="media" :src="getGroupAvatar(group)" class="avatar-image" />
         </f7-list-item>
       </f7-list>
-      <f7-block v-else class="text-align-center">
+      <div v-else class="block text-align-center">
         <preloader></preloader>
-      </f7-block>
+      </div>
     </div>
-  </f7-page>
+  </div>
 </template>
 
 <script>
-import { f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Block } from 'framework7-vue'
+import { f7Link, f7Toolbar, f7List, f7ListItem } from 'framework7-vue'
 import { mapState, mapGetters } from 'vuex'
 
 import Settings from './Settings.vue'
@@ -33,7 +33,7 @@ import Preloader from './Preloader.vue'
 
 export default {
   components: {
-    Settings, Tabs, Preloader, f7Page, f7Tabs, f7Tab, f7Link, f7Toolbar, f7List, f7ListItem, f7Block
+    Settings, Tabs, Preloader, f7Link, f7Toolbar, f7List, f7ListItem
   },
   computed: {
     ...mapState(['groups']),
