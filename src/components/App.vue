@@ -2,20 +2,25 @@
   <div class="page">
     <tabs active="glip"></tabs>
     <div class="page-content">
-      <f7-list media-list v-if="groups">
-        <f7-list-item
-          link="#"
-          :title="getGroupNameById(group.id)"
-          :text="getGroupMessagePreviewText(group)"
-          v-for="group in groups"
-          :key="group.id"
-          @click="openGroup(group.id)"
-          :badge="getUnreadCounts(group.id)"
-          badge-color="red"
-        >
-        <img slot="media" :src="getGroupAvatar(group)" class="avatar-image" />
-        </f7-list-item>
-      </f7-list>
+      <div class="list media-list" v-if="groups">
+        <ul>
+          <li v-for="group in groups" :key="group.id" @click="openGroup(group.id)">
+            <div class="item-content">
+              <div class="item-media">
+                <img :src="getGroupAvatar(group)" class="avatar-image">
+              </div>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">{{ getGroupNameById(group.id) }}</div>
+                  <div class="item-after"><span class="badge color-red">{{ getUnreadCounts(group.id) }}</span></div>
+                </div>
+                <div class="item-subtitle"></div>
+                <div class="item-text">{{ getGroupMessagePreviewText(group) }}</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div v-else class="block text-align-center">
         <preloader></preloader>
       </div>
@@ -24,16 +29,14 @@
 </template>
 
 <script>
-import { f7Link, f7Toolbar, f7List, f7ListItem } from 'framework7-vue'
 import { mapState, mapGetters } from 'vuex'
 
-import Settings from './Settings.vue'
 import Tabs from './Tabs.vue'
 import Preloader from './Preloader.vue'
 
 export default {
   components: {
-    Settings, Tabs, Preloader, f7Link, f7Toolbar, f7List, f7ListItem
+    Tabs, Preloader
   },
   computed: {
     ...mapState(['groups']),
