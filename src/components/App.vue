@@ -12,7 +12,7 @@
               <div class="item-inner">
                 <div class="item-title-row">
                   <div class="item-title">{{ getGroupNameById(group.id) }}</div>
-                  <div class="item-after"><span class="badge color-red">{{ getUnreadCounts(group.id) }}</span></div>
+                  <div class="item-after"><span class="badge color-red" v-if="getUnreadCounts(group.id)">{{ getUnreadCounts(group.id) }}</span></div>
                 </div>
                 <div class="item-subtitle"></div>
                 <div class="item-text">{{ getGroupMessagePreviewText(group) }}</div>
