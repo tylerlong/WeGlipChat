@@ -13,25 +13,7 @@
         <div class="right"></div>
       </div>
     </div>
-    <f7-messagebar placeholder="Message" ref="messagebar">
-      <input id="file-input" style="display: none;" type="file" @change="shareFile"/>
-      <f7-link
-        icon-if-ios="f7:share_fill"
-        icon-if-md="material:attachment"
-        slot="inner-start"
-        onclick="document.getElementById('file-input').click()"
-      ></f7-link>
-      <f7-link
-        icon-if-ios="f7:paper_plane_fill"
-        icon-if-md="material:send"
-        slot="inner-end"
-        @click="sendMessage"
-        title="Send"
-        id="send-button"
-        v-if="!sending"
-      ></f7-link>
-      <preloader v-else class="sending-loader"></preloader>
-    </f7-messagebar>
+    <messagebar :group="group" ref="messagebar"></messagebar>
     <div class="page-content">
       <f7-messages ref="messageList" :scroll-messages="false">
         <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
@@ -88,7 +70,7 @@
 </template>
 
 <script>
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import delay from 'timeout-as-promise'
@@ -96,15 +78,14 @@ import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import debounce from 'lodash.debounce'
 
-import { enableEmojiAutoComplete } from '../emoji'
-import { enableMentionAutoComplete } from '../mention'
 import Preloader from './Preloader.vue'
+import Messagebar from './Messagebar.vue'
 
 dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7Messagebar, f7MessagesTitle, f7Icon, f7Popover, f7Input
+    Preloader, Messagebar, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Icon, f7Popover, f7Input
   },
   computed: {
     ...mapGetters(['getPostText', 'getPersonNameById', 'getGroupById', 'getGroupNameById', 'getPostsByGroupId', 'isMyself', 'getPersonAvatar', 'getTotalUnreadCounts']),
@@ -146,9 +127,7 @@ export default {
       this.current.text = undefined
     },
     quotePost () {
-      this.textarea.val(`![:Person](${this.current.post.creatorId}) wrote:\n` + this.current.post.text.split('\n').map(line => `> ${line}`).join('\n') + '\n\n')
-      this.textarea.trigger('change')
-      this.textarea.focus()
+      this.$refs.messagebar.setText(`![:Person](${this.current.post.creatorId}) wrote:\n` + this.current.post.text.split('\n').map(line => `> ${line}`).join('\n') + '\n\n')
     },
     async editPost () {
       this.current.editing = true
@@ -212,24 +191,6 @@ export default {
     isImage (file) {
       return R.test(/\.(?:png|jpg|gif|bmp|tiff|jpeg)$/i, file.name)
     },
-    async sendMessage () {
-      if (this.textarea.val() === '') {
-        return
-      }
-      const text = this.textarea.val()
-      this.textarea.val('')
-      this.textarea.trigger('change')
-      this.sending = true
-      await this.$store.dispatch('sendMessage', { groupId: this.$route.params.id, text })
-      this.sending = false
-    },
-    async shareFile (e) {
-      const file = e.target.files[0]
-      this.sending = true
-      await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
-      this.sending = false
-      e.target.value = ''
-    },
     openPerson (id) {
       this.$router.push({ name: 'person', params: { id } })
     },
@@ -252,46 +213,6 @@ export default {
       await delay(1000)
     }
     this.$store.dispatch('fetchPersons', this.group.members)
-    this.textarea = this.$refs.messagebar.f7Messagebar.$textareaEl
-    this.textarea.focus()
-    this.textarea.on('keypress', (e) => {
-      if (e.keyCode === 13) {
-        if (!e.shiftKey) {
-          e.preventDefault()
-          document.getElementById('send-button').click()
-        }
-      }
-    })
-    this.textarea.on('paste', async (event) => {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items
-      for (const item of items) {
-        if (item.kind === 'file') {
-          event.preventDefault()
-          const file = item.getAsFile()
-          if (!R.isNil(file)) {
-            this.sending = true
-            await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
-            this.sending = false
-          }
-        }
-      }
-    })
-    this.textarea.on('drop', async (event) => {
-      const items = event.dataTransfer.items || []
-      for (const item of items) {
-        if (item.kind === 'file') {
-          event.preventDefault()
-          const file = item.getAsFile()
-          if (!R.isNil(file)) {
-            this.sending = true
-            await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
-            this.sending = false
-          }
-        }
-      }
-    })
-    enableEmojiAutoComplete(this.textarea[0])
-    enableMentionAutoComplete(this.textarea[0], this.group.members.map(id => ({ id, name: this.getPersonNameById(id) })))
 
     const $f7Messages = this.$refs.messageList.f7Messages
     const messagesListEl = $f7Messages.$pageContentEl
