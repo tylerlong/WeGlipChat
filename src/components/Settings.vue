@@ -56,8 +56,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import * as R from 'ramda'
+import Cookies from 'js-cookie'
 
 import Tabs from './Tabs.vue'
 import rc from '../api/ringcentral'
@@ -68,6 +69,7 @@ export default {
   },
   computed: {
     ...mapState(['extension']),
+    ...mapGetters(['getTheme']),
     loggedIn: function () {
       return !R.isNil(rc.token())
     },
@@ -81,13 +83,11 @@ export default {
     },
     theme: {
       get () {
-        return this.$store.state.config.theme
+        return this.getTheme()
       },
       set (value) {
-        this.$store.commit('setTheme', value)
-        setTimeout(() => {
-          window.location.reload(false)
-        }, 100) // wait for localforage writing
+        Cookies.set('FRAMEWORK7_THEME', value)
+        window.location.reload(false)
       }
     }
   },

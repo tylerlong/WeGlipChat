@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import MarkdownIt from 'markdown-it'
 import cheerio from 'cheerio'
 import dayjs from 'dayjs'
+import Cookies from 'js-cookie'
 
 import { emojiToImage } from '../emoji'
 import userAvatar from '../user-avatar.png'
@@ -13,7 +14,7 @@ const mdi = new MarkdownIt({
 })
 
 export const getTheme = state => () => {
-  return state.config.theme || 'ios'
+  return Cookies.get('FRAMEWORK7_THEME') || 'ios'
 }
 
 export const getTotalUnreadCounts = state => () => {

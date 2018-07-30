@@ -12,10 +12,6 @@ export const setEnableNotifications = (state, value) => {
   state.config.enableNotifications = value
 }
 
-export const setTheme = (state, value) => {
-  state.config.theme = value
-}
-
 export const moveGroupToFirst = (state, group) => {
   state.groups = [group, ...R.reject(g => g.id === group.id, state.groups)]
 }

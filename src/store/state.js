@@ -5,8 +5,7 @@ export const initialState = () => ({
   persons: {},
   groupPageTokens: {},
   config: {
-    enableNotifications: true,
-    theme: 'ios'
+    enableNotifications: true
   },
   readTimestamps: {},
   networkTimestamp: undefined
