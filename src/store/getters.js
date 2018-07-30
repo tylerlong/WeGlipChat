@@ -12,6 +12,10 @@ const mdi = new MarkdownIt({
   linkify: true
 })
 
+export const getTheme = state => () => {
+  return state.config.theme || 'ios'
+}
+
 export const getTotalUnreadCounts = state => () => {
   let unreadCount = 0
   if (!R.isNil(state.groups)) {

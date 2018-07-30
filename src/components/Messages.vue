@@ -10,7 +10,7 @@
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
             <textarea v-if="current.editing && current.post.id === post.id" class="resizable" @input="current.text = $event.target.value" id="editing-textarea">{{ current.text }}</textarea>
             <div v-else class="wrapped-bubble">
-              <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
+              <f7-link :class="{ 'margin-8': getTheme() === 'ios' }" popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
                 <i class="f7-icons ios-only size-20">more_vertical</i>
                 <i class="material-icons md-only size-20">more_vert</i>
               </f7-link>
@@ -31,7 +31,7 @@
                 </template>
                 <div v-if="!isSupportedPost(post)">Unsupported message</div>
               </div>
-              <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
+              <f7-link :class="{ 'margin-8': getTheme() === 'ios' }" popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
                 <i class="f7-icons ios-only size-20">more_vertical</i>
                 <i class="material-icons md-only size-20">more_vert</i>
               </f7-link>
@@ -90,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isMyself', 'getPersonAvatar', 'getPersonNameById', 'getPostText', 'getPostsByGroupId']),
+    ...mapGetters(['getTheme', 'isMyself', 'getPersonAvatar', 'getPersonNameById', 'getPostText', 'getPostsByGroupId']),
     latestPostId: function () {
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (R.isNil(posts) || R.isEmpty(posts)) {
