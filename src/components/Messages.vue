@@ -8,7 +8,7 @@
           <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
           <div class="message-content">
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
-            <f7-input type="textarea" v-if="current.editing && current.post.id === post.id" :resizable="true" :value="current.text" @input="current.text = $event.target.value" ref="editingTextarea"></f7-input>
+            <textarea v-if="current.editing && current.post.id === post.id" class="resizable" @input="current.text = $event.target.value" id="editing-textarea">{{ current.text }}</textarea>
             <div v-else class="wrapped-bubble">
               <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
                 <i class="f7-icons ios-only size-20">more_vertical</i>
@@ -67,7 +67,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Input } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle } from 'framework7-vue'
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
@@ -76,7 +76,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Input
+    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle
   },
   props: ['posts'],
   data: function () {
@@ -127,8 +127,9 @@ export default {
       this.current.editing = true
       this.current.text = this.current.post.text
       await delay(100)
-      const textarea = this.$refs.editingTextarea[0].$el.querySelector('textarea')
-      textarea.addEventListener('keydown', (e) => {
+      const textarea = Dom7('#editing-textarea')
+      textarea.trigger('change')
+      textarea.on('keydown', (e) => {
         if (e.keyCode === 13) {
           if (!e.shiftKey) {
             e.preventDefault()
