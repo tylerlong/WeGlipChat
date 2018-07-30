@@ -8,7 +8,7 @@
       </a>
 
       <div class="messagebar-area">
-        <textarea placeholder="Message" id="messagebar-textarea"></textarea>
+        <textarea class="resizable" placeholder="Message" id="messagebar-textarea"></textarea>
       </div>
 
       <a class="link" @click="sendMessage" title="Send" id="send-button" v-if="!sending">
@@ -102,11 +102,6 @@ export default {
       await this.$store.dispatch('shareFile', { groupId: this.$route.params.id, file })
       this.sending = false
       e.target.value = ''
-    },
-    setText (text) {
-      this.textarea.val(text)
-      this.textarea.trigger('change')
-      this.textarea.focus()
     }
   }
 }
