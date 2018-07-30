@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <f7-messages ref="messageList" :scroll-messages="false">
+    <div class="messages" id="messages-list">
       <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
       <template v-for="posts in groupedPosts()">
         <div class="messages-title">{{ timestamp(posts[0].creationTime) }}</div>
@@ -42,7 +42,7 @@
       <div v-if="!posts" class="block text-align-center">
         <preloader></preloader>
       </div>
-    </f7-messages>
+    </div>
     <div class="popover popover-menu">
       <div class="popover-inner">
         <div class="list" v-if="current.post">
@@ -67,16 +67,16 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
-import { f7Messages } from 'framework7-vue'
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
+import framework7 from '../framework7'
 
 dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7Messages
+    Preloader
   },
   props: ['posts'],
   data: function () {
@@ -102,7 +102,7 @@ export default {
   watch: {
     latestPostId: async function (val) { // scroll to bottom upon new post
       await delay(100)
-      this.$refs.messageList.f7Messages.scroll(100, 1000000)
+      this.messagesList.scroll(100, 1000000)
     }
   },
   methods: {
@@ -186,8 +186,11 @@ export default {
     }
   },
   async mounted () {
-    const $f7Messages = this.$refs.messageList.f7Messages
-    const messagesListEl = $f7Messages.$pageContentEl
+    this.messagesList = framework7.messages.create({
+      el: '#messages-list',
+      scrollMessages: false
+    })
+    const messagesListEl = this.messagesList.$pageContentEl
     const debouncedScroll = debounce(async (e) => {
       const topElement = messagesListEl.find('.message-content')[0]
       const top = topElement.getBoundingClientRect().top
@@ -195,12 +198,12 @@ export default {
         this.loadingMore = true
         await this.$store.dispatch('fetchMorePosts', this.$route.params.id)
         this.loadingMore = false
-        $f7Messages.scroll(0, topElement.getBoundingClientRect().top - top - 32)
+        this.messagesList.scroll(0, topElement.getBoundingClientRect().top - top - 32)
       }
     }, 100)
     messagesListEl.on('scroll', debouncedScroll)
 
-    $f7Messages.scroll(0, 1000000)
+    this.messagesList.scroll(0, 1000000)
   }
 }
 </script>
