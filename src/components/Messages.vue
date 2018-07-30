@@ -43,12 +43,20 @@
         <preloader></preloader>
       </div>
     </f7-messages>
-    <f7-popover class="popover-menu">
-      <f7-list v-if="current.post">
-        <f7-list-item v-if="current.post.text && isMyself(current.post.creatorId)" link="#" popover-close title="Edit" @click="editPost"></f7-list-item>
-        <f7-list-item v-if="current.post.text" link="#" popover-close title="Quote" @click="quotePost"></f7-list-item>
-      </f7-list>
-    </f7-popover>
+    <div class="popover popover-menu">
+      <div class="popover-inner">
+        <div class="list" v-if="current.post">
+          <ul>
+            <li v-if="current.post.text && isMyself(current.post.creatorId)">
+              <a class="list-button popover-close" @click="editPost">Edit</a>
+            </li>
+            <li v-if="current.post.text">
+              <a class="list-button popover-close" @click="quotePost">Quote</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -59,7 +67,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Popover, f7Input } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Input } from 'framework7-vue'
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
@@ -68,7 +76,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Popover, f7Input
+    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Input
   },
   props: ['posts'],
   data: function () {
