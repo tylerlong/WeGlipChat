@@ -5,7 +5,7 @@
   "private": true,
   "author": "Tyler Long <tyler4long@gmail.com>",
   "scripts": {
-    "upgrade": "yarn-upgrade-all && yarn remove framework7 framework7-vue && yarn add framework7@2.3.1 framework7-vue@2.3.0 && curl https://api.github.com/emojis > src/emojis.json",
+    "upgrade": "yarn-upgrade-all && yarn remove framework7 && yarn add framework7@2.3.1 && curl https://api.github.com/emojis > src/emojis.json",
     "prepush": "standard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --open --progress --colors --config webpack.dev.babel.js",
     "build": "webpack --progress --colors --config webpack.dev.babel.js",
@@ -17,7 +17,6 @@
     "favico.js": "^0.3.10",
     "framework7": "2.3.1",
     "framework7-icons": "^0.9.1",
-    "framework7-vue": "2.3.0",
     "js-cookie": "^2.2.0",
     "localforage": "^1.7.2",
     "lodash.debounce": "^4.0.8",

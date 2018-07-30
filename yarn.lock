@@ -2523,10 +2523,6 @@ framework7-icons@^0.9.1:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/framework7-icons/-/framework7-icons-0.9.1.tgz#01f089ce9f71eae112f516630b17009929a8b384"
 
-framework7-vue@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/framework7-vue/-/framework7-vue-2.3.0.tgz#fa9c81ab57b1f637441e8a418a0057cc8036152f"
-
 framework7@2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/framework7/-/framework7-2.3.1.tgz#a50ffc18117cf5c8840dba39348304f9e984085a"
@@ -5476,8 +5472,8 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
 ssr-window@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-1.0.0.tgz#8ed1b6beaa0a371ba7e74d6515d584c3f1cf973c"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-1.0.1.tgz#30752a6a4666e7767f0b7e6aa6fc2fdbd0d9b369"
 
 ssri@^5.2.4:
   version "5.3.0"
@@ -5705,8 +5701,8 @@ tar@^4:
     yallist "^3.0.2"
 
 template7@^1.3.5:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/template7/-/template7-1.3.6.tgz#ddb6df3c416745fa0ced635b6328a105eaa91c3a"
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/template7/-/template7-1.3.8.tgz#64ee79d5deb66040fb3ba843875c6ddb34e95c15"
 
 text-table@~0.2.0:
   version "0.2.0"
