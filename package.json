@@ -5,7 +5,7 @@
   "private": true,
   "author": "Tyler Long <tyler4long@gmail.com>",
   "scripts": {
-    "upgrade": "yarn-upgrade-all && curl https://api.github.com/emojis > src/emojis.json",
+    "upgrade": "yarn-upgrade-all && yarn remove optimize-css-assets-webpack-plugin && yarn add --dev optimize-css-assets-webpack-plugin@4.0.3 && curl https://api.github.com/emojis > src/emojis.json",
     "prepush": "standard --plugin html '**/*.{js,vue}'",
     "start": "webpack-dev-server --open --progress --colors --config webpack.dev.babel.js",
     "build": "webpack --progress --colors --config webpack.dev.babel.js",
@@ -44,7 +44,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",
-    "optimize-css-assets-webpack-plugin": "^5.0.0",
+    "optimize-css-assets-webpack-plugin": "4.0.3",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
