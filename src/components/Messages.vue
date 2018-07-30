@@ -3,7 +3,7 @@
     <f7-messages ref="messageList" :scroll-messages="false">
       <div class="progressbar-infinite color-green" v-if="loadingMore"></div>
       <template v-for="posts in groupedPosts()">
-        <f7-messages-title>{{ timestamp(posts[0].creationTime) }}</f7-messages-title>
+        <div class="messages-title">{{ timestamp(posts[0].creationTime) }}</div>
         <div class="message message-with-avatar" :class="isMyself(post.creatorId) ? 'message-sent' : 'message-received'" v-for="post in posts" :key="post.id">
           <div :style="'background-image:url(' + getPersonAvatar(post.creatorId) + ')'" class="message-avatar" @click="openPerson(post.creatorId)"></div>
           <div class="message-content">
@@ -67,7 +67,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message } from 'framework7-vue'
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
@@ -76,7 +76,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle
+    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message
   },
   props: ['posts'],
   data: function () {
