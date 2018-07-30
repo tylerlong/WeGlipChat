@@ -10,10 +10,10 @@
             <div class="message-name">{{ getPersonNameById(post.creatorId) }}</div>
             <textarea v-if="current.editing && current.post.id === post.id" class="resizable" @input="current.text = $event.target.value" id="editing-textarea">{{ current.text }}</textarea>
             <div v-else class="wrapped-bubble">
-              <f7-link :class="{ 'margin-8': getTheme() === 'ios' }" popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
+              <a class="link popover-open" :class="{ 'margin-8': getTheme() === 'ios' }" data-popover=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
                 <i class="f7-icons ios-only size-20">more_vertical</i>
                 <i class="material-icons md-only size-20">more_vert</i>
-              </f7-link>
+              </a>
               <div class="message-bubble">
                 <template v-if="post.type === 'TextMessage'">
                   <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
@@ -31,10 +31,10 @@
                 </template>
                 <div v-if="!isSupportedPost(post)">Unsupported message</div>
               </div>
-              <f7-link :class="{ 'margin-8': getTheme() === 'ios' }" popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
+              <a class="link popover-open" :class="{ 'margin-8': getTheme() === 'ios' }" data-popover=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
                 <i class="f7-icons ios-only size-20">more_vertical</i>
                 <i class="material-icons md-only size-20">more_vert</i>
-              </f7-link>
+              </a>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message } from 'framework7-vue'
+import { f7Messages } from 'framework7-vue'
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
@@ -76,7 +76,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message
+    Preloader, f7Messages
   },
   props: ['posts'],
   data: function () {
