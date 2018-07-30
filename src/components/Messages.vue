@@ -11,7 +11,8 @@
             <f7-input type="textarea" v-if="current.editing && current.post.id === post.id" :resizable="true" :value="current.text" @input="current.text = $event.target.value" ref="editingTextarea"></f7-input>
             <div v-else class="wrapped-bubble">
               <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && isMyself(post.creatorId)" @click="changeCurrent(post)">
-                <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
+                <i class="f7-icons ios-only size-20">more_vertical</i>
+                <i class="material-icons md-only size-20">more_vert</i>
               </f7-link>
               <div class="message-bubble">
                 <template v-if="post.type === 'TextMessage'">
@@ -31,7 +32,8 @@
                 <div v-if="!isSupportedPost(post)">Unsupported message</div>
               </div>
               <f7-link :class="{ 'margin-12': $theme.ios }" popover-open=".popover-menu" v-if="post.text && !isMyself(post.creatorId)" @click="changeCurrent(post)">
-                <f7-icon size="25" if-ios="f7:more_vertical" if-md="material:more_vert"></f7-icon>
+                <i class="f7-icons ios-only size-20">more_vertical</i>
+                <i class="material-icons md-only size-20">more_vert</i>
               </f7-link>
             </div>
           </div>
@@ -57,7 +59,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
-import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Icon, f7Popover, f7Input } from 'framework7-vue'
+import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Popover, f7Input } from 'framework7-vue'
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
@@ -66,7 +68,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   components: {
-    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Icon, f7Popover, f7Input
+    Preloader, f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7Popover, f7Input
   },
   props: ['posts'],
   data: function () {
