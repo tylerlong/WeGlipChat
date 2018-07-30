@@ -25,14 +25,10 @@
 import { mapGetters } from 'vuex'
 import * as R from 'ramda'
 import delay from 'timeout-as-promise'
-import dayjs from 'dayjs'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 import Preloader from './Preloader.vue'
 import Messagebar from './Messagebar.vue'
 import Messages from './Messages.vue'
-
-dayjs.extend(weekOfYear)
 
 export default {
   components: {

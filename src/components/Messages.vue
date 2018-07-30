@@ -53,6 +53,7 @@
 <script>
 import * as R from 'ramda'
 import dayjs from 'dayjs'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
 import delay from 'timeout-as-promise'
@@ -60,6 +61,8 @@ import { f7List, f7ListItem, f7Link, f7Messages, f7Message, f7MessagesTitle, f7I
 import { Dom7 } from 'framework7'
 
 import Preloader from './Preloader.vue'
+
+dayjs.extend(weekOfYear)
 
 export default {
   components: {
