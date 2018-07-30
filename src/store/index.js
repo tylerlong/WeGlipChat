@@ -155,7 +155,7 @@ setInterval(async () => {
 
 store.watch((_, getters) => {
   return getters.getTotalUnreadCounts()
-}, (val) => {
+}, val => {
   if (R.isNil(val)) {
     favicon.reset()
     document.title = 'WeGlipChat'
