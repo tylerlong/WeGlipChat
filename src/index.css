@@ -51,6 +51,10 @@ blockquote {
   white-space: pre-wrap;
 }
 
+.media-list .item-content {
+  cursor: pointer;
+}
+
 /* for emoji auto complete */
 /* copied from https://github.com/yuku/textcomplete/blob/master/src/doc/main.css */
 .dropdown-menu {
