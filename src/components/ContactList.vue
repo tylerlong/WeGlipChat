@@ -1,25 +1,16 @@
 <template>
   <div class="page">
     <tabs active="contacts"></tabs>
-    <div class="navbar">
-      <div class="navbar-inner">
-        <div class="left"></div>
-        <div class="title">Contacts</div>
-        <div class="right"></div>
-        <div class="subnavbar">
-          <form class="searchbar">
-            <div class="searchbar-inner">
-              <div class="searchbar-input-wrap">
-                <input type="search" placeholder="Search">
-                <i class="searchbar-icon"></i>
-                <span class="input-clear-button"></span>
-              </div>
-              <span class="searchbar-disable-button">Cancel</span>
-            </div>
-          </form>
+    <form class="searchbar">
+      <div class="searchbar-inner">
+        <div class="searchbar-input-wrap">
+          <input type="search" placeholder="Search">
+          <i class="searchbar-icon"></i>
+          <span class="input-clear-button"></span>
         </div>
+        <span class="searchbar-disable-button">Cancel</span>
       </div>
-    </div>
+    </form>
     <div class="page-content">
       <div class="searchbar-backdrop"></div>
       <div class="list media-list searchbar-found" v-if="persons && persons.length > 0">
