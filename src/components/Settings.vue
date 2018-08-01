@@ -15,6 +15,23 @@
         </ul>
       </div>
 
+      <div class="list simple-list">
+        <ul>
+          <li>
+            <span>Martian language
+              <a target="_blank" href="https://en.wikipedia.org/wiki/Martian_language" class="external">
+                <i class="f7-icons ios-only size-20">help</i>
+                <i class="material-icons md-only size-20">help</i>
+              </a>
+            </span>
+            <label class="toggle">
+              <input type="checkbox" v-model="martianLanguage">
+              <span class="toggle-icon"></span>
+            </label>
+          </li>
+        </ul>
+      </div>
+
       <div class="block-title">Theme</div>
       <div class="list">
         <ul>
@@ -79,6 +96,14 @@ export default {
       },
       set (value) {
         this.$store.commit('setEnableNotifications', value)
+      }
+    },
+    martianLanguage: {
+      get () {
+        return this.$store.state.config.martianLanguage
+      },
+      set (value) {
+        this.$store.commit('setMartianLanguage', value)
       }
     },
     theme: {

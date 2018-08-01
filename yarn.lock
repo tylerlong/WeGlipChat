@@ -6479,3 +6479,7 @@ yarn-upgrade-all@^0.3.0:
   dependencies:
     chalk "^2.3.0"
     commander "^2.12.2"
+
+zh2cht@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/zh2cht/-/zh2cht-0.0.2.tgz#ea6f445af8a796ec56156d8db3934d22b937a4b5"

@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 import multipartMixedParser from 'multipart-mixed-parser'
 import localforage from 'localforage'
+import { toHx as toMartianLanguage } from 'zh2cht'
 
 import rc from '../api/ringcentral'
 
@@ -56,8 +57,12 @@ export const shareFile = async (context, { groupId, file }) => {
   await rc.post('/restapi/v1.0/glip/files', data, { params: { groupId } })
 }
 
-export const sendMessage = async (context, { groupId, text }) => {
-  await rc.post('/restapi/v1.0/glip/posts', { groupId, text })
+export const sendMessage = async ({ state }, { groupId, text }) => {
+  let message = text
+  if (state.config.martianLanguage === true) {
+    message = toMartianLanguage(message)
+  }
+  await rc.post('/restapi/v1.0/glip/posts', { groupId, text: message })
 }
 
 export const init = async ({ dispatch, commit, state }, subscribe) => {
