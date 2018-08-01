@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <tabs active="contacts"></tabs>
-    <form class="searchbar">
+    <form class="searchbar" id="contacts-searchbar">
       <div class="searchbar-inner">
         <div class="searchbar-input-wrap">
           <input type="search" placeholder="Search">
@@ -13,7 +13,7 @@
     </form>
     <div class="page-content">
       <div class="searchbar-backdrop"></div>
-      <div class="list media-list searchbar-found" v-if="persons && persons.length > 0">
+      <div id="contacts-list" class="list media-list searchbar-found" v-if="persons && persons.length > 0">
         <ul>
           <li v-for="person in persons" :key="person.id" @click="openPerson(person.id)">
             <div class="item-content">
@@ -35,8 +35,10 @@
       <div v-else class="block text-align-center">
         <preloader></preloader>
       </div>
-      <div class="block searchbar-not-found">
-        <div class="block-inner">Nobody matched</div>
+      <div class="list simple-list searchbar-not-found">
+        <ul>
+          <li>Nobody matched</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -44,6 +46,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import * as R from 'ramda'
 
 import Tabs from './Tabs.vue'
 import Preloader from './Preloader.vue'
@@ -66,10 +69,23 @@ export default {
   },
   mounted: function () {
     this.searchbar = framework7.searchbar.create({
-      el: '.searchbar',
-      searchContainer: '.list',
+      el: '#contacts-searchbar',
+      searchContainer: '#contacts-list',
       searchIn: '.item-title'
     })
+  },
+  watch: { // fix refresh page issue
+    persons: function (newVal, oldVal) {
+      if (R.isNil(oldVal) || R.isEmpty(oldVal)) {
+        setTimeout(() => {
+          this.searchbar = framework7.searchbar.create({
+            el: '#contacts-searchbar',
+            searchContainer: '#contacts-list',
+            searchIn: '.item-title'
+          })
+        }, 1000)
+      }
+    }
   }
 }
 </script>
