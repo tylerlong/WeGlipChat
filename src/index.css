@@ -47,6 +47,10 @@ blockquote {
   font-size: 20px
 }
 
+.message-text pre {
+  white-space: pre-wrap;
+}
+
 /* for emoji auto complete */
 /* copied from https://github.com/yuku/textcomplete/blob/master/src/doc/main.css */
 .dropdown-menu {
