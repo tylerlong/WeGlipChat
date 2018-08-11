@@ -68,7 +68,7 @@ export default {
     this.$store.commit('updateReadTimestamp', this.$route.params.id)
     this.readTimestampInterval = setInterval(() => {
       this.$store.commit('updateReadTimestamp', this.$route.params.id)
-    }, 3000)
+    }, 10000)
   },
   beforeDestroy: function () {
     clearInterval(this.readTimestampInterval)
