@@ -18,11 +18,14 @@
                 <template v-if="post.type === 'TextMessage'">
                   <div class="message-text" v-if="post.text" v-html="getPostText(post)"></div>
                   <div v-if="post.attachments">
-                    <template v-for="file in post.attachments">
-                      <a :href="file.contentUri" class="external" target="_blank">
-                        <img v-if="isImage(file)" :src="file.contentUri" class="attachment-image"/>
-                        <span v-else>{{ file.name }}</span>
+                    <template v-for="a in post.attachments">
+                      <a v-if="a.contentUri" :href="a.contentUri" class="external" target="_blank">
+                        <img v-if="isImage(a)" :src="a.contentUri" class="attachment-image"/>
+                        <span v-else>{{ a.name }}</span>
                       </a>
+                      <div v-else-if="a.type === 'Card'">
+                        {{ a.text }}
+                      </div>
                     </template>
                   </div>
                 </template>
