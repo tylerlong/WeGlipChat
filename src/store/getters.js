@@ -44,6 +44,10 @@ export const getPerson = state => id => {
   return state.persons[id]
 }
 
+export const getCardText = state => card => {
+  return mdi.render(card.text.split('\n').map(l => `> ${l}`).join('\n'))
+}
+
 export const getPostText = state => post => {
   let html = post.text
   if (post.type === 'PersonsAdded') {

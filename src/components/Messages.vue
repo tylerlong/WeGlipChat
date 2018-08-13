@@ -23,9 +23,7 @@
                         <img v-if="isImage(a)" :src="a.contentUri" class="attachment-image"/>
                         <span v-else>{{ a.name }}</span>
                       </a>
-                      <div v-else-if="a.type === 'Card'">
-                        {{ a.text }}
-                      </div>
+                      <div v-else-if="a.type === 'Card'" v-html="getCardText(a)"></div>
                     </template>
                   </div>
                 </template>
@@ -93,7 +91,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getTheme', 'isMyself', 'getPersonAvatar', 'getPersonNameById', 'getPostText', 'getPostsByGroupId']),
+    ...mapGetters(['getTheme', 'isMyself', 'getPersonAvatar', 'getPersonNameById', 'getPostText', 'getCardText', 'getPostsByGroupId']),
     latestPostId: function () {
       const posts = this.getPostsByGroupId(this.$route.params.id)
       if (R.isNil(posts) || R.isEmpty(posts)) {
