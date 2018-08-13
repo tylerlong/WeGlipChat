@@ -82,6 +82,12 @@ const pubnub = new PubNub(rc, ['/restapi/v1.0/glip/posts', '/restapi/v1.0/glip/g
             window.focus()
             this.close()
             router.push({ name: 'group', params: { id: post.groupId } })
+            if (window.electron) { // electron
+              const win = window.electron.getCurrentWindow()
+              if (win.isMinimized()) {
+                win.restore()
+              }
+            }
           }
         })
       }
