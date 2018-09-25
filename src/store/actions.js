@@ -82,10 +82,10 @@ export const init = async ({ dispatch, commit, state }, subscribe) => {
     R.reduce(R.concat, [])
   )(state.groups)
   dispatch('fetchPersons', personIds)
-  for (const group of state.groups.slice(0, 16)) {
+  for (const group of state.groups.slice(0, 32)) {
     dispatch('fetchPosts', group.id)
   }
-  for (const group of state.groups.slice(16)) {
+  for (const group of state.groups.slice(32)) {
     if (R.isNil(state.posts[group.id])) {
       await dispatch('fetchPosts', group.id)
     }
